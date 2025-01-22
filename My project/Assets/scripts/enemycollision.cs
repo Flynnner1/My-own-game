@@ -2,32 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class projectilecollision : MonoBehaviour
+public class ProjectileCollision : MonoBehaviour
 {
-    public int layerMask;
-    public playerhealthsystem playerhealth;
-    public float time = 1f;
-    public float cooldowntimer = 3f;
-    // Start is called before the first frame update
+    public int layerMask; // Set this to the player's layer in the inspector
+    public PlayerHealth playerHealth; // Reference to the PlayerHealth component
+    public float cooldownTimer = 3f; // Cooldown time between hits
+    private float time = 0f;
 
-    void OnCollisionEnter2D(Collision2D col)
+    void Start()
+    {
+        // Try to find the PlayerHealth component in the scene
+        if (playerHealth == null)
         {
-        time += Time.deltaTime;
-            if (time >= cooldowntimer)
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
             {
-                Debug.Log("Hit");
-                if (col.gameObject.layer == layerMask)
-                {
-                    if (layerMask == 2)
-                    {
-                        playerhealth.deducthealth();
-                        Debug.Log("Hit Player");
-                    }
+                playerHealth = playerObject.GetComponent<PlayerHealth>();
+            }
 
-                }
+            if (playerHealth == null)
+            {
+                Debug.LogError("PlayerHealth component is not assigned and could not be found!");
             }
         }
+    }
 
-    // Update is called once per frame
-    
+    void Update()
+    {
+        // Increment the time
+        time += Time.deltaTime;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (time >= cooldownTimer)
+        {
+            Debug.Log("Hit");
+
+            if (col.gameObject.layer == layerMask)
+            {
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(10f); // Apply damage to the player
+                    Debug.Log("Hit Player");
+                }
+                else
+                {
+                    Debug.LogError("PlayerHealth component is missing!");
+                }
+
+                // Reset the cooldown timer
+                time = 0f;
+            }
+        }
+    }
 }

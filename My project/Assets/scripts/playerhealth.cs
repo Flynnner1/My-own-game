@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Maximum health of the player
-    private float currentHealth;
+    public float currentHealth = 100f;
 
     void Start()
     {

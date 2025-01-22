@@ -11,7 +11,7 @@ public class EnemyProjectileMovement : MonoBehaviour
     private Rigidbody2D rb;
     public PlayerHealth playerHealth; // Reference to the PlayerHealth component
 
-    public Transform target;
+    private Transform target; // Updated to private
 
     void Start()
     {
@@ -24,26 +24,18 @@ public class EnemyProjectileMovement : MonoBehaviour
             return;
         }
 
-        if (target == null)
+        // Find the player object and set it as the target
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
         {
-            Debug.LogError("Target is not assigned!");
-            return;
+            target = playerObject.transform;
+            playerHealth = playerObject.GetComponent<PlayerHealth>();
         }
 
-        if (playerHealth == null)
+        if (target == null || playerHealth == null)
         {
-            // Try to find the PlayerHealth component in the scene
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
-            {
-                playerHealth = playerObject.GetComponent<PlayerHealth>();
-            }
-
-            if (playerHealth == null)
-            {
-                Debug.LogError("PlayerHealth component is not assigned and could not be found!");
-                return;
-            }
+            Debug.LogError("Target or PlayerHealth component is not assigned and could not be found!");
+            return;
         }
 
         // Set the velocity of the projectile
