@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 3565758226200351632}
   - component: {fileID: 4732391329659895944}
   - component: {fileID: 5636920649467650925}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle (1)
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 25
 --- !u!58 &4732391329659895944
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -289,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7359293292453697816}
   - component: {fileID: 2476772729586420066}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

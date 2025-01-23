@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: 2041000643407761865}
   - component: {fileID: 9152213400209188296}
   - component: {fileID: 6850034318637092806}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle (1)
-  m_TagString: Untagged
+  m_TagString: Skeleton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 25
 --- !u!1 &2133215256004129780
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 193724121878017783}
   - component: {fileID: 7710423798525506186}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8941854737589367912}
   - component: {fileID: 2857456942061574711}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

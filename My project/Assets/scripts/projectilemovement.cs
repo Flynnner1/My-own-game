@@ -13,6 +13,8 @@ public class BallMovement : MonoBehaviour
     private Vector2 movementDirection;
     public Transform playerTransform;
 
+    public EnemyHealth EnemyHealth;
+
     // Define layer masks for Skeleton and Zombie
     public LayerMask skeletonLayer;
     public LayerMask zombieLayer;
@@ -46,25 +48,38 @@ public class BallMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         // Check if the collided object is on the Skeleton or Zombie layer
-        if ((skeletonLayer == (skeletonLayer | (1 << collision.gameObject.layer))) ||
-            (zombieLayer == (zombieLayer | (1 << collision.gameObject.layer))))
-        {
-            Debug.Log("Projectile hit a Skeleton or Zombie. Dealing damage.");
+        //if ((skeletonLayer == (skeletonLayer | (1 << collision.gameObject.layer))) ||
+        //    (zombieLayer == (zombieLayer | (1 << collision.gameObject.layer))))
+        //{
+        //    Debug.Log("Projectile hit a Skeleton or Zombie. Dealing damage.");
 
-            // Check if the collided object has an EnemyHealth component
+        //    // Check if the collided object has an EnemyHealth component
+        //    EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+        //    if (enemyHealth != null)
+        //    {
+        //        // Apply damage
+        //        enemyHealth.TakeDamage(damageAmount);
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.Log("Projectile hit something without the Skeleton or Zombie layer.");
+        //}
+
+        //// Destroy the ball upon collision
+        //Destroy(gameObject);
+        void OnCollisionEnter(Collision collision)
+        {
             EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 // Apply damage
+                int damageAmount = 10; // Example damage amount
                 enemyHealth.TakeDamage(damageAmount);
             }
-        }
-        else
-        {
-            Debug.Log("Projectile hit something without the Skeleton or Zombie layer.");
-        }
 
-        // Destroy the ball upon collision
-        Destroy(gameObject);
+            // Destroy the projectile upon collision
+            Destroy(gameObject);
+        }
     }
 }

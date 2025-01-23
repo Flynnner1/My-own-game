@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3722019986495918761}
   m_Layer: 0
   m_Name: pebble
-  m_TagString: Skeleton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,10 +106,10 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   skeletonLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   zombieLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!50 &488150154888213101
 Rigidbody2D:
   serializedVersion: 4
