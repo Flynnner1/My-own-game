@@ -102,8 +102,8 @@ MonoBehaviour:
   initialSpeed: 0.5
   acceleration: 4
   destroyTime: 4
-  damageAmount: 5
-  playerTransform: {fileID: 0}
+  damageAmount: 25
+  playerTransform: {fileID: 152095773214441737}
   EnemyHealth: {fileID: 0}
   skeletonLayer:
     serializedVersion: 2

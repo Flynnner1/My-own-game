@@ -83,11 +83,11 @@ public class BallMovement : MonoBehaviour
         //    // Destroy the projectile upon collision
         //    Destroy(gameObject);
         //}
-        
-    }
-    
 
- // This method is called when the collider enters a trigger collider attached to another object
+    }
+
+
+    // This method is called when the collider enters a trigger collider attached to another object
     void OnTriggerEnter2D(Collider2D collision)
     {
         // Get the EnemyHealth component from the collided object
