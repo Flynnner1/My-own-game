@@ -25,11 +25,11 @@ public class playershooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SwitchWeapon(1);
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SwitchWeapon(2);
         }
@@ -77,7 +77,7 @@ public class playershooting : MonoBehaviour
                 break;
 
             case 2:
-                if (Input.GetKeyDown(KeyCode.Mouse1))
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     ShootPebble();
                 }
