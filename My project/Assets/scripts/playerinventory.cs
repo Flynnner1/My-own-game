@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playerinventory : MonoBehaviour
 {
-    public int coins = 0;
+    public float coins = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +18,7 @@ public class playerinventory : MonoBehaviour
     }
     public void coinpickup()
     {
-        coins++;
+        coins += 0.5f;
         Debug.Log("+1 coin");
     }
 }

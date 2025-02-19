@@ -16,7 +16,8 @@ public class CoinPickup : MonoBehaviour
         // Update logic if needed
     }
 
-    void OnTriggerEnter(Collider other)
+    // Use OnTriggerEnter2D for 2D colliders
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {

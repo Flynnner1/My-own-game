@@ -13,6 +13,7 @@ public class EnemyProjectileMovement : MonoBehaviour
 
     private Transform target; // Updated to private
 
+    healthmanager healthmanager;
     void Start()
     {
         // Get the Rigidbody2D component
@@ -63,7 +64,7 @@ public class EnemyProjectileMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
         {
             // Apply damage to the player
-            playerHealth?.TakeDamage(damage);
+            healthmanager.takeDamage(damage);
             // Destroy the projectile
             Destroy(gameObject);
         }
@@ -79,7 +80,7 @@ public class EnemyProjectileMovement : MonoBehaviour
         if (playerHealth != null)
         {
             // Apply damage
-            playerHealth.TakeDamage(damage);
+            healthmanager.takeDamage(damage);
         }
 
         // Destroy the projectile upon collision

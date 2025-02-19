@@ -379,6 +379,7 @@
 "Assets/scripts/enemyprojectilemovement.cs"
 "Assets/scripts/enemyspawnlocation.cs"
 "Assets/scripts/game manage.cs"
+"Assets/scripts/healthmanager.cs"
 "Assets/scripts/movement.cs"
 "Assets/scripts/movingtowardsplayer.cs"
 "Assets/scripts/playerawearness.cs"

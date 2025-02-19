@@ -12,20 +12,20 @@ public class PlayerHealth : MonoBehaviour
     }
 
     // Method to take damage
-    public void TakeDamage(float amount)
-    {
-        // Reduce the current health by the damage amount
-        currentHealth -= amount;
+    //public void TakeDamage(float amount)
+    //{
+    //    // Reduce the current health by the damage amount
+    //    currentHealth -= amount;
 
-        // Check if the health is less than or equal to zero
-        if (currentHealth <= 0f)
-        {
-            Die();
-        }
-    }
+    //    // Check if the health is less than or equal to zero
+    //    if (currentHealth <= 0f)
+    //    {
+    //        Die();
+    //    }
+    //}
 
     // Method to handle player's death
-    void Die()
+    public void Die()
     {
         // Handle what happens when the player dies
         Debug.Log("Player has died!");

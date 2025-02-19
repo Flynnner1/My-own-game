@@ -9,6 +9,7 @@ public class ProjectileCollision : MonoBehaviour
     public float cooldownTimer = 3f; // Cooldown time between hits
     private float time = 0f;
 
+    healthmanager healthmanager;
     void Start()
     {
         // Try to find the PlayerHealth component in the scene
@@ -43,7 +44,7 @@ public class ProjectileCollision : MonoBehaviour
             {
                 if (playerHealth != null)
                 {
-                    playerHealth.TakeDamage(10f); // Apply damage to the player
+                    healthmanager.takeDamage(10f); // Apply damage to the player
                     Debug.Log("Hit Player");
                 }
                 else
