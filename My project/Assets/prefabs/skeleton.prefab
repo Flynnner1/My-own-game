@@ -251,6 +251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 25
+  itemToSpawn: {fileID: 4720519639868995373, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
+  spawnOffset: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2133215256004129780
 GameObject:
   m_ObjectHideFlags: 0

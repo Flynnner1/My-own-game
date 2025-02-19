@@ -2,66 +2,89 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playershooting : MonoBehaviour
+public class PlayerShooting : MonoBehaviour
 {
     private int currentWeapon = 1; // Start with the fireball
     public int pebbleCount = 5;
-    public float ShotInterval = 0.5f; // Interval between each projectile in the spread shot
-    public float angle = 45f;
+    public float shotInterval = 0.5f; // Interval between each projectile in the spread shot
+    public float switchCooldown = 1f; // Cooldown time for switching weapons
 
     public GameObject fireball;
     public GameObject pebble;
 
     public Transform spawnLocationProjectile;
 
-    MovementAndShooting MovementAndShooting;
-    BallMovement BallMovement;
+    public float cooldownTimerfireball = 3f; // Cooldown time between shots
+    public float cooldownTimerpebble = 5f; // Cooldown time between shots
+
+    public float time1 = 0f;
+    public float time2 = 0f;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        time1 = cooldownTimerfireball;
+        time2 = cooldownTimerpebble;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        time1 += Time.deltaTime;
+        time2 += Time.deltaTime;
+
+        // Check for input to switch weapons
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+           
             SwitchWeapon(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SwitchWeapon(2);
+        { 
+             SwitchWeapon(2);            
         }
 
+        // Check for input to shoot
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (currentWeapon == 1)
+            {               
+                if (time1 >= cooldownTimerfireball)
+                {
+                    ShootFireball();
+                    time1 = 0f;
+                }
+            }
+            else if (currentWeapon == 2)
+            {
+                if (time2 >= cooldownTimerpebble)
+                {
+                    StartCoroutine(ShootPebble());
+                    time2 = 0f;
+                }
+            }
+        }
     }
-    //void shootFireBall(GameObject fireball, Vector3 position, Quaternion rotation)
-    //{
-    //    Debug.Log("Spawning projectile at position: " + position); // Debug log to check the spawn position
-    //    GameObject spawnedProjectile = Instantiate(fireball, position, rotation);
-    //    BallMovement ballMovement = spawnedProjectile.GetComponent<BallMovement>();
-    //    if (ballMovement != null)
-    //    {
-    //        ballMovement.playerTransform = transform;
-    //    }
-    //}
 
-    void Shootfireball()
+    void ShootFireball()
     {
         // Instantiate a single projectile
         Instantiate(fireball, spawnLocationProjectile.position, transform.rotation);
     }
+
     public IEnumerator ShootPebble()
     {
         for (int i = 0; i < pebbleCount; i++)
         {
-            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward) * transform.rotation;
-            Instantiate(pebble, spawnLocationProjectile.position, rotation);
+            Instantiate(pebble, spawnLocationProjectile.position, transform.rotation);
 
-            // Wait for the spreadShotInterval before spawning the next projectile
-            yield return new WaitForSeconds(ShotInterval);
+            // Wait for the shotInterval before spawning the next projectile
+            yield return new WaitForSeconds(shotInterval);
         }
     }
+
     void SwitchWeapon(int weaponNumber)
     {
         currentWeapon = weaponNumber;
@@ -69,18 +92,10 @@ public class playershooting : MonoBehaviour
         switch (currentWeapon)
         {
             case 1:
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    Shootfireball();
-                }
                 Debug.Log("Switched to fireball");
                 break;
 
             case 2:
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    ShootPebble();
-                }
                 Debug.Log("Switched to pebble");
                 break;
 

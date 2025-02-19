@@ -101,9 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialSpeed: 6
   acceleration: 4
-  destroyTime: 100
+  destroyTime: 10
   damageAmount: 5
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 8396442415819621472}
   EnemyHealth: {fileID: 0}
   skeletonLayer:
     serializedVersion: 2

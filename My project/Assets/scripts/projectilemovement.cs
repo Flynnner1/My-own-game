@@ -88,19 +88,22 @@ public class BallMovement : MonoBehaviour
 
 
     // This method is called when the collider enters a trigger collider attached to another object
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        // Get the EnemyHealth component from the collided object
-        EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
-        if (enemyHealth != null)
+        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie"))
         {
-            // Apply damage
-            int damageAmount = 10; // Example damage amount
-            enemyHealth.TakeDamage(damageAmount);
-        }
+            // Get the EnemyHealth component from the collided object
+            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                // Apply damage
+                int damageAmount = 10; // Example damage amount
+                enemyHealth.TakeDamage(damageAmount);
+            }
 
-        // Destroy the projectile upon collision
-        Destroy(gameObject);
+            // Destroy the projectile upon collision
+            Destroy(gameObject);
+        }
     }
 
 }
