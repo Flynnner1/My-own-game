@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 418188057}
   - component: {fileID: 418188059}
   - component: {fileID: 418188058}
+  - component: {fileID: 418188064}
   - component: {fileID: 418188060}
   - component: {fileID: 418188061}
   - component: {fileID: 418188062}
@@ -396,13 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
-  spawnLocationProjectile: {fileID: 801565219}
-  fireball1: {fileID: 6904639606474421570, guid: ecc740b6d63424548b1d1a6c4a174467, type: 3}
-  fireball2: {fileID: 6953616894594093251, guid: bce1f83011c478e498e7b6510530396a, type: 3}
   rb: {fileID: 418188060}
-  time1: 1
-  coolDownTimer1: 3
-  spreadShotInterval: 0.5
 --- !u!114 &418188059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,6 +521,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.50000006
+--- !u!114 &418188064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418188055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367cc067a729a484cbfa7040d3b666ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pebbleCount: 5
+  ShotInterval: 0.5
+  angle: 45
+  fireball: {fileID: 6904639606474421570, guid: ecc740b6d63424548b1d1a6c4a174467, type: 3}
+  pebble: {fileID: 6953616894594093251, guid: bce1f83011c478e498e7b6510530396a, type: 3}
+  spawnLocationProjectile: {fileID: 801565219}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
