@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileCollision : MonoBehaviour
+public class EnemyCollision : MonoBehaviour
 {
-    public int layerMask; // Set this to the player's layer in the inspector
     public PlayerHealth playerHealth; // Reference to the PlayerHealth component
-    public float cooldownTimer = 3f; // Cooldown time between hits
+    public float cooldownTimer = 0.5f; // Cooldown time between hits
     private float time = 0f;
+    public float damage = 10f;
 
-    healthmanager healthmanager;
     void Start()
     {
         // Try to find the PlayerHealth component in the scene
@@ -38,13 +37,14 @@ public class ProjectileCollision : MonoBehaviour
     {
         if (time >= cooldownTimer)
         {
-            Debug.Log("Hit");
+            Debug.Log("The zombie collides with the player");
 
-            if (col.gameObject.layer == layerMask)
+            if (col.gameObject.CompareTag("Player"))
             {
                 if (playerHealth != null)
                 {
-                    healthmanager.takeDamage(10f); // Apply damage to the player
+                    Debug.Log("ouch!");
+                    Healthmanager.Instance.TakeDamage(damage); // Apply damage to the player
                     Debug.Log("Hit Player");
                 }
                 else

@@ -3,38 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class healthmanager : MonoBehaviour
+public class Healthmanager : MonoBehaviour
 {
+    public static Healthmanager Instance;
     public Image healthBar;
     public float healthAmount = 100f;
 
-    PlayerHealth PlayerHealth;
-    // Start is called before the first frame update
-    void Start()
+    public PlayerHealth playerHealth;
+
+    private void Awake()
     {
-        
+        // Implement singleton pattern
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        // Find the player and its PlayerHealth component
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            playerHealth = playerObject.GetComponent<PlayerHealth>();
+        }
+        else
+        {
+            Debug.LogError("Player not found in scene!");
+        }
     }
-    public void takeDamage(float damage)
+
+    public void TakeDamage(float damage)
     {
         healthAmount -= damage;
         healthBar.fillAmount = healthAmount / 100f;
         if (healthAmount <= 0f)
         {
-            PlayerHealth.Die();
+            Debug.Log("Player died via Healthmanager.");
+            if (playerHealth != null)
+            {
+                playerHealth.Die();
+            }
         }
     }
-    public void heal(float healingAmount)
+
+    public void Heal(float healingAmount)
     {
-        healthAmount += healthAmount;
+        healthAmount += healingAmount;
         healthAmount = Mathf.Clamp(healthAmount, 0, 100);
         healthBar.fillAmount = healthAmount / 100f;
-
     }
 }

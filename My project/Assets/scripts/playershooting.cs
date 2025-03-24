@@ -11,15 +11,25 @@ public class PlayerShooting : MonoBehaviour
 
     public GameObject fireball;
     public GameObject pebble;
+    public GameObject beam;
+    public GameObject slash;
+
 
     public Transform spawnLocationProjectile;
 
-    public float cooldownTimerfireball = 3f; // Cooldown time between shots
+    public float cooldownTimerfireball = 4f; // Cooldown time between shots
     public float cooldownTimerpebble = 5f; // Cooldown time between shots
+    public float cooldownTimerBeam = 15f; // Cooldown time between shots
+    public float cooldownTimerslash = 2.5f; // Cooldown time between shots
+
 
     public float time1 = 0f;
     public float time2 = 0f;
+    public float time3 = 0f;
+    public float time4 = 0f;
 
+    public gameManager gameManager;
+    public NPCController NPCcontroller;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +44,9 @@ public class PlayerShooting : MonoBehaviour
     {
         time1 += Time.deltaTime;
         time2 += Time.deltaTime;
+        time3 += Time.deltaTime;
+        time4 += Time.deltaTime;
+
 
         // Check for input to switch weapons
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -45,24 +58,51 @@ public class PlayerShooting : MonoBehaviour
         { 
              SwitchWeapon(2);            
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SwitchWeapon(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SwitchWeapon(4);
+        }
 
         // Check for input to shoot
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (gameManager.inventorystate == false )//|| NPCcontroller.npcUIstate == false
         {
-            if (currentWeapon == 1)
-            {               
-                if (time1 >= cooldownTimerfireball)
-                {
-                    ShootFireball();
-                    time1 = 0f;
-                }
-            }
-            else if (currentWeapon == 2)
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                if (time2 >= cooldownTimerpebble)
+                if (currentWeapon == 1)
                 {
-                    StartCoroutine(ShootPebble());
-                    time2 = 0f;
+                    if (time1 >= cooldownTimerfireball)
+                    {
+                        ShootFireball();
+                        time1 = 0f;
+                    }
+                }
+                else if (currentWeapon == 2)
+                {
+                    if (time2 >= cooldownTimerpebble)
+                    {
+                        StartCoroutine(ShootPebble());
+                        time2 = 0f;
+                    }
+                }
+                else if (currentWeapon == 3)
+                {
+                    if (time3 >= cooldownTimerBeam)
+                    {
+                        ShootBeam();
+                        time3 = 0f;
+                    }
+                }
+                else if (currentWeapon == 4)
+                {
+                    if (time4 >= cooldownTimerslash)
+                    {
+                        ShootSlash();
+                        time4 = 0f;
+                    }
                 }
             }
         }
@@ -85,6 +125,15 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    void ShootBeam()
+    {
+        Instantiate(beam, spawnLocationProjectile.position, transform.rotation);
+    }
+    void ShootSlash()
+    {
+        Instantiate(slash, spawnLocationProjectile.position, transform.rotation);
+
+    }
     void SwitchWeapon(int weaponNumber)
     {
         currentWeapon = weaponNumber;
@@ -94,9 +143,14 @@ public class PlayerShooting : MonoBehaviour
             case 1:
                 Debug.Log("Switched to fireball");
                 break;
-
             case 2:
                 Debug.Log("Switched to pebble");
+                break;
+            case 3:
+                Debug.Log("Switched to Beam");
+                break;
+            case 4:
+                Debug.Log("Switched to slash");
                 break;
 
             default:

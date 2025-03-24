@@ -4,98 +4,51 @@ using UnityEngine;
 
 public class EnemyProjectileMovement : MonoBehaviour
 {
-    public float speed = 7f; // Speed of the projectile
-    public float lifetime = 1.5f; // Time before the projectile is destroyed
-    public float damage = 3f; // Damage dealt by the projectile
+    public float initialSpeed = 7f;
+    public float acceleration = 2f;
+    public float destroyTime = 5f;
+
+    public float damage = 15f; // Damage dealt by the projectile
 
     private Rigidbody2D rb;
-    public PlayerHealth playerHealth; // Reference to the PlayerHealth component
 
-    private Transform target; // Updated to private
-
-    healthmanager healthmanager;
     void Start()
     {
-        // Get the Rigidbody2D component
         rb = GetComponent<Rigidbody2D>();
-
-        if (rb == null)
+        if (rb != null)
         {
-            Debug.LogError("Rigidbody2D component is missing!");
-            return;
+            rb.velocity = transform.right * initialSpeed;
+        }
+        else
+        {
+            Debug.LogError("Rigidbody2D component is missing on this projectile!");
         }
 
-        // Find the player object and set it as the target
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
-        {
-            target = playerObject.transform;
-            playerHealth = playerObject.GetComponent<PlayerHealth>();
-        }
-
-        if (target == null || playerHealth == null)
-        {
-            Debug.LogError("Target or PlayerHealth component is not assigned and could not be found!");
-            return;
-        }
-
-        // Set the velocity of the projectile
-        rb.velocity = transform.right * speed;
-
-        // Rotate the projectile to face the direction it is moving
-        RotateProjectile();
-
-        // Destroy the projectile after its lifetime
-        Destroy(gameObject, lifetime);
+        // Destroy the projectile after the specified lifetime
+        Destroy(gameObject, destroyTime);
     }
 
     void Update()
     {
-        if (target == null)
+        if (rb != null)
         {
-            Debug.LogError("Target is not assigned!");
-            return;
+            // Accelerate the projectile over time
+            rb.velocity += (Vector2)(transform.right * acceleration * Time.deltaTime);
         }
-
-        // Move the projectile towards the target
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-
-        // If the projectile is close enough to the target, hit it
-        if (Vector3.Distance(transform.position, target.position) < 0.1f)
-        {
-            // Apply damage to the player
-            healthmanager.takeDamage(damage);
-            // Destroy the projectile
-            Destroy(gameObject);
-        }
-
-        // Continuously rotate the projectile to face the direction it is moving
-        RotateProjectile();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the collided object has a PlayerHealth component
-        PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
+        // If the projectile hits the player, deal damage
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // Apply damage
-            healthmanager.takeDamage(damage);
+            if (Healthmanager.Instance != null)
+            {
+                Healthmanager.Instance.TakeDamage(damage);
+            }
         }
 
-        // Destroy the projectile upon collision
+        // Destroy the projectile on any collision
         Destroy(gameObject);
-    }
-
-    void RotateProjectile()
-    {
-        // Calculate the direction of the velocity
-        Vector2 direction = rb.velocity;
-
-        // Calculate the angle between the x-axis and the velocity vector
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Set the rotation of the projectile to face the direction of the velocity
-        rb.rotation = angle;
     }
 }

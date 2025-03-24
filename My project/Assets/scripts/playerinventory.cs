@@ -1,24 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class playerinventory : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
     public float coins = 0f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public TMP_Text coinCountText; // Reference to the UI Text component
+   
 
-    // Update is called once per frame
-    void Update()
+    public void CoinPickup()
     {
-        
-    }
-    public void coinpickup()
-    {
-        coins += 0.5f;
+        coins += 1f;
         Debug.Log("+1 coin");
+        updateCoins();
+    }
+    public void AddCoinsQuest(float AmountCoins)
+    {
+        Debug.LogWarning("added the " + AmountCoins);
+        updateCoins();
+    }
+    public void updateCoins()
+    {
+        coinCountText.text = "" + coins;
+
     }
 }

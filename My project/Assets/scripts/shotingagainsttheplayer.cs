@@ -10,8 +10,6 @@ public class ShootingAgainstThePlayer : MonoBehaviour
     public float shootingInterval = 3f; // Interval between shots
     public Transform projectileContainer; // Reference to the empty container for projectiles
 
-    private bool isPlayerInRange = false; // To track if the player is in range
-
     void Start()
     {
         // Find the player object in the scene using the tag "Player"
@@ -34,7 +32,8 @@ public class ShootingAgainstThePlayer : MonoBehaviour
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
             // Check if the player is within range
-            isPlayerInRange = (distanceToPlayer <= range);
+            // This value is used to determine whether to shoot rather than for projectile homing
+            // (Projectile movement is handled in EnemyProjectileMovement)
         }
     }
 
@@ -42,12 +41,15 @@ public class ShootingAgainstThePlayer : MonoBehaviour
     {
         while (true)
         {
-            if (isPlayerInRange)
+            // Check the distance again before shooting
+            if (player != null && Vector3.Distance(transform.position, player.position) <= range)
             {
-                // Instantiate the projectile prefab at the enemy's position
-                GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+                // Instantiate the projectile prefab at the projectile container's position and rotation
+                GameObject projectile = Instantiate(projectilePrefab, projectileContainer.position, projectileContainer.rotation);
+                // (Do NOT try to assign a PlayerHealth component here since the projectile
+                // should have an EnemyProjectileMovement component which handles finding the player.)
 
-                // Set the projectile's parent to the projectile container
+                // Set the projectile's parent to the projectile container if desired
                 if (projectileContainer != null)
                 {
                     projectile.transform.parent = projectileContainer;

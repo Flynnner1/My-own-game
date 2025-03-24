@@ -44,60 +44,15 @@ public class BallMovement : MonoBehaviour
             rb.velocity += movementDirection * acceleration * Time.deltaTime;
         }
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Check if the collided object is on the Skeleton or Zombie layer
-        //if ((skeletonLayer == (skeletonLayer | (1 << collision.gameObject.layer))) ||
-        //    (zombieLayer == (zombieLayer | (1 << collision.gameObject.layer))))
-        //{
-        //    Debug.Log("Projectile hit a Skeleton or Zombie. Dealing damage.");
-
-        //    // Check if the collided object has an EnemyHealth component
-        //    EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
-        //    if (enemyHealth != null)
-        //    {
-        //        // Apply damage
-        //        enemyHealth.TakeDamage(damageAmount);
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.Log("Projectile hit something without the Skeleton or Zombie layer.");
-        //}
-
-        //// Destroy the ball upon collision
-        //Destroy(gameObject);
-        //void OnTriggerEnter2d(Collision collision)
-        //{
-        //    GameObject EnemyObject = GameObject.FindGameObjectWithTag("Skeleton");
-        //    GameObject Enemy1Object = GameObject.FindGameObjectWithTag("Zombie");
-        //    EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
-        //    if (enemyHealth != null)
-        //    {
-        //        // Apply damage
-        //        int damageAmount = 10; // Example damage amount
-        //        enemyHealth.TakeDamage(damageAmount);
-        //    }
-
-        //    // Destroy the projectile upon collision
-        //    Destroy(gameObject);
-        //}
-
-    }
-
-
-    // This method is called when the collider enters a trigger collider attached to another object
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie"))
+        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime"))
         {
             // Get the EnemyHealth component from the collided object
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                // Apply damage
-                int damageAmount = 10; // Example damage amount
+                
                 enemyHealth.TakeDamage(damageAmount);
             }
 

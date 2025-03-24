@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -11,25 +13,10 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // Method to take damage
-    //public void TakeDamage(float amount)
-    //{
-    //    // Reduce the current health by the damage amount
-    //    currentHealth -= amount;
-
-    //    // Check if the health is less than or equal to zero
-    //    if (currentHealth <= 0f)
-    //    {
-    //        Die();
-    //    }
-    //}
-
-    // Method to handle player's death
     public void Die()
     {
         // Handle what happens when the player dies
         Debug.Log("Player has died!");
-        // For example, you might disable the player object or trigger a respawn
         gameObject.SetActive(false);
     }
 }
