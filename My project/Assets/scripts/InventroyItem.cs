@@ -58,4 +58,10 @@ public class InventroyItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
     }
+    public void addcoins(int coins)
+    {
+        count += coins;
+        Debug.Log("the count is " + count + "now");
+        RefreshCount();
+    }
 }

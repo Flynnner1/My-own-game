@@ -9,7 +9,7 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject inventoryItemPrefab;
 
-    public int maxCount = 4;
+    public int maxCount = 1000;
     public int selectedSlot = -1;
 
     private void Start()
@@ -74,7 +74,7 @@ public class InventoryManager : MonoBehaviour
         {
             InventorySlot slot = inventorySlots[i];
             InventroyItem itemInSlot = slot.GetComponentInChildren<InventroyItem>();
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxCount)//&& itemInSlot.item.stackable == true
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxCount && itemInSlot.item.stackble == true)//&& itemInSlot.item.stackable == true
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();

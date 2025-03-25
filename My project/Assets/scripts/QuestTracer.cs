@@ -29,6 +29,7 @@ public class QuestTracer : MonoBehaviour
     private float time1;
 
     public Inventory inventory;
+    public InventroyItem inventroyItem;
 
     // This will decide how many kills the player needs
     public int randomNum;
@@ -43,7 +44,11 @@ public class QuestTracer : MonoBehaviour
         {
             inventory = GetComponent<Inventory>();
         }
-        
+        if (inventroyItem == null)
+        {
+            inventroyItem = GetComponent<InventroyItem>();
+        }
+
         // Generate an initial quest
         currentQuest();
     }
@@ -170,7 +175,7 @@ public class QuestTracer : MonoBehaviour
             {
                 int coins = Random.Range(5, 20);
                 coins += kills;
-                inventory.AddCoinsQuest(coins);
+                
 
                 // Reset quest data
                 currentkils = 0;
@@ -179,10 +184,18 @@ public class QuestTracer : MonoBehaviour
                 succes = false;
                 randomNum = 0;
 
+                Debug.Log("you get" +  coins + "amount of coins");
+                AddCoins(coins);
                 // Generate a new quest
                 currentQuest();
             }
         }
 
+    }
+    public void AddCoins(int coin)
+    {
+        Debug.Log("added " + coin);
+        inventroyItem.addcoins(coin);
+        
     }
 }

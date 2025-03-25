@@ -5,24 +5,28 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public float coins = 0f;
-    public TMP_Text coinCountText; // Reference to the UI Text component
-   
+    public int coins = 1;
 
+    public InventroyItem inventroyItem;
+
+    public void Start()
+    {
+        if (inventroyItem == null)
+        {
+            inventroyItem = GetComponent<InventroyItem>();
+        }
+    }
     public void CoinPickup()
     {
-        coins += 1f;
+        coins += 1;
         Debug.Log("+1 coin");
-        updateCoins();
+        inventroyItem.addcoins(coins);
+        
     }
     public void AddCoinsQuest(float AmountCoins)
     {
         Debug.LogWarning("added the " + AmountCoins);
-        updateCoins();
+        
     }
-    public void updateCoins()
-    {
-        coinCountText.text = "" + coins;
-
-    }
+    
 }
