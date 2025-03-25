@@ -12,6 +12,19 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     private void Awake()
     {
+        if (image == null)
+        {
+            image = GetComponent<Image>();
+        }
+        // Ensure alpha is at least 1 for visibility.
+        if (selectedColor.a < 1f)
+        {
+            selectedColor = new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1f);
+        }
+        if (notSelectedColor.a < 1f)
+        {
+            notSelectedColor = new Color(notSelectedColor.r, notSelectedColor.g, notSelectedColor.b, 1f);
+        }
         Deselect();
     }
     public void Select()
@@ -21,7 +34,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public void Deselect()
     {
         image.color = notSelectedColor;
-
     }
     public void OnDrop(PointerEventData eventData)
     {

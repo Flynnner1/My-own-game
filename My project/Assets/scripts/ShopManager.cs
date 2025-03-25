@@ -22,14 +22,28 @@ public class ShopManager : MonoBehaviour
     }
     public void GetSelectedItem()
     {
-        Item recievedItem = inventoryManager.GetSelectedItem();
+        Item recievedItem = inventoryManager.GetSelectedItem(false);
         if (recievedItem != null)
         {
-            Debug.Log("recieved item");
+            Debug.Log("recieved item " + recievedItem);
         }
         else
         {
             Debug.Log("didnt recieve a item");
+
+        }
+
+    }
+    public void UseGetSelectedItem()
+    {
+        Item recievedItem = inventoryManager.GetSelectedItem(true);
+        if (recievedItem != null)
+        {
+            Debug.Log("used item" + recievedItem);
+        }
+        else
+        {
+            Debug.Log("didnt use a item");
 
         }
 
