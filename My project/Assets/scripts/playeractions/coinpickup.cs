@@ -4,37 +4,27 @@ using UnityEngine;
 
 public class CoinPickup : MonoBehaviour
 {
-    private Inventory inventory;
-    private bool pickedUp = false;
+    public bool pickedUp = false;
+    public int coins = 0;
 
-    void Start()
-    {
-        Debug.Log("Coin created");
-        // Initialization if needed
-    }
-
-    void Update()
-    {
-        // Update logic if needed
-    }
-
-    // Use OnTriggerEnter2D for 2D colliders
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && !pickedUp)
         {
-            inventory = other.GetComponent<Inventory>();
-            if (inventory != null)
+            PlayerCoins playerCoins = other.GetComponent<PlayerCoins>();
+            if (playerCoins != null)
             {
+                // Increase the coin count and mark as picked up.
+                coins += 1;
                 pickedUp = true;
-                inventory.CoinPickup();
+                playerCoins.addcoins(1);
+
                 Debug.Log("You've picked up a coin");
                 Destroy(gameObject);
-
             }
             else
             {
-                Debug.LogError("Inventory component not found on Player!");
+                Debug.LogError("PlayerCoins component not found on Player!");
             }
         }
         else

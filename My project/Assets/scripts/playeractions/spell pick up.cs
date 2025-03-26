@@ -31,7 +31,7 @@ public class spellpickup : MonoBehaviour
             if (inventoryManager != null)
             {
                 pickedUp = true;
-                if (useRandomSpell)
+                if (useRandomSpell == true)
                 {
                     int randomID = Random.Range(0, itemsToPickup.Length);
                     PickUpspell(randomID);

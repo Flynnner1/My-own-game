@@ -40,7 +40,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         if (transform.childCount == 0)
         {
             GameObject dropped = eventData.pointerDrag;
-            InventroyItem draggableItem = dropped.GetComponent<InventroyItem>();
+            InventoryItem draggableItem = dropped.GetComponent<InventoryItem>();
             draggableItem.parentAfterDrag = transform;
         }
     }

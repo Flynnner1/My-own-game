@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public InventorySlot[] inventorySlots;
-
     public GameObject inventoryItemPrefab;
 
     public int maxCount = 1000;
@@ -19,42 +17,15 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeSelectedSlot(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeSelectedSlot(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeSelectedSlot(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ChangeSelectedSlot(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            ChangeSelectedSlot(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            ChangeSelectedSlot(5);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            ChangeSelectedSlot(6);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            ChangeSelectedSlot(7);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            ChangeSelectedSlot(8);
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeSelectedSlot(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeSelectedSlot(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeSelectedSlot(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeSelectedSlot(3);
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) ChangeSelectedSlot(4);
+        else if (Input.GetKeyDown(KeyCode.Alpha6)) ChangeSelectedSlot(5);
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) ChangeSelectedSlot(6);
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) ChangeSelectedSlot(7);
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) ChangeSelectedSlot(8);
     }
 
     void ChangeSelectedSlot(int newValue)
@@ -63,18 +34,20 @@ public class InventoryManager : MonoBehaviour
         {
             inventorySlots[selectedSlot].Deselect();
         }
-
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
     }
 
     public bool AddItem(Item item)
     {
+        // First look for an existing stackable slot
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
-            InventroyItem itemInSlot = slot.GetComponentInChildren<InventroyItem>();
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxCount && itemInSlot.item.stackble == true)//&& itemInSlot.item.stackable == true
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null && itemInSlot.item == item
+                && itemInSlot.count < maxCount
+                && itemInSlot.item.stackable) // use "stackable" instead of "stackble" if that’s the correct property
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
@@ -82,10 +55,11 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        // Otherwise spawn a new item
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
-            InventroyItem itemInSlot = slot.GetComponentInChildren<InventroyItem>();
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot == null)
             {
                 SpawnNewItem(item, slot);
@@ -98,18 +72,20 @@ public class InventoryManager : MonoBehaviour
     void SpawnNewItem(Item item, InventorySlot slot)
     {
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
-        InventroyItem inventoryItem = newItemGo.GetComponent<InventroyItem>();
+        InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
     }
 
     public Item GetSelectedItem(bool use)
     {
+        if (selectedSlot < 0 || selectedSlot >= inventorySlots.Length) return null;
+
         InventorySlot slot = inventorySlots[selectedSlot];
-        InventroyItem itemInSlot = slot.GetComponentInChildren<InventroyItem>();
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
         if (itemInSlot != null)
         {
             Item item = itemInSlot.item;
-            if ( use == true)
+            if (use)
             {
                 itemInSlot.count--;
                 if (itemInSlot.count <= 0)
@@ -120,7 +96,6 @@ public class InventoryManager : MonoBehaviour
                 {
                     itemInSlot.RefreshCount();
                 }
-
             }
             return item;
         }
