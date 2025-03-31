@@ -4,158 +4,91 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    private int currentWeapon = 1; // Start with the fireball
-    public int pebbleCount = 5;
-    public float shotInterval = 0.5f; // Interval between each projectile in the spread shot
-    public float switchCooldown = 1f; // Cooldown time for switching weapons
+    public InventoryManager inventoryManager;
 
-    public GameObject fireball;
-    public GameObject pebble;
-    public GameObject beam;
-    public GameObject slash;
-
-
+    public GameObject fireballPrefab;
+    public GameObject pebblePrefab;
+    public GameObject beamPrefab;
+    public GameObject slashPrefab;
     public Transform spawnLocationProjectile;
 
-    public float cooldownTimerfireball = 4f; // Cooldown time between shots
-    public float cooldownTimerpebble = 5f; // Cooldown time between shots
-    public float cooldownTimerBeam = 15f; // Cooldown time between shots
-    public float cooldownTimerslash = 2.5f; // Cooldown time between shots
+    public float fireballCooldown = 4f;
+    public float pebbleCooldown = 5f;
+    public float beamCooldown = 15f;
+    public float slashCooldown = 2.5f;
 
+    private float fireballTimer;
+    private float pebbleTimer;
+    private float beamTimer;
+    private float slashTimer;
 
-    public float time1 = 0f;
-    public float time2 = 0f;
-    public float time3 = 0f;
-    public float time4 = 0f;
+    public int pebbleCount = 5;
+    public float shotInterval = 0.5f;
 
-    public gameManager gameManager;
-    public NPCController NPCcontroller;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        time1 = cooldownTimerfireball;
-        time2 = cooldownTimerpebble;
-
+        fireballTimer = fireballCooldown;
+        pebbleTimer = pebbleCooldown;
+        beamTimer = beamCooldown;
+        slashTimer = slashCooldown;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        time1 += Time.deltaTime;
-        time2 += Time.deltaTime;
-        time3 += Time.deltaTime;
-        time4 += Time.deltaTime;
+        fireballTimer += Time.deltaTime;
+        pebbleTimer += Time.deltaTime;
+        beamTimer += Time.deltaTime;
+        slashTimer += Time.deltaTime;
 
-
-        // Check for input to switch weapons
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // On left-click, check currently selected item to decide which projectile to fire:
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-           
-            SwitchWeapon(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        { 
-             SwitchWeapon(2);            
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SwitchWeapon(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SwitchWeapon(4);
-        }
-
-        // Check for input to shoot
-        if (gameManager.inventorystate == false )//|| NPCcontroller.npcUIstate == false
-        {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            Item selectedItem = inventoryManager.GetSelectedItem(false);
+            if (selectedItem != null)
             {
-                if (currentWeapon == 1)
+                string itemName = selectedItem.name.ToLower();
+                if (itemName.Contains("fireball"))
                 {
-                    if (time1 >= cooldownTimerfireball)
+                    if (fireballTimer >= fireballCooldown)
                     {
-                        ShootFireball();
-                        time1 = 0f;
+                        Instantiate(fireballPrefab, spawnLocationProjectile.position, transform.rotation);
+                        fireballTimer = 0f;
                     }
                 }
-                else if (currentWeapon == 2)
+                else if (itemName.Contains("pebble"))
                 {
-                    if (time2 >= cooldownTimerpebble)
+                    if (pebbleTimer >= pebbleCooldown)
                     {
-                        StartCoroutine(ShootPebble());
-                        time2 = 0f;
+                        StartCoroutine(ShootPebbleSpread());
+                        pebbleTimer = 0f;
                     }
                 }
-                else if (currentWeapon == 3)
+                else if (itemName.Contains("beam"))
                 {
-                    if (time3 >= cooldownTimerBeam)
+                    if (beamTimer >= beamCooldown)
                     {
-                        ShootBeam();
-                        time3 = 0f;
+                        Instantiate(beamPrefab, spawnLocationProjectile.position, transform.rotation);
+                        beamTimer = 0f;
                     }
                 }
-                else if (currentWeapon == 4)
+                else if (itemName.Contains("slash"))
                 {
-                    if (time4 >= cooldownTimerslash)
+                    if (slashTimer >= slashCooldown)
                     {
-                        ShootSlash();
-                        time4 = 0f;
+                        Instantiate(slashPrefab, spawnLocationProjectile.position, transform.rotation);
+                        slashTimer = 0f;
                     }
                 }
             }
         }
     }
 
-    void ShootFireball()
-    {
-        // Instantiate a single projectile
-        Instantiate(fireball, spawnLocationProjectile.position, transform.rotation);
-    }
-
-    public IEnumerator ShootPebble()
+    private IEnumerator ShootPebbleSpread()
     {
         for (int i = 0; i < pebbleCount; i++)
         {
-            Instantiate(pebble, spawnLocationProjectile.position, transform.rotation);
-
-            // Wait for the shotInterval before spawning the next projectile
+            Instantiate(pebblePrefab, spawnLocationProjectile.position, transform.rotation);
             yield return new WaitForSeconds(shotInterval);
-        }
-    }
-
-    void ShootBeam()
-    {
-        Instantiate(beam, spawnLocationProjectile.position, transform.rotation);
-    }
-    void ShootSlash()
-    {
-        Instantiate(slash, spawnLocationProjectile.position, transform.rotation);
-
-    }
-    void SwitchWeapon(int weaponNumber)
-    {
-        currentWeapon = weaponNumber;
-
-        switch (currentWeapon)
-        {
-            case 1:
-                Debug.Log("Switched to fireball");
-                break;
-            case 2:
-                Debug.Log("Switched to pebble");
-                break;
-            case 3:
-                Debug.Log("Switched to Beam");
-                break;
-            case 4:
-                Debug.Log("Switched to slash");
-                break;
-
-            default:
-                Debug.Log("Invalid weapon selection");
-                break;
         }
     }
 }

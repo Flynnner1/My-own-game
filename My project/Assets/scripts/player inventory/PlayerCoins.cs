@@ -8,7 +8,7 @@ public class PlayerCoins : MonoBehaviour
     public CoinPickup coinPickup;
     public TMP_Text coinText;
 
-    private int coins = 0;
+    public int coins = 0;
 
     void Start()
     {

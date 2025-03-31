@@ -30,14 +30,14 @@ public class QuestTracer : MonoBehaviour
     private float time1;
 
     // Remove GetComponent usage to avoid null references if on different objects
-    public Inventory inventory;
+    //public Inventory inventory;
     public InventoryItem inventroyItem;
     public PlayerCoins playerCoins;
 
     void Start()
     {
         // Assign references by finding them in the scene, or wire them in the Inspector
-        if (!inventory) inventory = FindObjectOfType<Inventory>();
+        //if (!inventory) inventory = FindObjectOfType<Inventory>();
         if (!inventroyItem) inventroyItem = FindObjectOfType<InventoryItem>();
         if (!playerCoins) playerCoins = FindObjectOfType<PlayerCoins>();
 
@@ -120,11 +120,11 @@ public class QuestTracer : MonoBehaviour
 
     public void collectQuest()
     {
-        if (!inventory)
-        {
-            Debug.LogWarning("There is no inventory");
-            return;
-        }
+        //if (!inventory)
+        //{
+        //    Debug.LogWarning("There is no inventory");
+        //    return;
+        //}
 
         if (quest1 && succes)
         {

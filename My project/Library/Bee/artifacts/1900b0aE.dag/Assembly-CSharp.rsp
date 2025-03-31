@@ -391,7 +391,6 @@
 "Assets/scripts/player inventory/InventroyItem.cs"
 "Assets/scripts/player inventory/Item.cs"
 "Assets/scripts/player inventory/PlayerCoins.cs"
-"Assets/scripts/player inventory/playerinventory.cs"
 "Assets/scripts/player inventory/ShopManager.cs"
 "Assets/scripts/playeractions/camerafollow.cs"
 "Assets/scripts/playeractions/coinpickup.cs"

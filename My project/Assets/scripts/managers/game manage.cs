@@ -6,7 +6,7 @@ public class gameManager : MonoBehaviour
 {
     public GameObject gameOverScreen; // The UI element for game over
     public GameObject inventoryScreen; // The UI element for inventory
-    public Inventory inventory;
+    //public Inventory inventory;
 
     public Sprite coinIcon; // Reference to the coin icon sprite
     public Sprite wandIcon; // Reference to the wand icon sprite

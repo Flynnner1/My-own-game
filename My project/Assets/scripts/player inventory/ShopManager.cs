@@ -6,20 +6,46 @@ using UnityEngine;
 public class ShopManager : MonoBehaviour
 {
     public InventoryManager inventoryManager;
+    public PlayerCoins playerCoins;
     public Item[] itemsToPickup;
+    public int[] itemCosts;
+
+    void Start()
+    {
+        if (!playerCoins)
+        {
+            playerCoins = FindObjectOfType<PlayerCoins>();
+        }
+    }
 
     public void PickUpItem(int id)
     {
-        bool result = inventoryManager.AddItem(itemsToPickup[id]);
-        if (result == true)
+        if (id < 0 || id >= itemsToPickup.Length || id >= itemCosts.Length)
         {
-            Debug.Log("added item");
+            Debug.Log("Invalid item ID");
+            return;
         }
-        else if (result == false)
+
+        if (playerCoins.coins >= itemCosts[id])
         {
-            Debug.Log("item not added");
+            bool result = inventoryManager.AddItem(itemsToPickup[id]);
+            if (result == true)
+            {
+                Debug.Log("added item");
+                playerCoins.coins -= itemCosts[id];
+                playerCoins.updatecointext();
+            }
+            else
+            {
+                Debug.Log("item not added");
+            }
+        }
+        else
+        {
+            Debug.Log("not enough coins");
         }
     }
+
     public void GetSelectedItem()
     {
         Item recievedItem = inventoryManager.GetSelectedItem(false);
@@ -32,8 +58,9 @@ public class ShopManager : MonoBehaviour
             Debug.Log("didnt recieve a item");
 
         }
-
     }
+
+
     public void UseGetSelectedItem()
     {
         Item recievedItem = inventoryManager.GetSelectedItem(true);
@@ -48,4 +75,5 @@ public class ShopManager : MonoBehaviour
         }
 
     }
+
 }
