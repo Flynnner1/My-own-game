@@ -6,7 +6,6 @@ public class NPCController : MonoBehaviour
     public GameObject questUI;
     [Tooltip("Reference to the smaller Quest UI panel.")]
     public GameObject smallquestUI;
-
     [Tooltip("Reference to the inventory UI panel.")]
     public GameObject inventoryUI;
 
@@ -20,34 +19,35 @@ public class NPCController : MonoBehaviour
 
     void Update()
     {
-        // If the player is in range and right mouse button is clicked, show the main quest UI
+        // Check whether the player is near the NPC and if right mouse is clicked
         if (isPlayerNearby && Input.GetMouseButtonDown(1))
         {
-            questUI.SetActive(true);
-            // Also show the inventory UI when the main quest screen is active
-            inventoryUI.SetActive(true);
-
-            if (questUI.activeSelf)
+            // Make sure questUI is assigned and not null
+            if (questUI != null)
             {
-                npcUIstate = true;
+                questUI.SetActive(true);
+            }
+            // Also show the inventory UI
+            if (inventoryUI != null)
+            {
+                inventoryUI.SetActive(true);
+            }
+
+            npcUIstate = (questUI != null && questUI.activeSelf);
+        }
+
+        // If the quest is active, show/hide the smallquestUI
+        if (npcQuest && questTracer != null && questTracer.quest1)
+        {
+            if (questUI != null && !questUI.activeSelf)
+            {
+                if (smallquestUI != null)
+                    smallquestUI.SetActive(true);
             }
             else
             {
-                npcUIstate = false;
-            }
-        }
-
-        // Show the smaller quest UI if the quest is active but the main quest UI is not
-        if (npcQuest == true)
-        {
-            if (!questUI.activeSelf && questTracer.quest1)
-            {
-                smallquestUI.SetActive(true);
-            }
-            else if (questUI.activeSelf)
-            {
-                // If the main quest UI is open, hide the smaller quest UI
-                smallquestUI.SetActive(false);
+                if (smallquestUI != null)
+                    smallquestUI.SetActive(false);
             }
         }
     }
@@ -65,25 +65,29 @@ public class NPCController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
-            questUI.SetActive(false);
-            smallquestUI.SetActive(false);
-            // Hide the inventory UI when leaving the NPC's range
-            inventoryUI.SetActive(false);
+            if (questUI != null)
+                questUI.SetActive(false);
+            if (smallquestUI != null)
+                smallquestUI.SetActive(false);
+            if (inventoryUI != null)
+                inventoryUI.SetActive(false);
         }
     }
 
-    /// <summary>
-    /// Call this method from a UI Button in questUI to accept the quest.
-    /// </summary>
+   
     public void AcceptQuestButton()
     {
         // Call the acceptQuest method in QuestTracer
-        questTracer.acceptQuest();
+        if (questTracer != null)
+            questTracer.acceptQuest();
 
-        // Hide the main quest UI and show the smaller UI
-        questUI.SetActive(false);
-        smallquestUI.SetActive(true);
-        // Optionally hide the inventory UI here if desired
-        inventoryUI.SetActive(false);
+        if (questUI != null)
+            questUI.SetActive(false);
+
+        if (smallquestUI != null)
+            smallquestUI.SetActive(true);
+
+        if (inventoryUI != null)
+            inventoryUI.SetActive(false);
     }
 }

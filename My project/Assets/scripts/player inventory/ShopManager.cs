@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     public PlayerCoins playerCoins;
     public Item[] itemsToPickup;
     public int[] itemCosts;
+    
 
     void Start()
     {
@@ -51,6 +52,7 @@ public class ShopManager : MonoBehaviour
         Item recievedItem = inventoryManager.GetSelectedItem(false);
         if (recievedItem != null)
         {
+            
             Debug.Log("recieved item " + recievedItem);
         }
         else
@@ -66,7 +68,8 @@ public class ShopManager : MonoBehaviour
         Item recievedItem = inventoryManager.GetSelectedItem(true);
         if (recievedItem != null)
         {
-            Debug.Log("used item" + recievedItem);
+           
+                Debug.Log("used item" + recievedItem);
         }
         else
         {
