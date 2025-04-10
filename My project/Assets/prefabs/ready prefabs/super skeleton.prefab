@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1743841465249047475}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45, y: -10.8, z: 0}
+  m_LocalPosition: {x: 60.7, y: -10.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -455,9 +455,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 300
   currentHealth: 0
-  itemToSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
+  coinSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
+  enemy: {fileID: 8952445898665710215}
+  rareSpellItem: {fileID: 0}
   spawnOffset: {x: 0, y: 0, z: 0}
   MoreCoins: 4
+  questTracer: {fileID: 0}
 --- !u!114 &8513036271473212335
 MonoBehaviour:
   m_ObjectHideFlags: 0

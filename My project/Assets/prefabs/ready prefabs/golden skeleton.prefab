@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 8847450127646458672, guid: 09cae15c6493c9248a6f7508d09f3810, type: 3}
   range: 10
   shootingInterval: 3
   projectileContainer: {fileID: 1099318426330972759}
@@ -345,11 +345,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 80
   currentHealth: 0
-  itemToSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
-  enemy: {fileID: 0}
+  coinSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
+  enemy: {fileID: 3546322336631646818}
+  rareSpellItem: {fileID: 0}
   spawnOffset: {x: 0, y: 0, z: 0}
   MoreCoins: 25
-  buttonreaction: {fileID: 0}
   questTracer: {fileID: 0}
 --- !u!114 &7071749033840463315
 MonoBehaviour:

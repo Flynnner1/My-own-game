@@ -147,11 +147,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 150
   currentHealth: 0
-  itemToSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
+  coinSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
   enemy: {fileID: 4688823800891986718}
+  rareSpellItem: {fileID: 0}
   spawnOffset: {x: 0, y: 0, z: 0}
   MoreCoins: 50
-  buttonreaction: {fileID: 0}
   questTracer: {fileID: 0}
 --- !u!114 &6187556049169471083
 MonoBehaviour:
