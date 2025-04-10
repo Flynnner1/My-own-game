@@ -386,6 +386,7 @@
 "Assets/scripts/npc/npc walking.cs"
 "Assets/scripts/npc/NPC-Controller.cs"
 "Assets/scripts/npc/QuestTracer.cs"
+"Assets/scripts/player inventory/hotbar.cs"
 "Assets/scripts/player inventory/inventoryManager.cs"
 "Assets/scripts/player inventory/InventorySlot.cs"
 "Assets/scripts/player inventory/InventroyItem.cs"

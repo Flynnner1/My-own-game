@@ -9,6 +9,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 {
     public Image image;
     public Color selectedColor, notSelectedColor;
+    public int SlotNum;
+    public hotbar hotBar;
 
     private void Awake()
     {
@@ -30,6 +32,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public void Select()
     {
         image.color = selectedColor;
+        hotBar.slotNum = SlotNum;
     }
     public void Deselect()
     {

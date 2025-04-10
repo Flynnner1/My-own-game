@@ -31,7 +31,7 @@ public class MovementAndShooting : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A) && playerNumber == 1)
         {
-            rb.velocity = new Vector2(-2000 * Time.deltaTime, 0);
-        }  
+            transform.position += new Vector3(-pedalSpeed * Time.deltaTime, 0, 0);
+        }
     }
 }

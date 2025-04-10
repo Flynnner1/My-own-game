@@ -15,9 +15,8 @@ public class BallMovement : MonoBehaviour
 
     public EnemyHealth EnemyHealth;
 
-    // Define layer masks for Skeleton and Zombie
-    public LayerMask skeletonLayer;
-    public LayerMask zombieLayer;
+    
+    
 
     void Start()
     {
