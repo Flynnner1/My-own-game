@@ -328,11 +328,15 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   coinSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
+  XPSpawn: {fileID: 337052201602955027, guid: 3ed6c9b6240da914098ae1765bc5567a, type: 3}
   enemy: {fileID: 4336382074971675006}
   rareSpellItem: {fileID: 0}
-  spawnOffset: {x: 0, y: 0, z: 0}
   MoreCoins: 10
+  amountXp: 10
+  spawnOffset: {x: 0, y: 0, z: 0}
   questTracer: {fileID: 0}
+  distanceThreshold: 40
+  player: {fileID: 0}
 --- !u!114 &6279424070049300900
 MonoBehaviour:
   m_ObjectHideFlags: 0

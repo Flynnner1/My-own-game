@@ -6,21 +6,23 @@ public class EnemyHealth : MonoBehaviour
     public float currentHealth;
 
     public GameObject coinSpawn;
+    public GameObject XPSpawn;
     public GameObject enemy;
 
     // Single spell item to drop
     public GameObject rareSpellItem;
 
-    private float randomPlace = 0.5f;
+    public int MoreCoins = 4;           // Maximum number of coins to drop
+    public int amountXp = 10;
     public Vector3 spawnOffset;
-
-    // Maximum number of coins to drop
-    public int MoreCoins = 4;
 
     // Reference to the quest system
     public QuestTracer questTracer;
 
-    // Prevent duplicate death processing
+    // Distance to the player after which the enemy dies
+    public float distanceThreshold = 40f;
+    public Transform player;            // Reference to the player's Transform
+
     private bool pickedUp = false;
 
     void Start()
@@ -31,6 +33,16 @@ public class EnemyHealth : MonoBehaviour
         // Generate a random Y offset for the spawn position
         int randomY = Random.Range(0, 3);
         spawnOffset = new Vector3(0, randomY, 0);
+    }
+
+    void Update()
+    {
+        // If the player reference is set and the enemy is too far away, kill the enemy
+        if (player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold && !pickedUp)
+        {
+            pickedUp = true;
+            Die();
+        }
     }
 
     public void TakeDamage(float amount)
@@ -88,6 +100,15 @@ public class EnemyHealth : MonoBehaviour
         if (dropChance == 1 && rareSpellItem != null)
         {
             Instantiate(rareSpellItem, transform.position + spawnOffset, Quaternion.identity);
+        }
+
+        int XpChange = Random.Range(1, amountXp);
+        for (int t = 0; t < XpChange; t++)
+        {
+            if (XPSpawn != null)
+            {
+                Instantiate(XPSpawn, transform.position + spawnOffset, Quaternion.identity);
+            }
         }
     }
 

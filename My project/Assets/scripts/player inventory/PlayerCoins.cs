@@ -8,10 +8,11 @@ public class PlayerCoins : MonoBehaviour
     public CoinPickup coinPickup;
     public TMP_Text coinText;
 
-    public int coins = 0;
+    public int coins = 30;
 
     void Start()
     {
+        updatecointext();
         // Find or assign references if on different objects
         if (!coinPickup)
         {

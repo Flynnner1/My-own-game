@@ -10,8 +10,9 @@ public class Healthmanager : MonoBehaviour
     public float healthAmount = 100f;
 
     public PlayerHealth playerHealth;
+    public PlayerCoins playerCoins; // Add this reference
 
-    private void Awake()
+    void Awake()
     {
         // Implement singleton pattern
         if (Instance != null && Instance != this)
@@ -31,10 +32,23 @@ public class Healthmanager : MonoBehaviour
         if (playerObject != null)
         {
             playerHealth = playerObject.GetComponent<PlayerHealth>();
+            // Also find or assign PlayerCoins
+            if (!playerCoins)
+            {
+                playerCoins = playerObject.GetComponent<PlayerCoins>();
+            }
         }
         else
         {
             Debug.LogError("Player not found in scene!");
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            TakeDamage(10);
         }
     }
 
@@ -54,8 +68,17 @@ public class Healthmanager : MonoBehaviour
 
     public void Heal(float healingAmount)
     {
-        healthAmount += healingAmount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, 100);
-        healthBar.fillAmount = healthAmount / 100f;
+        if (playerCoins != null)
+        {
+            healthAmount += healingAmount;
+            healthAmount = Mathf.Clamp(healthAmount, 0, 100);
+            healthBar.fillAmount = healthAmount / 100f;
+            playerCoins.coins -= 10;    // Safe to update now
+            playerCoins.updatecointext();
+        }
+        else
+        {
+            Debug.LogError("playerCoins is not assigned. Cannot charge the player.");
+        }
     }
 }
