@@ -22,6 +22,8 @@ public class PlayerShooting : MonoBehaviour
     public float cooldownTimerpebble = 5f; // Cooldown time between shots
     public float cooldownTimerBeam = 15f; // Cooldown time between shots
     public float cooldownTimerslash = 2.5f; // Cooldown time between shots
+    public float cooldownTimerpoison = 7f; // Cooldown time between shots
+
 
     public Item emptyItem;
 
@@ -29,6 +31,7 @@ public class PlayerShooting : MonoBehaviour
     public float time2 = 0f;
     public float time3 = 0f;
     public float time4 = 0f;
+    public float time5 = 0f;
 
     public gameManager gameManager;
     public NPCController NPCcontroller;
@@ -69,8 +72,9 @@ public class PlayerShooting : MonoBehaviour
         time2 += Time.deltaTime;
         time3 += Time.deltaTime;
         time4 += Time.deltaTime;
+        time5 += Time.deltaTime;
 
-        
+
 
         // Check for input to shoot
         if (gameManager.inventorystate == false)//|| NPCcontroller.npcUIstate == false
@@ -109,12 +113,12 @@ public class PlayerShooting : MonoBehaviour
                         time4 = 0f;
                     }
                 }
-                else if (currentWeapon.name == "poison")
+                else if (currentWeapon.name == "poison splash")
                 {
-                    if (time4 >= cooldownTimerslash)
+                    if (time5 >= cooldownTimerpoison)
                     {
                         ShootSlash();
-                        time4 = 0f;
+                        time5 = 0f;
                     }
                 }
             }
