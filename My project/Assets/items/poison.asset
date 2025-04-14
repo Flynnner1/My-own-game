@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c7845f4138b37a40bb1bfb9208ff8ba, type: 3}
-  m_Name: Poison splash
+  m_Name: poison
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   type: 0
   actionType: 0
   range: {x: 5, y: 4}
   hotBarNum: 0
-  stackable: 1
-  image: {fileID: 0}
+  stackable: 0
+  image: {fileID: 21300000, guid: ab9851f10d7bc0d408376c383714076a, type: 3}

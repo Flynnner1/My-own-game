@@ -113,13 +113,17 @@ public class PlayerShooting : MonoBehaviour
                         time4 = 0f;
                     }
                 }
-                else if (currentWeapon.name == "poison splash")
+                else if (currentWeapon.name == "poison")
                 {
                     if (time5 >= cooldownTimerpoison)
                     {
                         ShootSlash();
                         time5 = 0f;
                     }
+                }
+                else
+                {
+                    Debug.LogWarning("no spell attaced");
                 }
             }
         }
