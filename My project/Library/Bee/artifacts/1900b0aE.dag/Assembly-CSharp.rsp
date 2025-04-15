@@ -384,6 +384,7 @@
 "Assets/scripts/managers/game manage.cs"
 "Assets/scripts/managers/healthmanager.cs"
 "Assets/scripts/managers/Menu Manager.cs"
+"Assets/scripts/managers/Upgrade manager.cs"
 "Assets/scripts/managers/XpManager.cs"
 "Assets/scripts/npc/npc walking.cs"
 "Assets/scripts/npc/NPC-Controller.cs"

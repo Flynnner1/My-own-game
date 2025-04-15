@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovementAndShooting : MonoBehaviour
 {
     public int playerNumber = 1;
-    private int pedalSpeed = 7;
+    public int pedalSpeed = 7;
     public Rigidbody2D rb;
  
     void Start()
