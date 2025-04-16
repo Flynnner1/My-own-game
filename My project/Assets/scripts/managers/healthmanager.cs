@@ -46,10 +46,10 @@ public class Healthmanager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            TakeDamage(10);
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    TakeDamage(10);
+        //}
     }
 
     public void TakeDamage(float damage)

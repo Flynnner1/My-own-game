@@ -29,6 +29,8 @@ public class QuestTracer : MonoBehaviour
     private float cooldownTimerfireball = 0.5f;
     private float time1;
 
+    private bool accepted = false;
+
     // Remove GetComponent usage to avoid null references if on different objects
     //public Inventory inventory;
     public InventoryItem inventroyItem;
@@ -46,15 +48,15 @@ public class QuestTracer : MonoBehaviour
 
     void Update()
     {
-        time1 += Time.deltaTime;
-        if (time1 >= cooldownTimerfireball)
-        {
-            if (Input.GetKey(KeyCode.Q))
-            {
-                AddKill();
-                time1 = 0f;
-            }
-        }
+        //time1 += Time.deltaTime;
+        //if (time1 >= cooldownTimerfireball)
+        //{
+        //    if (Input.GetKey(KeyCode.Q))
+        //    {
+        //        AddKill();
+        //        time1 = 0f;
+        //    }
+        //}
 
         if (kills == currentkils && kills > 0)
         {
@@ -64,23 +66,26 @@ public class QuestTracer : MonoBehaviour
 
     public void currentQuest()
     {
-        randomMonster = Random.Range(1, 5);  // 1 to 4
-        randomNum = Random.Range(1, 10);     // 1 to 9
-        Quest = true;
-
-        switch (randomMonster)
+        if (!accepted)
         {
-            case 1: monster = "Slime"; break;
-            case 2: monster = "Zombie"; break;
-            case 3: monster = "Skeleton"; break;
-            default: monster = "Demon"; break;
-        }
+            randomMonster = Random.Range(1, 4);  // 1 to 3
+            randomNum = Random.Range(1, 10);     // 1 to 9
+            Quest = true;
 
-        if (Quest)
-        {
-            kills += randomNum;
+            switch (randomMonster)
+            {
+                case 1: monster = "Slime"; break;
+                case 2: monster = "Zombie"; break;
+                default: monster = "Skeleton"; break;
+                    //default: monster = "Demon"; break;
+            }
+
+            if (Quest)
+            {
+                kills += randomNum;
+            }
+            UpdateQuest();
         }
-        UpdateQuest();
     }
 
     public void UpdateQuest()
@@ -106,10 +111,11 @@ public class QuestTracer : MonoBehaviour
     public void acceptQuest()
     {
         quest1 = true;
-        currentkils = 0;
-        kills = 0;
-        currentQuest();
+        //currentkils = 0;
+        //kills = 0;
+        //currentQuest();
         UpdateQuest();
+        accepted = true;
     }
 
     public void QuestCompleted()
@@ -139,7 +145,7 @@ public class QuestTracer : MonoBehaviour
             quest1 = false;
             succes = false;
             randomNum = 0;
-
+            accepted = false;
             currentQuest();
         }
     }

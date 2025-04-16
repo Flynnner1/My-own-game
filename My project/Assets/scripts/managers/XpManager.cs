@@ -12,7 +12,8 @@ public class XpManager : MonoBehaviour
     public PlayerXp playerXp;
     public int level = 0;
     public TMP_Text Level;
-
+    public int MaxXp = 100;
+    public float MaxXpF = 100f;
     void Start()
     {
         // Find the player and its PlayerXp component
@@ -31,28 +32,28 @@ public class XpManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            PlusXp(10);
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.L))
+    //    {
+    //        PlusXp(10);
+    //    }
+    //}
 
-    public void MinusXp(float damage)
-    {
-        xpAmount -= damage;
-        xpAmount = Mathf.Clamp(xpAmount, 0, 100);
-        healthBar.fillAmount = xpAmount / 100f;
-    }
+    //public void MinusXp(float damage)
+    //{
+    //    xpAmount -= damage;
+    //    xpAmount = Mathf.Clamp(xpAmount, 0, 100);
+    //    healthBar.fillAmount = xpAmount / 100f;
+    //}
 
     public void PlusXp(float amount)
     {
         xpAmount += amount;
-        xpAmount = Mathf.Clamp(xpAmount, 0, 100);
+        xpAmount = Mathf.Clamp(xpAmount, 0, MaxXp);
 
         // Update the UI fill amount
-        healthBar.fillAmount = xpAmount / 100f;
+        healthBar.fillAmount = xpAmount / MaxXpF;
 
         // Optionally sync with PlayerXp if you want both to track
         if (playerXp != null)
@@ -61,10 +62,12 @@ public class XpManager : MonoBehaviour
         }
 
         // If the XP bar reaches 100, reset and level up
-        if (xpAmount >= 100)
+        if (xpAmount >= MaxXp)
         {
             xpAmount = 0;
             level++;
+            MaxXp += 5;
+            MaxXpF += 5f;
             updateleveltext();
             healthBar.fillAmount = 0f;
         }
