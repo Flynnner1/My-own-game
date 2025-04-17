@@ -29,6 +29,7 @@ public class Upgrademanager : MonoBehaviour
 
         if (xpManager.level >= 1)
         {
+            healthmanager.SecrethealthAmount += 5f;
             healthmanager.healthAmount += 5f;
             xpManager.level--;
             xpManager.updateleveltext();

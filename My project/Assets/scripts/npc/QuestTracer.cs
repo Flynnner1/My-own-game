@@ -26,7 +26,7 @@ public class QuestTracer : MonoBehaviour
     public bool quest1 = false;
     public bool succes = false;
 
-    private float cooldownTimerfireball = 0.5f;
+    
     private float time1;
 
     private bool accepted = false;

@@ -8,6 +8,7 @@ public class Healthmanager : MonoBehaviour
     public static Healthmanager Instance;
     public Image healthBar;
     public float healthAmount = 100f;
+    public float SecrethealthAmount = 100f;
 
     public PlayerHealth playerHealth;
     public PlayerCoins playerCoins; // Add this reference

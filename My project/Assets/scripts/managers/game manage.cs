@@ -6,12 +6,14 @@ public class gameManager : MonoBehaviour
 {
     public GameObject gameOverScreen;
     public GameObject inventoryScreen;
+    public GameObject deathscreen;
 
-    // Just make these public or properly assign them in code:
     public PlayerCoins playerCoins;
     public Healthmanager healthmanager;
 
     public bool inventorystate = false;
+
+    public GameObject player;
 
     void Start()
     {
@@ -26,6 +28,10 @@ public class gameManager : MonoBehaviour
         if (!healthmanager)
         {
             healthmanager = FindObjectOfType<Healthmanager>();
+        }
+        if (!player)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
         }
     }
 
@@ -52,7 +58,6 @@ public class gameManager : MonoBehaviour
 
     public void BuyHeal()
     {
-        // Check if references are valid before calling
         if (playerCoins && healthmanager)
         {
             if (playerCoins.coins >= 10)
@@ -65,18 +70,49 @@ public class gameManager : MonoBehaviour
             Debug.LogError("References to PlayerCoins or Healthmanager are not set.");
         }
     }
+
     public void goToGame()
     {
         SceneManager.LoadScene(1);
         Time.timeScale = 1;
     }
+
     public void goToMenu()
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
     }
+
     public void exitGame()
     {
         Application.Quit();
+    }
+
+    public void respawn()
+    {
+        if (player != null)
+        {
+            // Teleport the player to the respawn position
+            player.transform.position = new Vector3(45, -45, 0);
+
+            // Deactivate the death screen and resume the game
+            deathscreen.SetActive(false);
+            Time.timeScale = 1;
+            healthmanager.healthAmount = healthmanager.SecrethealthAmount;
+            healthmanager.TakeDamage(0);
+        }
+        else
+        {
+            Debug.LogError("Player GameObject is not assigned.");
+        }
+    }
+
+    public void toggleDeathScreen()
+    {
+        // Toggle the deathscreen visibility and adjust the game time accordingly
+        bool isDeathscreenActive = deathscreen.activeSelf;
+
+        deathscreen.SetActive(!isDeathscreenActive);
+        Time.timeScale = isDeathscreenActive ? 1 : 0;
     }
 }
