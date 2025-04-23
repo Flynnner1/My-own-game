@@ -15,7 +15,10 @@ public class NPCController : MonoBehaviour
     public QuestTracer questTracer;
 
     public bool npcQuest = false;
-    private bool npcUIstate = false;
+    // Removed npcUIstate as we will use the public property instead
+
+    // Public property to check if any relevant UI is open
+    public bool IsUIOpen { get; private set; }
 
     void Update()
     {
@@ -32,24 +35,27 @@ public class NPCController : MonoBehaviour
             {
                 inventoryUI.SetActive(true);
             }
-
-            npcUIstate = (questUI != null && questUI.activeSelf);
         }
 
-        // If the quest is active, show/hide the smallquestUI
-        if (npcQuest && questTracer != null && questTracer.quest1)
+        // Update the IsUIOpen state based on whether questUI or inventoryUI is active
+        IsUIOpen = (questUI != null && questUI.activeSelf) || (inventoryUI != null && inventoryUI.activeSelf);
+
+        // --- Small Quest UI Logic ---
+        // Decide whether to show the small quest UI based on quest status and main UI visibility
+        bool showSmallQuestUI = npcQuest && questTracer != null && questTracer.quest1 && !IsUIOpen; // Don't show if main UI is open
+
+        if (smallquestUI != null)
         {
-            if (questUI != null && !questUI.activeSelf)
+            if (showSmallQuestUI)
             {
-                if (smallquestUI != null)
-                    smallquestUI.SetActive(true);
+                smallquestUI.SetActive(true);
             }
             else
             {
-                if (smallquestUI != null)
-                    smallquestUI.SetActive(false);
+                smallquestUI.SetActive(false); // Hide if conditions aren't met or main UI is open
             }
         }
+        // --- End Small Quest UI Logic ---
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -65,29 +71,37 @@ public class NPCController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
+            // Close all UIs when player leaves
             if (questUI != null)
                 questUI.SetActive(false);
             if (smallquestUI != null)
                 smallquestUI.SetActive(false);
             if (inventoryUI != null)
                 inventoryUI.SetActive(false);
+
+            // Ensure IsUIOpen is updated when player leaves
+            IsUIOpen = false;
         }
     }
 
-   
+
     public void AcceptQuestButton()
     {
         // Call the acceptQuest method in QuestTracer
         if (questTracer != null)
             questTracer.acceptQuest();
 
+        // Close main quest and inventory UIs
         if (questUI != null)
             questUI.SetActive(false);
-
-        if (smallquestUI != null)
-            smallquestUI.SetActive(true);
-
         if (inventoryUI != null)
             inventoryUI.SetActive(false);
+
+        // Optionally show small quest UI immediately after accepting
+        if (smallquestUI != null && npcQuest && questTracer != null && questTracer.quest1)
+            smallquestUI.SetActive(true);
+
+        // Update IsUIOpen state
+        IsUIOpen = false;
     }
 }

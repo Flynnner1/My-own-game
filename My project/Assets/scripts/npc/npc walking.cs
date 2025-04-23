@@ -1,57 +1,105 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class npcwalking : MonoBehaviour
+[RequireComponent(typeof(NPCController))]
+[RequireComponent(typeof(Rigidbody2D))]
+public class NPCMovement2D : MonoBehaviour
 {
-    public float walkRadius = 5f; // Radius within which the NPC will walk to random points
-    public float walkSpeed = 2f; // Speed at which the NPC walks
-    private Vector3 targetPosition; // The current target position the NPC is walking towards
-    private bool questUIActive = false; // Flag to check if the quest UI is active
+    public Transform[] waypoints; // Points the NPC walks between
+    public float moveSpeed = 2f; // Speed of the NPC
 
-    // Reference to the NPCController to check the quest UI status
-    public NPCController npcController;
+    private NPCController npcController;
+    private Rigidbody2D rb;
+    private int currentWaypointIndex = 0;
+    private bool isMoving = false; // Flag to control movement state
 
-    // Start is called before the first frame update
     void Start()
     {
-        SetRandomTargetPosition();
-    }
+        npcController = GetComponent<NPCController>();
+        rb = GetComponent<Rigidbody2D>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (npcController.questUI.activeSelf) // Check if the quest UI is active
+        // Ensure Rigidbody2D settings are appropriate (e.g., Kinematic or Dynamic with Gravity Scale 0)
+        if (rb.bodyType == RigidbodyType2D.Dynamic)
         {
-            questUIActive = true;
+            rb.gravityScale = 0; // Prevent falling if dynamic
+        }
+
+        // Start moving if waypoints exist
+        if (waypoints.Length > 0)
+        {
+            isMoving = true;
         }
         else
         {
-            questUIActive = false;
-        }
-
-        // If the quest UI is active, stop walking
-        if (questUIActive)
-        {
-            return;
-        }
-
-        // Move the NPC towards the target position
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, walkSpeed * Time.deltaTime);
-
-        // If the NPC reached the target position, set a new random target position
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-        {
-            SetRandomTargetPosition();
+            Debug.LogWarning("NPCMovement2D: No waypoints assigned.", this);
+            isMoving = false;
         }
     }
 
-    // Method to set a new random target position within the walk radius
-    void SetRandomTargetPosition()
+    void FixedUpdate() // Use FixedUpdate for Rigidbody operations
     {
-        Vector3 randomDirection = Random.insideUnitSphere * walkRadius;
-        randomDirection += transform.position;
-        randomDirection.y = transform.position.y; // Keep the y position the same (for 2D or top-down view)
-        targetPosition = randomDirection;
+        // --- Check UI State ---
+        if (npcController.IsUIOpen)
+        {
+            // If UI is open, stop movement
+            if (isMoving)
+            {
+                rb.velocity = Vector2.zero; // Stop immediately if dynamic
+                isMoving = false; // Prevent further movement calculations
+            }
+            return; // Exit FixedUpdate early
+        }
+        else
+        {
+            // If UI is closed and we were previously stopped by UI, resume moving
+            if (!isMoving && waypoints.Length > 0)
+            {
+                isMoving = true;
+            }
+        }
+        // --- End Check UI State ---
+
+
+        // --- Movement Logic ---
+        if (!isMoving || waypoints.Length == 0)
+        {
+            // Ensure velocity is zero if not supposed to be moving
+            if (rb.bodyType == RigidbodyType2D.Dynamic)
+            {
+                rb.velocity = Vector2.zero;
+            }
+            return; // Don't move if flag is false or no waypoints
+        }
+
+        // Get the target waypoint position
+        Transform targetWaypoint = waypoints[currentWaypointIndex];
+        Vector2 targetPosition = targetWaypoint.position;
+
+        // Calculate direction and distance
+        Vector2 currentPosition = rb.position; // Use rb.position for kinematic or dynamic
+        Vector2 direction = (targetPosition - currentPosition).normalized;
+        float distance = Vector2.Distance(currentPosition, targetPosition);
+
+        // Check if close enough to the target waypoint
+        if (distance < 0.1f) // Adjust threshold as needed
+        {
+            // Move to the next waypoint
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+        }
+        else
+        {
+            // Move towards the target waypoint
+            Vector2 newPos = currentPosition + direction * moveSpeed * Time.fixedDeltaTime;
+
+            if (rb.bodyType == RigidbodyType2D.Kinematic)
+            {
+                rb.MovePosition(newPos); // Use MovePosition for kinematic bodies
+            }
+            else // Dynamic
+            {
+                rb.velocity = direction * moveSpeed; // Set velocity for dynamic bodies
+                // Optional: Face the direction of movement (add sprite flipping logic if needed)
+            }
+        }
+        // --- End Movement Logic ---
     }
 }

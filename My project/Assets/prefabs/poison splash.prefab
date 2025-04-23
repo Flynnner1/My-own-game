@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 182f07cfc426a0e479ee4723e35e49f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -133,6 +133,7 @@ MonoBehaviour:
   damageDuration: 3
   damageInterval: 1
   cloudPrefab: {fileID: 5184811624233276559, guid: d9f58b98e7314b44a84b4b685eab0f47, type: 3}
+  playerTransform: {fileID: 6254297224578057021}
 --- !u!60 &6807769001807866748
 PolygonCollider2D:
   m_ObjectHideFlags: 0

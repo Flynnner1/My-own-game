@@ -39,10 +39,18 @@ public class gameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            inventoryScreen.SetActive(!inventoryScreen.activeSelf);
-            inventorystate = inventoryScreen.activeSelf;
+            inventorystate = !inventorystate;
+            Debug.Log($"E pressed. Inventory state toggled to: {inventorystate} at Time: {Time.time}");
+            inventoryScreen.SetActive(inventorystate);
+            Debug.Log($"Inventory Screen Active set to: {inventoryScreen.activeSelf} at Time: {Time.time}");
+
+            // Uncomment this if you want to pause the game
+            // Time.timeScale = inventorystate ? 0 : 1;
         }
+        // Add another log outside the if to see if something else changes it
+        // Debug.Log($"End of Update - Inventory Screen Active: {inventoryScreen.activeSelf}");
     }
+
 
     public void GameEnd()
     {

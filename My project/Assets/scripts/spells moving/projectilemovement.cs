@@ -45,7 +45,7 @@ public class BallMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime"))
+        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon"))
         {
             // Get the EnemyHealth component from the collided object
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();

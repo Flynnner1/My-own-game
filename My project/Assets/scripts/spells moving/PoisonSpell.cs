@@ -1,152 +1,188 @@
 using System.Collections;
 using UnityEngine;
 
-// Require Rigidbody2D to ensure it exists
+// ... (rest of your script above Start) ...
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class PoisonSpell : MonoBehaviour
 {
+    // ... (Keep your Header variables and other fields) ...
     [Header("Movement Settings")]
     public float initialSpeed = 2f;
     public float acceleration = 1f;
-    public float maxLifetime = 5f; // After this time, it destroys itself if it hasn't collided
+    public float maxLifetime = 5f;
 
     [Header("Damage Settings")]
-    public float damageAmount = 10f;   // Damage per hit interval
-    public float damageDuration = 3f;  // How long the damage lasts in seconds
-    public float damageInterval = 1f;  // How often damage is applied (seconds)
+    public float damageAmount = 10f;
+    public float damageDuration = 3f;
+    public float damageInterval = 1f;
 
     [Header("Effects")]
-    public GameObject cloudPrefab;     // Instantiated if no collision occurs before maxLifetime
+    public GameObject cloudPrefab;
 
-    private float currentSpeed; // Keep track for potential future use, but velocity handles movement
+    private float currentSpeed;
     private bool hasCollided = false;
-
     private Rigidbody2D rb;
     private Vector2 movementDirection;
-    public Transform playerTransform; // Assign the player's transform in the Inspector
+    public Transform playerTransform;
 
-    // Removed unused class-level EnemyHealth variable
+    // Layer index to move the projectile to after hit
+    private const int PostHitLayerIndex = 0; // Layer 0 is "Default"
 
+    // ... (Your Start and FixedUpdate methods remain the same) ...
     void Start()
     {
+        Debug.Log("PoisonSpell Start: Initializing...");
         rb = GetComponent<Rigidbody2D>();
-        currentSpeed = initialSpeed; // Initialize currentSpeed, though velocity is primary driver
+        currentSpeed = initialSpeed;
 
-        // Ensure playerTransform is assigned before using it
         if (playerTransform != null)
         {
-            // Set initial direction based on player's facing direction (assuming right is forward)
             movementDirection = playerTransform.right;
             rb.velocity = movementDirection * initialSpeed;
+            Debug.Log("PoisonSpell Start: Set initial velocity based on player.");
         }
         else
         {
-            // Default direction if playerTransform isn't set (e.g., forward in world space)
             Debug.LogWarning("PlayerTransform not assigned to PoisonSpell. Using default direction (Vector2.right).");
             movementDirection = Vector2.right;
             rb.velocity = movementDirection * initialSpeed;
         }
 
-        // Destroy (or finalize) the projectile if it doesn't collide within the set lifetime
-        // Using Invoke is fine, or you could use a coroutine timer
         Invoke(nameof(DestroyProjectileNoHit), maxLifetime);
+        Debug.Log($"PoisonSpell Start: Invoke DestroyProjectileNoHit scheduled in {maxLifetime}s.");
     }
 
-    void FixedUpdate() // Use FixedUpdate for physics calculations
+    void FixedUpdate()
     {
-        // Only accelerate if the Rigidbody exists and we haven't collided
-        if (rb != null && !hasCollided)
+        if (rb != null && !hasCollided && rb.bodyType != RigidbodyType2D.Kinematic)
         {
-            // Accelerate the projectile over time using velocity
-            // Note: Directly adding velocity continuously can lead to very high speeds.
-            // Consider capping the speed or using AddForce for more controlled acceleration.
             rb.velocity += movementDirection * acceleration * Time.fixedDeltaTime;
-
-            // Optional: Update currentSpeed if needed elsewhere, based on velocity magnitude
             currentSpeed = rb.velocity.magnitude;
         }
     }
 
-    // Use OnTriggerEnter2D for 2D collisions
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        // If we've already collided and started the damage process, do nothing further
-        if (hasCollided) return;
+        Debug.Log($"PoisonSpell OnTriggerEnter2D: Collided with {other.gameObject.name} (Tag: {other.tag})");
 
-        // Check if the collided object has an EnemyHealth component
+        if (hasCollided)
+        {
+            Debug.Log("PoisonSpell OnTriggerEnter2D: Already collided, ignoring.");
+            return;
+        }
+
         EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
-            // Check if the collider belongs to an enemy tag (optional, but good practice)
-            if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime")) // Add other enemy tags if needed
-            {
-                hasCollided = true; // Mark as collided to stop movement/further checks
+            Debug.Log($"PoisonSpell OnTriggerEnter2D: Found EnemyHealth on {other.gameObject.name}.");
+            bool isEnemyTag = other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon");
 
-                // Disable the projectile's collider so it doesn't hit multiple things
+            if (isEnemyTag)
+            {
+                Debug.Log($"PoisonSpell OnTriggerEnter2D: Enemy tag match on {other.gameObject.name}. Processing hit.");
+                hasCollided = true;
+
+                // --- Stop Physics Interaction ---
+                // 1. Disable Collider
                 Collider2D projectileCollider = GetComponent<Collider2D>();
                 if (projectileCollider != null)
                 {
                     projectileCollider.enabled = false;
+                    Debug.Log("PoisonSpell OnTriggerEnter2D: Disabled projectile collider.");
                 }
 
-                // Stop the projectile's movement
+                // 2. Stop Rigidbody
                 if (rb != null)
                 {
                     rb.velocity = Vector2.zero;
-                    rb.isKinematic = true; // Stop physics interactions
+                    rb.isKinematic = true; // Make kinematic to stop all physics influence
+                    Debug.Log("PoisonSpell OnTriggerEnter2D: Stopped Rigidbody and set to Kinematic.");
                 }
 
-                // Start applying damage over time
-                StartCoroutine(DealDamageOverTime(enemyHealth));
+                // 3. Change Layer to Default (Layer 0) ***** UPDATED *****
+                gameObject.layer = PostHitLayerIndex; // Directly assign layer index 0
+                Debug.Log($"PoisonSpell OnTriggerEnter2D: Set GameObject layer to 'Default' (Index: {PostHitLayerIndex}).");
+                // Optional: Recursively set children if needed
+                // SetLayerRecursively(transform, PostHitLayerIndex);
 
-                // --- IMPORTANT: Do NOT destroy the GameObject here ---
-                // The coroutine will handle destruction after the DoT effect.
+                // --- End Stop Physics Interaction ---
+
+
+                Debug.Log($"PoisonSpell OnTriggerEnter2D: Starting DealDamageOverTime coroutine for {other.gameObject.name}.");
+                StartCoroutine(DealDamageOverTime(enemyHealth));
+            }
+            else
+            {
+                Debug.Log($"PoisonSpell OnTriggerEnter2D: Object {other.gameObject.name} has EnemyHealth but wrong tag ({other.tag}).");
             }
         }
-        // Optional: Add collision logic for other object types (e.g., walls) here if needed
-        // else if (other.CompareTag("Wall")) { ... DestroyProjectileWithHit(); ... }
+        else
+        {
+            Debug.Log($"PoisonSpell OnTriggerEnter2D: Object {other.gameObject.name} does not have EnemyHealth component.");
+        }
     }
 
+    // ... (Your DealDamageOverTime, DestroyProjectileWithHit, DestroyProjectileNoHit methods remain the same) ...
     IEnumerator DealDamageOverTime(EnemyHealth target)
     {
+        string targetName = target != null ? target.gameObject.name : "Unknown (Target became null)";
+        Debug.Log($"PoisonSpell Coroutine: Starting DoT loop for {targetName}. Duration: {damageDuration}s, Interval: {damageInterval}s");
+
         float elapsed = 0f;
-        while (elapsed < damageDuration && target != null) // Check if target still exists
+        int tickCount = 0;
+        while (elapsed < damageDuration)
         {
+            if (target == null)
+            {
+                Debug.LogWarning($"PoisonSpell Coroutine: Target ({targetName}) became null during DoT. Exiting loop.");
+                break;
+            }
+
+            tickCount++;
+            Debug.Log($"PoisonSpell Coroutine: Applying tick {tickCount} ({damageAmount} damage) to {target.gameObject.name}. Elapsed: {elapsed:F2}s");
             target.TakeDamage(damageAmount);
+
             yield return new WaitForSeconds(damageInterval);
             elapsed += damageInterval;
         }
 
-        // Effect finished, now destroy the projectile
+        Debug.Log($"PoisonSpell Coroutine: DoT loop finished for {targetName}. Elapsed: {elapsed:F2}s. Calling DestroyProjectileWithHit.");
         DestroyProjectileWithHit();
     }
 
     void DestroyProjectileWithHit()
     {
-        // Cancel the timed destruction in case it was hit just before maxLifetime
+        Debug.Log("PoisonSpell DestroyProjectileWithHit: Cancelling Invoke and destroying GameObject.");
         CancelInvoke(nameof(DestroyProjectileNoHit));
-
-        // Optionally instantiate a cloud or an effect upon successful collision
-        // (Uncomment if you also want a cloud to appear when you do hit something)
-        // if (cloudPrefab != null)
-        // {
-        //     Instantiate(cloudPrefab, transform.position, Quaternion.identity);
-        // }
-
         Destroy(gameObject);
     }
 
     void DestroyProjectileNoHit()
     {
-        // This is called by Invoke if maxLifetime is reached without a collision
-        // Check !hasCollided again just to be safe
         if (!hasCollided)
         {
+            Debug.Log($"PoisonSpell DestroyProjectileNoHit: Max lifetime ({maxLifetime}s) reached without hit. Instantiating cloud and destroying GameObject.");
             if (cloudPrefab != null)
             {
                 Instantiate(cloudPrefab, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
         }
+        else
+        {
+            Debug.Log("PoisonSpell DestroyProjectileNoHit: Max lifetime reached, but already collided. Doing nothing.");
+        }
     }
+
+    // Optional helper function if you need to change children layers too
+    // void SetLayerRecursively(Transform parent, int layer)
+    // {
+    //     parent.gameObject.layer = layer;
+    //     foreach (Transform child in parent)
+    //     {
+    //         SetLayerRecursively(child, layer);
+    //     }
+    // }
 }

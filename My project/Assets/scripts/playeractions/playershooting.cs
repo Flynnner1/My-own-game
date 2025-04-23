@@ -117,7 +117,7 @@ public class PlayerShooting : MonoBehaviour
                 {
                     if (time5 >= cooldownTimerpoison)
                     {
-                        ShootSlash();
+                        ShootPoison();
                         time5 = 0f;
                     }
                 }
