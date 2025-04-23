@@ -2,33 +2,61 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [Header("Identification")]
+    public string EnemyId = "Zombie1"; // Assign this in the Inspector for each enemy prefab variant
+
+    [Header("Health")]
     public float maxHealth = 100f;
     public float currentHealth;
 
+    [Header("Drops")]
     public GameObject coinSpawn;
     public GameObject XPSpawn;
-    public GameObject enemy;
-
-    // Single spell item to drop
-    public GameObject rareSpellItem;
-
+    public GameObject rareSpellItem; // Single spell item to drop
     public int MoreCoins = 4;           // Maximum number of coins to drop
     public int amountXp = 10;
     public Vector3 spawnOffset;
 
-    // Reference to the quest system
-    public QuestTracer questTracer;
+    [Header("Behavior")]
+    public float distanceThreshold = 40f; // Distance to the player after which the enemy dies
+    public Transform player;            // Reference to the player's Transform (Assign or find)
 
-    // Distance to the player after which the enemy dies
-    public float distanceThreshold = 40f;
-    public Transform player;            // Reference to the player's Transform
+    // --- References to Scene Managers ---
+    private QuestTracer questTracer; // Keep private if only used here
+    private KillCounter killCounter; // Keep private if only used here
 
-    private bool pickedUp = false;
+    private bool isDying = false; // Renamed from pickedUp for clarity
 
     void Start()
     {
-        questTracer = FindObjectOfType<QuestTracer>();
         currentHealth = maxHealth;
+
+        // --- Find Scene Managers ---
+        // Find the single KillCounter instance in the scene
+        killCounter = FindObjectOfType<KillCounter>();
+        if (killCounter == null)
+        {
+
+            Debug.LogError($"KillCounter script not found in the scene! Kills from {gameObject.name} will not be counted.", this);
+        }
+
+        // Find QuestTracer (as before)
+        questTracer = FindObjectOfType<QuestTracer>();
+        // Optional: Add a null check warning for questTracer too
+
+        // Find Player if not assigned (optional but good practice)
+        if (player == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                player = playerObject.transform;
+            }
+            else
+            {
+                Debug.LogWarning($"Player with tag 'Player' not found. Distance check for {gameObject.name} might not work.", this);
+            }
+        }
 
         // Generate a random Y offset for the spawn position
         int randomY = Random.Range(0, 3);
@@ -37,31 +65,50 @@ public class EnemyHealth : MonoBehaviour
 
     void Update()
     {
-        // If the player reference is set and the enemy is too far away, kill the enemy
-        if (player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold && !pickedUp)
+        // If the player reference is set, enemy not already dying, and is too far away, despawn it.
+        if (!isDying && player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold)
         {
-            pickedUp = true;
-            Die();
+            // Consider if distance despawn should count as a "kill" or drop loot
+            Die(false); // Pass false: Don't count as kill, don't drop loot
         }
     }
 
     public void TakeDamage(float amount)
     {
+        if (isDying) return; // Already dying, do nothing
+
         currentHealth -= amount;
 
-        if (currentHealth <= 0f && !pickedUp)
+        if (currentHealth <= 0f)
         {
-            pickedUp = true;
-            Die();
+            Die(true); // Pass true: Count as kill, drop loot
         }
     }
 
-    void Die()
+    // Added bool parameter to distinguish true kills from despawns
+    void Die(bool wasKilled)
     {
-        // Update quest kills if the monster name matches the tag
-        if (questTracer != null)
+        if (isDying) return; // Prevent multiple calls
+        isDying = true;
+
+        // --- Report Kill ---
+        // Only report to KillCounter if it was a true kill and the counter was found
+        if (wasKilled && killCounter != null)
         {
-            if (questTracer.monster == "Zombie" && enemy.CompareTag("Zombie"))
+            killCounter.addcount(EnemyId); // Call the counter method
+        }
+        else if (wasKilled && killCounter == null)
+        {
+            Debug.LogError($"Attempted to report kill for {EnemyId}, but KillCounter is missing!", this);
+        }
+
+        // --- Quest Logic ---
+        // Only update quests if it was a true kill
+        if (wasKilled && questTracer != null)
+        {
+            // Your existing quest logic based on tags/monster type
+            // Consider simplifying this if EnemyId can replace the need for tags here
+            if (questTracer.monster == "Zombie" && gameObject.CompareTag("Zombie")) // Note: Using gameObject.CompareTag is better than enemy.CompareTag
             {
                 questTracer.AddKill();
             }
@@ -79,14 +126,21 @@ public class EnemyHealth : MonoBehaviour
             }
         }
 
-        RandomDrop();
-        Destroy(gameObject);
+        // --- Drops ---
+        // Only drop loot if it was a true kill
+        if (wasKilled)
+        {
+            RandomDrop();
+        }
+
+        // --- Cleanup ---
+        Destroy(gameObject); // Destroy the enemy object at the end
     }
 
     void RandomDrop()
     {
-        // Spawn a random number of coins
-        int randomNumber = Random.Range(1, MoreCoins);
+        // Spawn a random number of coins (corrected range)
+        int randomNumber = Random.Range(1, MoreCoins + 1); // Use +1 for max value inclusion
         for (int t = 0; t < randomNumber; t++)
         {
             if (coinSpawn != null)
@@ -96,13 +150,14 @@ public class EnemyHealth : MonoBehaviour
         }
 
         // 1-in-100 chance to drop the single rare spell item
-        int dropChance = Random.Range(1, 101);
+        int dropChance = Random.Range(1, 101); // Correct range
         if (dropChance == 1 && rareSpellItem != null)
         {
             Instantiate(rareSpellItem, transform.position + spawnOffset, Quaternion.identity);
         }
 
-        int XpChange = Random.Range(1, amountXp);
+        // Spawn XP (corrected range)
+        int XpChange = Random.Range(1, amountXp + 1); // Use +1 for max value inclusion
         for (int t = 0; t < XpChange; t++)
         {
             if (XPSpawn != null)

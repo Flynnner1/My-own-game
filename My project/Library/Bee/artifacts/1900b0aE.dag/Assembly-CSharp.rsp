@@ -384,6 +384,7 @@
 "Assets/scripts/FlowingWater.cs"
 "Assets/scripts/managers/game manage.cs"
 "Assets/scripts/managers/healthmanager.cs"
+"Assets/scripts/managers/KillCounter.cs"
 "Assets/scripts/managers/Menu Manager.cs"
 "Assets/scripts/managers/pause script.cs"
 "Assets/scripts/managers/Upgrade manager.cs"

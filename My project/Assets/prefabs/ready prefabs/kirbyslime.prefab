@@ -167,16 +167,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db627a20b194474db2478199260b783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyId: Slime3
   maxHealth: 100
   currentHealth: 0
   coinSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
   XPSpawn: {fileID: 337052201602955027, guid: 3ed6c9b6240da914098ae1765bc5567a, type: 3}
-  enemy: {fileID: 3098165736304976912}
   rareSpellItem: {fileID: 0}
   MoreCoins: 15
   amountXp: 10
   spawnOffset: {x: 0, y: 0, z: 0}
-  questTracer: {fileID: 0}
   distanceThreshold: 40
   player: {fileID: 0}
 --- !u!114 &4773599238382861969

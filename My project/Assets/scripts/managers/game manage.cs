@@ -7,11 +7,13 @@ public class gameManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject inventoryScreen;
     public GameObject deathscreen;
+    public GameObject KillCounterScreen;
 
     public PlayerCoins playerCoins;
     public Healthmanager healthmanager;
 
     public bool inventorystate = false;
+    public bool Counterstate = false;
 
     public GameObject player;
 
@@ -42,6 +44,16 @@ public class gameManager : MonoBehaviour
             inventorystate = !inventorystate;
             Debug.Log($"E pressed. Inventory state toggled to: {inventorystate} at Time: {Time.time}");
             inventoryScreen.SetActive(inventorystate);
+            Debug.Log($"Inventory Screen Active set to: {inventoryScreen.activeSelf} at Time: {Time.time}");
+
+            // Uncomment this if you want to pause the game
+            // Time.timeScale = inventorystate ? 0 : 1;
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Counterstate = !Counterstate;
+            Debug.Log($"E pressed. Inventory state toggled to: {inventorystate} at Time: {Time.time}");
+            KillCounterScreen.SetActive(Counterstate);
             Debug.Log($"Inventory Screen Active set to: {inventoryScreen.activeSelf} at Time: {Time.time}");
 
             // Uncomment this if you want to pause the game
