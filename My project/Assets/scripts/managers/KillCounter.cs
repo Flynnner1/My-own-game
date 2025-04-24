@@ -71,7 +71,7 @@ public class KillCounter : MonoBehaviour
                 break;
             case "Zombie3":
                 ZombieCount3++;
-                if (Zombie3Count != null) Zombie3Count.text = Zombie3Count.ToString();
+                if (Zombie3Count != null) Zombie3Count.text = ZombieCount3.ToString();
                 break;
             case "Zombie4":
                 ZombieCount4++;
@@ -79,7 +79,7 @@ public class KillCounter : MonoBehaviour
                 break;
             case "Zombie5":
                 ZombieCount5++;
-                if (Zombie5Count != null) Zombie5Count.text = Zombie5Count.ToString();
+                if (Zombie5Count != null) Zombie5Count.text = ZombieCount5.ToString();
                 break;
 
             // --- Slimes ---
@@ -89,7 +89,7 @@ public class KillCounter : MonoBehaviour
                 break;
             case "Slime2":
                 SlimeCount2++;
-                if (Slime2Count != null) Slime2Count.text = Slime2Count.ToString();
+                if (Slime2Count != null) Slime2Count.text = SlimeCount2.ToString();
                 break;
             case "Slime3":
                 SlimeCount3++;
@@ -97,11 +97,11 @@ public class KillCounter : MonoBehaviour
                 break;
             case "Slime4":
                 SlimeCount4++;
-                if (Slime4Count != null) Slime4Count.text = Slime4Count.ToString();
+                if (Slime4Count != null) Slime4Count.text = SlimeCount4.ToString();
                 break;
             case "Slime5":
                 SlimeCount5++;
-                if (Slime5Count != null) Slime5Count.text = Slime5Count.ToString();
+                if (Slime5Count != null) Slime5Count.text = SlimeCount5.ToString();
                 break;
 
             // --- Skeletons ---
@@ -119,34 +119,34 @@ public class KillCounter : MonoBehaviour
                 break;
             case "Skeleton4":
                 SkeletonCount4++;
-                if (Skeleton4Count != null) Skeleton4Count.text = Skeleton4Count.ToString();
+                if (Skeleton4Count != null) Skeleton4Count.text = SkeletonCount4.ToString();
                 break;
             case "Skeleton5":
                 SkeletonCount5++;
-                if (Skeleton5Count != null) Skeleton5Count.text = Skeleton5Count.ToString();
+                if (Skeleton5Count != null) Skeleton5Count.text = SkeletonCount5.ToString();
                 break;
 
             // --- Demons ---
-            //case "Demon1":
-            //    DemonCount1++;
-            //    if (Demon1Count != null) Demon1Count.text = DemonCount1.ToString();
-            //    break;
-            //case "Demon2":
-            //    DemonCount2++;
-            //    if (Demon2Count != null) Demon2Count.text = Demon2Count.ToString();
-            //    break;
-            //case "Demon3":
-            //    DemonCount3++;
-            //    if (Demon3Count != null) Demon3Count.text = Demon3Count.ToString();
-            //    break;
-            //case "Demon4":
-            //    DemonCount4++;
-            //    if (Demon4Count != null) Demon4Count.text = Demon4Count.ToString();
-            //    break;
-            //case "Demon5":
-            //    DemonCount5++;
-            //    if (Demon5Count != null) Demon5Count.text = DemonCount5.ToString();
-            //    break;
+            case "Demon1":
+                DemonCount1++;
+                if (Demon1Count != null) Demon1Count.text = DemonCount1.ToString();
+                break;
+            case "Demon2":
+                DemonCount2++;
+                if (Demon2Count != null) Demon2Count.text = DemonCount2.ToString();
+                break;
+            case "Demon3":
+                DemonCount3++;
+                if (Demon3Count != null) Demon3Count.text = DemonCount3.ToString();
+                break;
+            case "Demon4":
+                DemonCount4++;
+                if (Demon4Count != null) Demon4Count.text = DemonCount4.ToString();
+                break;
+            case "Demon5":
+                DemonCount5++;
+                if (Demon5Count != null) Demon5Count.text = DemonCount5.ToString();
+                break;
 
             default:
                 Debug.LogWarning($"KillCounter received an unknown enemy type: {enemy}");

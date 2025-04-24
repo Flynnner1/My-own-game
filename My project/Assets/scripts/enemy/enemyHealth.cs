@@ -22,8 +22,10 @@ public class EnemyHealth : MonoBehaviour
     public Transform player;            // Reference to the player's Transform (Assign or find)
 
     // --- References to Scene Managers ---
-    private QuestTracer questTracer; // Keep private if only used here
-    private KillCounter killCounter; // Keep private if only used here
+    private QuestTracer questTracer;
+    // Make this public if you want the *option* to assign it in the inspector later,
+    // but FindObjectOfType will still be the primary way it gets set in Start()
+    public KillCounter killCounter;
 
     private bool isDying = false; // Renamed from pickedUp for clarity
 
@@ -33,18 +35,22 @@ public class EnemyHealth : MonoBehaviour
 
         // --- Find Scene Managers ---
         // Find the single KillCounter instance in the scene
-        killCounter = FindObjectOfType<KillCounter>();
+        killCounter = FindObjectOfType<KillCounter>(); // Find the manager in the scene
         if (killCounter == null)
         {
-
+            // Log the error if not found
             Debug.LogError($"KillCounter script not found in the scene! Kills from {gameObject.name} will not be counted.", this);
         }
 
-        // Find QuestTracer (as before)
+        // Find QuestTracer
         questTracer = FindObjectOfType<QuestTracer>();
-        // Optional: Add a null check warning for questTracer too
+        if (questTracer == null)
+        {
+            Debug.LogWarning($"QuestTracer script not found in the scene! Quests might not track kills from {gameObject.name}.", this);
+        }
 
-        // Find Player if not assigned (optional but good practice)
+
+        // Find Player if not assigned
         if (player == null)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -68,7 +74,6 @@ public class EnemyHealth : MonoBehaviour
         // If the player reference is set, enemy not already dying, and is too far away, despawn it.
         if (!isDying && player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold)
         {
-            // Consider if distance despawn should count as a "kill" or drop loot
             Die(false); // Pass false: Don't count as kill, don't drop loot
         }
     }
@@ -97,18 +102,20 @@ public class EnemyHealth : MonoBehaviour
         {
             killCounter.addcount(EnemyId); // Call the counter method
         }
-        else if (wasKilled && killCounter == null)
-        {
-            Debug.LogError($"Attempted to report kill for {EnemyId}, but KillCounter is missing!", this);
-        }
+        // Optional: You could log an error here again if wasKilled is true but killCounter is null,
+        // but the Start() method already warned you.
+        // else if (wasKilled && killCounter == null)
+        // {
+        //     Debug.LogError($"Attempted to report kill for {EnemyId}, but KillCounter is missing!", this);
+        // }
 
         // --- Quest Logic ---
-        // Only update quests if it was a true kill
+        // Only update quests if it was a true kill and questTracer was found
         if (wasKilled && questTracer != null)
         {
-            // Your existing quest logic based on tags/monster type
-            // Consider simplifying this if EnemyId can replace the need for tags here
-            if (questTracer.monster == "Zombie" && gameObject.CompareTag("Zombie")) // Note: Using gameObject.CompareTag is better than enemy.CompareTag
+            // Using CompareTag is good practice!
+            // Consider if EnemyId could simplify quest tracking further.
+            if (questTracer.monster == "Zombie" && gameObject.CompareTag("Zombie"))
             {
                 questTracer.AddKill();
             }
@@ -124,6 +131,7 @@ public class EnemyHealth : MonoBehaviour
             {
                 questTracer.AddKill();
             }
+            // Consider adding an 'else' or default case if needed
         }
 
         // --- Drops ---
@@ -139,8 +147,8 @@ public class EnemyHealth : MonoBehaviour
 
     void RandomDrop()
     {
-        // Spawn a random number of coins (corrected range)
-        int randomNumber = Random.Range(1, MoreCoins + 1); // Use +1 for max value inclusion
+        // Spawn a random number of coins
+        int randomNumber = Random.Range(1, MoreCoins + 1);
         for (int t = 0; t < randomNumber; t++)
         {
             if (coinSpawn != null)
@@ -150,14 +158,14 @@ public class EnemyHealth : MonoBehaviour
         }
 
         // 1-in-100 chance to drop the single rare spell item
-        int dropChance = Random.Range(1, 101); // Correct range
+        int dropChance = Random.Range(1, 101);
         if (dropChance == 1 && rareSpellItem != null)
         {
             Instantiate(rareSpellItem, transform.position + spawnOffset, Quaternion.identity);
         }
 
-        // Spawn XP (corrected range)
-        int XpChange = Random.Range(1, amountXp + 1); // Use +1 for max value inclusion
+        // Spawn XP
+        int XpChange = Random.Range(1, amountXp + 1);
         for (int t = 0; t < XpChange; t++)
         {
             if (XPSpawn != null)
