@@ -28,6 +28,9 @@ public class Healthmanager : MonoBehaviour
 
     void Start()
     {
+        LoadHealthData();
+        UpdateHealthUI();
+
         // Find the player and its PlayerHealth component
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
@@ -45,12 +48,9 @@ public class Healthmanager : MonoBehaviour
         }
     }
 
-    void Update()
+    void OnApplicationQuit()
     {
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    TakeDamage(10);
-        //}
+        SaveHealthData();
     }
 
     public void TakeDamage(float damage)
@@ -65,6 +65,7 @@ public class Healthmanager : MonoBehaviour
                 playerHealth.Die();
             }
         }
+        SaveHealthData();
     }
 
     public void Heal(float healingAmount)
@@ -76,10 +77,30 @@ public class Healthmanager : MonoBehaviour
             healthBar.fillAmount = healthAmount / 100f;
             playerCoins.coins -= 10;    // Safe to update now
             playerCoins.updatecointext();
+            SaveHealthData();
         }
         else
         {
             Debug.LogError("playerCoins is not assigned. Cannot charge the player.");
         }
+    }
+
+    void SaveHealthData()
+    {
+        PlayerPrefs.SetFloat("Healthmanager_healthAmount", healthAmount);
+        PlayerPrefs.SetFloat("Healthmanager_SecrethealthAmount", SecrethealthAmount);
+        PlayerPrefs.Save();
+    }
+
+    void LoadHealthData()
+    {
+        healthAmount = PlayerPrefs.GetFloat("Healthmanager_healthAmount", 100f);
+        SecrethealthAmount = PlayerPrefs.GetFloat("Healthmanager_SecrethealthAmount", 100f);
+    }
+
+    void UpdateHealthUI()
+    {
+        if (healthBar != null)
+            healthBar.fillAmount = healthAmount / 100f;
     }
 }

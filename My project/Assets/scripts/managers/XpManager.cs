@@ -14,8 +14,12 @@ public class XpManager : MonoBehaviour
     public TMP_Text Level;
     public int MaxXp = 100;
     public float MaxXpF = 100f;
+
     void Start()
     {
+        LoadXpData();
+        UpdateUI();
+
         // Find the player and its PlayerXp component
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
@@ -32,20 +36,10 @@ public class XpManager : MonoBehaviour
         }
     }
 
-    //void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.L))
-    //    {
-    //        PlusXp(10);
-    //    }
-    //}
-
-    //public void MinusXp(float damage)
-    //{
-    //    xpAmount -= damage;
-    //    xpAmount = Mathf.Clamp(xpAmount, 0, 100);
-    //    healthBar.fillAmount = xpAmount / 100f;
-    //}
+    void OnApplicationQuit()
+    {
+        SaveXpData();
+    }
 
     public void PlusXp(float amount)
     {
@@ -61,7 +55,7 @@ public class XpManager : MonoBehaviour
             playerXp.addXp((int)amount);
         }
 
-        // If the XP bar reaches 100, reset and level up
+        // If the XP bar reaches MaxXp, reset and level up
         if (xpAmount >= MaxXp)
         {
             xpAmount = 0;
@@ -71,6 +65,7 @@ public class XpManager : MonoBehaviour
             updateleveltext();
             healthBar.fillAmount = 0f;
         }
+        SaveXpData(); // Optionally save after every XP change
     }
 
     public void updateleveltext()
@@ -83,5 +78,29 @@ public class XpManager : MonoBehaviour
         {
             Debug.LogWarning("Level not assigned on XpManager.");
         }
+    }
+
+    void SaveXpData()
+    {
+        PlayerPrefs.SetFloat("xpAmount", xpAmount);
+        PlayerPrefs.SetInt("level", level);
+        PlayerPrefs.SetInt("MaxXp", MaxXp);
+        PlayerPrefs.SetFloat("MaxXpF", MaxXpF);
+        PlayerPrefs.Save();
+    }
+
+    void LoadXpData()
+    {
+        xpAmount = PlayerPrefs.GetFloat("xpAmount", 0f);
+        level = PlayerPrefs.GetInt("level", 0);
+        MaxXp = PlayerPrefs.GetInt("MaxXp", 100);
+        MaxXpF = PlayerPrefs.GetFloat("MaxXpF", 100f);
+    }
+
+    void UpdateUI()
+    {
+        if (healthBar != null)
+            healthBar.fillAmount = xpAmount / MaxXpF;
+        updateleveltext();
     }
 }

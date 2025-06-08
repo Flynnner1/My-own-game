@@ -27,26 +27,26 @@ public class ProximityMusicPlayer : MonoBehaviour
     void Start()
     {
         logPrefix = $"[ProximityMusicPlayer ({gameObject.name})]: ";
-        Debug.Log(logPrefix + "Starting initialization...");
+        //Debug.Log(logPrefix + "Starting initialization...");
 
         // Get the required AudioSource component
         audioSource = GetComponent<AudioSource>();
-        Debug.Log(logPrefix + "AudioSource component obtained.");
+        //Debug.Log(logPrefix + "AudioSource component obtained.");
 
         // --- Set the Volume ---
         audioSource.volume = targetVolume; // Set the volume based on the Inspector value
-        Debug.Log(logPrefix + $"Setting AudioSource volume to: {targetVolume}");
+        //Debug.Log(logPrefix + $"Setting AudioSource volume to: {targetVolume}");
         // --- End Volume Setting ---
 
         // Find the player by tag if not assigned in the Inspector
         if (playerTransform == null)
         {
-            Debug.Log(logPrefix + "Player Transform not assigned in Inspector, attempting to find by tag 'Player'.");
+            //Debug.Log(logPrefix + "Player Transform not assigned in Inspector, attempting to find by tag 'Player'.");
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
             if (playerObject != null)
             {
                 playerTransform = playerObject.transform;
-                Debug.Log(logPrefix + $"Player found: {playerObject.name}");
+                //Debug.Log(logPrefix + $"Player found: {playerObject.name}");
             }
             else
             {
@@ -57,7 +57,7 @@ public class ProximityMusicPlayer : MonoBehaviour
         }
         else
         {
-            Debug.Log(logPrefix + $"Player Transform assigned in Inspector: {playerTransform.name}");
+            //Debug.Log(logPrefix + $"Player Transform assigned in Inspector: {playerTransform.name}");
         }
 
         // Configure the AudioSource
@@ -66,7 +66,7 @@ public class ProximityMusicPlayer : MonoBehaviour
             audioSource.clip = musicClip;
             audioSource.playOnAwake = false;
             audioSource.loop = true;
-            Debug.Log(logPrefix + $"Music Clip '{musicClip.name}' assigned and AudioSource configured.");
+            //Debug.Log(logPrefix + $"Music Clip '{musicClip.name}' assigned and AudioSource configured.");
         }
         else
         {
@@ -74,7 +74,7 @@ public class ProximityMusicPlayer : MonoBehaviour
             this.enabled = false;
         }
 
-        Debug.Log(logPrefix + "Initialization complete.");
+        //Debug.Log(logPrefix + "Initialization complete.");
     }
 
     void Update()

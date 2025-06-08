@@ -14,9 +14,10 @@ public class BallMovement : MonoBehaviour
     public Transform playerTransform;
 
     public EnemyHealth EnemyHealth;
+    public NpcHealth npcHealth;
 
-    
-    
+
+
 
     void Start()
     {
@@ -45,7 +46,7 @@ public class BallMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon"))
+        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon") || other.CompareTag("Npc"))
         {
             // Get the EnemyHealth component from the collided object
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
@@ -53,6 +54,12 @@ public class BallMovement : MonoBehaviour
             {
                 
                 enemyHealth.TakeDamage(damageAmount);
+            }
+            NpcHealth npcHealth = other.gameObject.GetComponent<NpcHealth>();
+            if (npcHealth != null)
+            {
+
+                npcHealth.TakeDamage(damageAmount);
             }
 
             // Destroy the projectile upon collision
