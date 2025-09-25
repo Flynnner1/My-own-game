@@ -63,8 +63,18 @@ public class NpcHealth : MonoBehaviour
             {
                 fighting = false;
             }
-            
         }
+
+        // Enable/disable the non-trigger PolygonCollider2D based on fighting state
+        PolygonCollider2D[] colliders = GetComponents<PolygonCollider2D>();
+        foreach (var col in colliders)
+        {
+            if (!col.isTrigger)
+            {
+                col.enabled = fighting;
+            }
+        }
+
         if (fighting)
         {
             time += Time.deltaTime;
