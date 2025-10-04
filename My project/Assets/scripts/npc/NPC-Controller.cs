@@ -15,7 +15,6 @@ public class NPCController : MonoBehaviour
     public QuestTracer questTracer;
 
     public bool npcQuest = false;
-    // Removed npcUIstate as we will use the public property instead
 
     // Public property to check if any relevant UI is open
     public bool IsUIOpen { get; private set; }
@@ -52,7 +51,7 @@ public class NPCController : MonoBehaviour
             }
             else
             {
-                smallquestUI.SetActive(false); // Hide if conditions aren't met or main UI is open
+                smallquestUI.SetActive(false); // <<-- SET TO FALSE HERE
             }
         }
         // --- End Small Quest UI Logic ---
@@ -75,7 +74,7 @@ public class NPCController : MonoBehaviour
             if (questUI != null)
                 questUI.SetActive(false);
             if (smallquestUI != null)
-                smallquestUI.SetActive(false);
+                smallquestUI.SetActive(false); // <<-- SET TO FALSE HERE
             if (inventoryUI != null)
                 inventoryUI.SetActive(false);
 
@@ -83,7 +82,6 @@ public class NPCController : MonoBehaviour
             IsUIOpen = false;
         }
     }
-
 
     public void AcceptQuestButton()
     {

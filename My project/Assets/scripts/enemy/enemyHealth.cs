@@ -131,6 +131,10 @@ public class EnemyHealth : MonoBehaviour
             {
                 questTracer.AddKill();
             }
+            else if (questTracer.monster == "Cow" && gameObject.CompareTag("Cow"))
+            {
+                questTracer.AddKill();
+            }
             // Consider adding an 'else' or default case if needed
         }
 
