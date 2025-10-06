@@ -14,16 +14,15 @@ public class ProjectileDamage : MonoBehaviour
             Debug.Log("Projectile hit: " + other.name);
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             CowHealth cowHealth = other.GetComponent<CowHealth>();
-            if (enemyHealth != null)
-            {
+            
                 enemyHealth.TakeDamage(damageAmount);
                 Debug.Log("the enemy is hit (EnemyHealth)");
-            }
-            if (cowHealth != null)
-            {
+            
+            
                 cowHealth.TakeDamage(damageAmount);
                 Debug.Log("the cow is hit (CowHealth)");
-            }
+            
         }
+        
     }
 }

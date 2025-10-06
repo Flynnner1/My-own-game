@@ -18,6 +18,7 @@ TagManager:
   - slot 6
   - slot 1
   - Npc
+  - Cow
   layers:
   - Default
   - TransparentFX
