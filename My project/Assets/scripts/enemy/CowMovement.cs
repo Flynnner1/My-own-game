@@ -10,7 +10,7 @@ public class CowMovement : MonoBehaviour
 
     private float currentSpeed;
     private bool isRunning = false;
-    private float runTimer = 0f;
+    private float runTimer = 3f;
 
     private Vector2 target;
     private float changeTargetTime = 2f;

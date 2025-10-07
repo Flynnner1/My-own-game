@@ -35,6 +35,8 @@ public class CowHealth : MonoBehaviour
 
     void Start()
     {
+        //gameObject.tag = "Cow";
+        //Debug.Log("Cow tag assigned to " + gameObject.name);
         currentHealth = maxHealth;
 
         // --- Find Scene Managers ---

@@ -9,20 +9,22 @@ public class ProjectileDamage : MonoBehaviour
     // 2D trigger method!
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon") || other.CompareTag("Cow"))
+        // Check if the collided object is any of the enemy types.
+        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon") || other.CompareTag("COW"))
         {
             Debug.Log("Projectile hit: " + other.name);
+
+            // Try to get the EnemyHealth component.
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-            CowHealth cowHealth = other.GetComponent<CowHealth>();
-            
+            if (enemyHealth != null)
+            {
+                // If it exists, deal damage.
                 enemyHealth.TakeDamage(damageAmount);
-                Debug.Log("the enemy is hit (EnemyHealth)");
-            
-            
-                cowHealth.TakeDamage(damageAmount);
-                Debug.Log("the cow is hit (CowHealth)");
+                Debug.Log(other.name + " was hit (EnemyHealth)");
+            }
+
+            // Try to get the CowHealth component.
             
         }
-        
     }
 }

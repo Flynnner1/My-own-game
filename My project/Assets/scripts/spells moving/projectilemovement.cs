@@ -46,25 +46,34 @@ public class BallMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon") || other.CompareTag("Npc"))
+        // The list of tags to check against. Note the change from "COW" to "Cow".
+        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon") || other.CompareTag("Npc") || other.CompareTag("COW"))
         {
-            // Get the EnemyHealth component from the collided object
+            Debug.Log("Projectile hit: " + other.name);
+            // Try to get the EnemyHealth component from the collided object.
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                
                 enemyHealth.TakeDamage(damageAmount);
             }
+
+            // Try to get the NpcHealth component.
             NpcHealth npcHealth = other.gameObject.GetComponent<NpcHealth>();
             if (npcHealth != null)
             {
-
                 npcHealth.TakeDamage(damageAmount);
             }
 
-            // Destroy the projectile upon collision
+            // Try to get the CowHealth component.
+            CowHealth cowHealth = other.gameObject.GetComponent<CowHealth>();
+            if (cowHealth != null)
+            {
+                cowHealth.TakeDamage(damageAmount);
+                Debug.Log(other.name + " was hit (CowHealth)");
+            }
+
+            // Destroy the projectile upon hitting any valid target.
             Destroy(gameObject);
         }
     }
-
 }
