@@ -12,7 +12,7 @@ public class PoisonCloud : MonoBehaviour
     public float damageInterval = 2f;
 
     [Header("Targeting")]
-    public List<string> targetTags = new List<string> { "Player", "Skeleton", "Slime", "Zombie", "Demon" };
+    public List<string> targetTags = new List<string> { "Player", "Skeleton", "Slime", "Zombie", "Demon", "Npc", "COW" };
 
     private List<GameObject> targetsInCloud = new List<GameObject>();
 

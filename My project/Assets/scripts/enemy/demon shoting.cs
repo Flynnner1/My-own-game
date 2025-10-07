@@ -4,74 +4,50 @@ using UnityEngine;
 
 public class demonshoting : MonoBehaviour
 {
-    public Transform player; // Reference to the player's Transform
-    public GameObject projectilePrefab; // Reference to the projectile prefab
-    public float range = 10f; // Range within which the enemy can shoot
-    public float shootingInterval = 3f; // Interval between shots
-    public Transform projectileContainer1; // Reference to the empty container for projectiles
-    public Transform projectileContainer2; // Reference to the empty container for projectiles
+    public GameObject fireball;
+    public GameObject firewall;
+    public GameObject CrimsonBeam;
 
-    public Transform projectileContainer3; // Reference to the empty container for projectiles
-    private int randomShoting;
+    public float timer;
+    public float cooldowntimer = 7;
 
-    void Start()
+    public int randomInt = 0;
+
+    public int range = 10;
+
+    public GameObject spawnPlace;
+
+    public Transform player;
+
+    public void Start()
     {
-        // Find the player object in the scene using the tag "Player"
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
             player = playerObject.transform;
         }
-
-        // Start the shooting coroutine
-        Shooting();
-    }
-
-    void Update()
-    {
-        randomShoting = Random.Range(1, 4);  // 1 to 3
-
-        if (randomShoting ==1)
+        if (player != null && Vector3.Distance(transform.position, player.position) <= range)
         {
-            StartCoroutine(ShootFireWallAtPlayer());
-        }
-        // Check if the player reference is assigned
-        if (player != null)
-        {
-            // Calculate the distance to the player
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-            // Check if the player is within range
-            // This value is used to determine whether to shoot rather than for projectile homing
-            // (Projectile movement is handled in EnemyProjectileMovement)
-        }
-    }
-    public void Shooting()
-    {
-
-    }
-
-    IEnumerator ShootFireWallAtPlayer()
-    {
-        while (true)
-        {
-            // Check the distance again before shooting
-            if (player != null && Vector3.Distance(transform.position, player.position) <= range)
+            timer += Time.deltaTime;
+            if (timer >= cooldowntimer)
             {
-                // Instantiate the projectile prefab at the projectile container's position and rotation
-                GameObject FireWall = Instantiate(projectilePrefab, projectileContainer1.position, projectileContainer1.rotation);
-                // (Do NOT try to assign a PlayerHealth component here since the projectile
-                // should have an EnemyProjectileMovement component which handles finding the player.)
-
-                // Set the projectile's parent to the projectile container if desired
-                if (projectileContainer1 != null)
+                int randomInt = Random.Range(1, 101);
+                if (randomInt <= 60)
                 {
-                    FireWall.transform.parent = projectileContainer1;
+                    Instantiate(fireball, spawnPlace.transform.position, spawnPlace.transform.rotation);
                 }
+                // 30% chance for Firewall (if number is 61-90)
+                else if (randomInt <= 90)
+                {
+                    Instantiate(firewall, spawnPlace.transform.position, spawnPlace.transform.rotation);
+                }
+                // 10% chance for Crimson Beam (if number is 91-100)
+                else
+                {
+                    Instantiate(CrimsonBeam, spawnPlace.transform.position, spawnPlace.transform.rotation);
+                }
+                timer = 0f;
             }
-
-            // Wait for the shooting interval before the next shot
-            Shooting();
         }
     }
 }
