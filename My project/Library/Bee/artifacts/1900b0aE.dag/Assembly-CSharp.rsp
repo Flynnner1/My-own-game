@@ -385,6 +385,7 @@
 "Assets/scripts/enemy/SlimeMovement.cs"
 "Assets/scripts/enemy/stayinrange.cs"
 "Assets/scripts/FlowingWater.cs"
+"Assets/scripts/graveyardMovement.cs"
 "Assets/scripts/Graveyardspell.cs"
 "Assets/scripts/look at demons.cs"
 "Assets/scripts/managers/game manage.cs"

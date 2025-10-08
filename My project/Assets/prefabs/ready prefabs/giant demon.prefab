@@ -143,7 +143,6 @@ MonoBehaviour:
   MoreCoins: 1
   amountXp: 10
   spawnOffset: {x: 0, y: 0, z: 0}
-  destroyWhenFar: 0
   distanceThreshold: 40
   player: {fileID: 0}
   killCounter: {fileID: 0}

@@ -19,7 +19,7 @@ public class demonshoting : MonoBehaviour
 
     public Transform player;
 
-    public void Start()
+    public void Update()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)

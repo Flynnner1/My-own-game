@@ -111,7 +111,6 @@ MonoBehaviour:
   MoreCoins: 150
   amountXp: 220
   spawnOffset: {x: 0, y: 0, z: 0}
-  destroyWhenFar: 0
   distanceThreshold: 40
   player: {fileID: 0}
   killCounter: {fileID: 0}
@@ -127,9 +126,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd98027405050544a7bce8f4d402b5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  rotationOffset: 0
+  enemiesTag: Demon
+  moveSpeed: 5
+  detectionRadius: 30
+  rotationSpeed: 180
   searchInterval: 4
+  switchTargetInterval: 3
 --- !u!114 &7574553127556058918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heal: 20
+  multi: 1.02
 --- !u!60 &-2953024660772980707
 PolygonCollider2D:
   m_ObjectHideFlags: 0

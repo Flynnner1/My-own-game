@@ -15,30 +15,53 @@ public class GraveyardSpell : MonoBehaviour
 
     public int maxEnemies = 3;
 
+    public float destroyTime = 3.3f;
+
+    // The enemiesTag is no longer needed for counting, but might be used by other systems.
     public string enemiesTag = "";
 
     public Transform player;
 
-    private BoxCollider2D spawnArea;
-    public void Update()
-    {
-        
+    public Transform[] spawnPoints;
+    private int nextSpawnPointIndex = 0;
 
+    // A private list to track only the enemies spawned by this specific spell instance.
+    private List<GameObject> spawnedEnemies;
+
+    void Start()
+    {
+        // Initialize the list of enemies for this spell instance.
+        spawnedEnemies = new List<GameObject>();
+
+        // Set the timer to destroy this spell object. This is now only called once.
+        Destroy(gameObject, destroyTime);
+    }
+
+    void Update()
+    {
         if (Time.time >= lastSpawnTime + spawnInterval)
         {
-            // Count the number of enemies currently in the scene
-            int enemyCount = GameObject.FindGameObjectsWithTag(enemiesTag).Length;
+            // Before counting, remove any enemies from the list that may have been destroyed (e.g., by the player).
+            spawnedEnemies.RemoveAll(item => item == null);
 
-            // Check if the number of enemies is less than the maximum allowed
+            // Count only the enemies that this instance has spawned.
+            int enemyCount = spawnedEnemies.Count;
+
+            // Check if the number of enemies is less than the maximum allowed for this spell.
             if (enemyCount < maxEnemies)
             {
-                // Spawn a new enemy at a random position within the spawn area
-                Vector3 spawnPosition = GetRandomPositionWithinSpawnArea();
+                if (spawnPoints == null || spawnPoints.Length == 0)
+                {
+                    Debug.LogError("Spawn points are not set up in the GraveyardSpell script!");
+                    return;
+                }
 
-                // Generate a random number
+                Vector3 spawnPosition = spawnPoints[nextSpawnPointIndex].position;
+                nextSpawnPointIndex = (nextSpawnPointIndex + 1) % spawnPoints.Length;
+
                 int randomNumber = Random.Range(1, 551);
 
-                GameObject spawnedEnemy;
+                GameObject spawnedEnemy = null;
                 if (randomNumber <= 30)
                 {
                     spawnedEnemy = Instantiate(specialEnemyPrefab, spawnPosition, Quaternion.identity);
@@ -65,28 +88,20 @@ public class GraveyardSpell : MonoBehaviour
                     Debug.Log("normal version has spawned");
                 }
 
-                // Pass the player's transform to the newly spawned enemy
+                // Add the newly created enemy to this spell's personal list.
+                if (spawnedEnemy != null)
+                {
+                    spawnedEnemies.Add(spawnedEnemy);
+                }
+
                 EnemyHealth enemyHealth = spawnedEnemy.GetComponent<EnemyHealth>();
                 if (enemyHealth != null)
                 {
                     enemyHealth.player = player;
                 }
 
-                // Update the last spawn time
                 lastSpawnTime = Time.time;
             }
         }
-        Vector3 GetRandomPositionWithinSpawnArea()
-        {
-            // Get the bounds of the BoxCollider2D
-            Bounds bounds = spawnArea.bounds;
-
-            // Generate a random position within the bounds
-            float x = Random.Range(bounds.min.x, bounds.max.x);
-            float y = Random.Range(bounds.min.y, bounds.max.y);
-
-            return new Vector3(x, y, 0);
-        }
-
     }
 }

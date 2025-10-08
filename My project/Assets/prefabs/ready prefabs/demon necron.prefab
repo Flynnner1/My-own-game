@@ -65,7 +65,7 @@ Transform:
   m_GameObject: {fileID: 3614292579463561247}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1761.8383, y: 2755.877, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -161,7 +161,6 @@ MonoBehaviour:
   MoreCoins: 12
   amountXp: 10
   spawnOffset: {x: 0, y: 0, z: 0}
-  destroyWhenFar: 0
   distanceThreshold: 40
   player: {fileID: 0}
   killCounter: {fileID: 0}
@@ -197,7 +196,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6615351894193462870, guid: 4c9f32b3a4a0d5c48b900e4a7d10f473, type: 3}
   range: 15
   shootingInterval: 15
-  projectileContainer: {fileID: 0}
+  projectileContainer: {fileID: 5231942595175574385}
 --- !u!60 &5533343080452426729
 PolygonCollider2D:
   m_ObjectHideFlags: 0
