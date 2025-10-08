@@ -17,19 +17,27 @@ public class QuestTracer : MonoBehaviour
 
     [Header("Quest Variables")]
     public int kills = 0;
+    public int cowkills = 0;
     public int currentkils = 0;
     public int randomMonster;
     public string monster = "";
     public bool Quest = false;
+    public bool Quest2 = false;
 
     public int randomNum;
     public bool quest1 = false;
+    public bool quest2 = false;
     public bool succes = false;
+    public bool succes1 = false;
 
-    
+    public int currentCowkils = 0;
+
     private float time1;
 
     private bool accepted = false;
+    private bool accepted1 = false;
+
+    private float cooldownTimer = 0.2f;
 
     // Remove GetComponent usage to avoid null references if on different objects
     //public Inventory inventory;
@@ -48,19 +56,23 @@ public class QuestTracer : MonoBehaviour
 
     void Update()
     {
-        //time1 += Time.deltaTime;
-        //if (time1 >= cooldownTimerfireball)
-        //{
-        //    if (Input.GetKey(KeyCode.Q))
-        //    {
-        //        AddKill();
-        //        time1 = 0f;
-        //    }
-        //}
+        time1 += Time.deltaTime;
+        if (time1 >= cooldownTimer)
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                AddKillCow();
+                time1 = 0f;
+            }
+        }
 
         if (kills == currentkils && kills > 0)
         {
             QuestCompleted();
+        }
+        if (kills == currentCowkils && cowkills > 0)
+        {
+            QuestCompletedCow();
         }
     }
 
@@ -160,5 +172,80 @@ public class QuestTracer : MonoBehaviour
         {
             Debug.LogWarning("No PlayerCoins reference found.");
         }
+    }
+    public void acceptQuestCow()
+    {
+        quest2 = true;
+        //currentkils = 0;
+        //kills = 0;
+        //currentQuest();
+        UpdateQuest1();
+        accepted1 = true;
+    }
+
+    void AddKillCow()
+    {
+        if (quest2)
+        {
+            currentCowkils++;
+            UpdateQuest1();
+        }
+    }
+    public void UpdateQuest1()
+    {
+        amountOfKills.text = kills.ToString();
+        currentKills.text = currentCowkils.ToString();
+        monsterText.text = "Cow";
+
+        smallamountOfKills.text = kills.ToString();
+        smallcurrentKills.text = currentCowkils.ToString();
+        smallmonsterText.text = "Cow";
+    }
+    public void currentQuestCow()
+    {
+        if (!accepted1)
+        {
+            
+            randomNum = Random.Range(1, 11);     
+            Quest = true;
+
+            
+
+            if (Quest2)
+            {
+                kills += randomNum;
+            }
+            UpdateQuest1();
+        }
+    }
+    public void collectCowQuest()
+    {
+        //if (!inventory)
+        //{
+        //    Debug.LogWarning("There is no inventory");
+        //    return;
+        //}
+
+        if (quest2 && succes1)
+        {
+            int coinsCollected = Random.Range(5, 20);
+            coinsCollected += kills;
+
+            Debug.Log("You get " + coinsCollected + " coins");
+            AddCoins(coinsCollected);
+
+            currentkils = 0;
+            kills = 0;
+            quest2 = false;
+            succes1 = false;
+            randomNum = 0;
+            accepted = false;
+            currentQuestCow();
+        }
+    }
+    public void QuestCompletedCow()
+    {
+        succes1 = true;
+        Debug.Log("Quest completed!");
     }
 }
