@@ -10,6 +10,11 @@ public class QuestTracer : MonoBehaviour
     public TMP_Text currentKills;
     public TMP_Text monsterText;
 
+    [Header("UI Text References (Cow)")]
+    public TMP_Text amountOfKillsOfCow;
+    public TMP_Text currentKillsOfCow;
+    public TMP_Text monsterTextOfCow;
+
     [Header("UI Text References (Small UI)")]
     public TMP_Text smallamountOfKills;
     public TMP_Text smallcurrentKills;
@@ -107,7 +112,7 @@ public class QuestTracer : MonoBehaviour
         monsterText.text = monster;
 
         smallamountOfKills.text = kills.ToString();
-        smallcurrentKills.text = currentkils.ToString();
+        smallcurrentKills.text = currentCowkils.ToString();
         smallmonsterText.text = monster;
     }
 
@@ -193,13 +198,11 @@ public class QuestTracer : MonoBehaviour
     }
     public void UpdateQuest1()
     {
-        amountOfKills.text = kills.ToString();
-        currentKills.text = currentCowkils.ToString();
-        monsterText.text = "Cow";
+        amountOfKillsOfCow.text = kills.ToString();
+        currentKillsOfCow.text = currentCowkils.ToString();
+        monsterTextOfCow.text = "Cow";
 
-        smallamountOfKills.text = kills.ToString();
-        smallcurrentKills.text = currentCowkils.ToString();
-        smallmonsterText.text = "Cow";
+        
     }
     public void currentQuestCow()
     {
