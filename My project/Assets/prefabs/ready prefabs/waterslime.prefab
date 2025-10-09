@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6819881789654179661}
   - component: {fileID: 2294515805655589761}
   - component: {fileID: 7448083572890721140}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Slime
   m_Icon: {fileID: 0}
@@ -146,6 +146,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!60 &3144011378129723532
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -369,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 461957919096717575}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: waterslime
   m_TagString: Untagged
   m_Icon: {fileID: 0}

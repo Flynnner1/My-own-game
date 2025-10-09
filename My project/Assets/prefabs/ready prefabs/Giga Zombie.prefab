@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1207526954684755636}
   - component: {fileID: 1792663209958605879}
   - component: {fileID: 1754909109469411640}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -145,14 +145,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db627a20b194474db2478199260b783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyId: Zombie1
   maxHealth: 300
   currentHealth: 0
-  itemToSpawn: {fileID: 2496454831491692112, guid: da51e3b1523a31749bfef1e787a4e964, type: 3}
-  enemy: {fileID: 5794472793935697039}
-  spawnOffset: {x: 0, y: 0, z: 0}
+  coinSpawn: {fileID: 0}
+  XPSpawn: {fileID: 0}
+  rareSpellItem: {fileID: 0}
   MoreCoins: 20
-  buttonreaction: {fileID: 0}
-  questTracer: {fileID: 0}
+  amountXp: 10
+  spawnOffset: {x: 0, y: 0, z: 0}
+  distanceThreshold: 40
+  player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &8037846101421699037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +187,10 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 7
   stopRange: 40
+  Cowspeed: 1
+  runSpeed: 3
+  runDuration: 2
+  Cow: 0
 --- !u!60 &1792663209958605879
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -380,7 +388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5304309988652729495}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Giga Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}

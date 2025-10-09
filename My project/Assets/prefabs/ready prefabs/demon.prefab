@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2686190044126345038}
   - component: {fileID: 4141153854386445721}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: demon trident
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 611231257992687515}
   - component: {fileID: 392195520513467665}
   - component: {fileID: 4459349367549574413}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: demon
   m_TagString: Demon
   m_Icon: {fileID: 0}

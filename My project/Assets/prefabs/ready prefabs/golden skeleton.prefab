@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1458705816456663824}
   - component: {fileID: 7071749033840463315}
   - component: {fileID: 2915235030771647069}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Skeleton
   m_Icon: {fileID: 0}
@@ -354,6 +354,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &7071749033840463315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6923714882930385809}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: golden skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099318426330972759}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: projectilespawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,6 +460,10 @@ PrefabInstance:
     - target: {fileID: 6946193124956089080, guid: 292a4cd05fae77a4da0f28e126037ed1, type: 3}
       propertyPath: m_Name
       value: gold crossbow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946193124956089080, guid: 292a4cd05fae77a4da0f28e126037ed1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9064923737962360331, guid: 292a4cd05fae77a4da0f28e126037ed1, type: 3}
       propertyPath: m_LocalScale.x

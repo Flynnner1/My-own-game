@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 960700269480888604}
   - component: {fileID: 4610113771157262432}
   - component: {fileID: 6267261722982334198}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: demon mage
   m_TagString: Demon
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 928588073516713341}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: spawn point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9029622075491532940}
   - component: {fileID: 6191294765699541709}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: demon wand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

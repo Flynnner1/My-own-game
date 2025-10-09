@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8307621329628865951}
   - component: {fileID: 5289628278894574636}
   - component: {fileID: 8826650803837276846}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Slime
   m_Icon: {fileID: 0}
@@ -156,6 +156,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &6187556049169471083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2905121835932648647}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: gold-slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}

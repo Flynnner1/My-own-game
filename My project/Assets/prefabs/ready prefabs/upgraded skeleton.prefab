@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2169733301868674269}
   - component: {fileID: 1448846114273855542}
   - component: {fileID: 8651294494347127812}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Skeleton
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6767062263078515058}
   - component: {fileID: 3205793168979714895}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body armor (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9015606966418733620}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: upgraded skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2103240750253663951}
   - component: {fileID: 4352539815984998272}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pixil-frame-0 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 599086290978310416}
   - component: {fileID: 3492986061039893403}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: helmet (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3241255245050763712}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: projectile spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}

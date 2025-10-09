@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5128136455305394824}
   - component: {fileID: 1563464907374105576}
   - component: {fileID: 2657500262616150673}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2436464102271094767}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: White Cow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

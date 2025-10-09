@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7545870932964960392}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: sand zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 1822125455041030561}
   - component: {fileID: 8343398448091514322}
   - component: {fileID: 5913458053828029255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -336,6 +336,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &6279424070049300900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +367,10 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 6
   stopRange: 25
+  Cowspeed: 1
+  runSpeed: 3
+  runDuration: 2
+  Cow: 0
 --- !u!114 &8343398448091514322
 MonoBehaviour:
   m_ObjectHideFlags: 0

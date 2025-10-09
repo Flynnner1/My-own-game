@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5591596151851771721}
   - component: {fileID: -1326252600811123780}
   - component: {fileID: 2070614781174544068}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: giant demon
   m_TagString: Demon
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5500961511269155518}
   - component: {fileID: 1284315722126902380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: demon hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

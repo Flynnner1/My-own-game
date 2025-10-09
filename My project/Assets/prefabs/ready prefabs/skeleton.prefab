@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7591865922073984628}
   - component: {fileID: 7543130829922061726}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: crossbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4370325328090626005}
   - component: {fileID: 2789611466853301864}
   - component: {fileID: 3064462297304232122}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Skeleton
   m_Icon: {fileID: 0}
@@ -375,6 +375,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!60 &3064462297304232122
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -484,7 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1254814125999288704}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3409594070607156855}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: enemyprojectilespawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}

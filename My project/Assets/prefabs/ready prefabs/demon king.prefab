@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2953024660772980707}
   - component: {fileID: 2890758077836545377}
   - component: {fileID: 5739462937287340429}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: demon king
   m_TagString: Demon
   m_Icon: {fileID: 0}

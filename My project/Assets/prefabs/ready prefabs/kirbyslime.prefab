@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5856087972891822899}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: kirbyslime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 5389835959502009705}
   - component: {fileID: 1793282205801719569}
   - component: {fileID: 1471768912753978590}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Slime
   m_Icon: {fileID: 0}
@@ -178,6 +178,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &4773599238382861969
 MonoBehaviour:
   m_ObjectHideFlags: 0

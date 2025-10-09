@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4841903037431750905}
   - component: {fileID: 4387536202463131205}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pixil-frame-0 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1269457607678126880}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: enemyprojectilespawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 111695943298300775}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ice skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 5351143234586364613}
   - component: {fileID: 3229774320736778872}
   - component: {fileID: 2739042729610312126}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Skeleton
   m_Icon: {fileID: 0}
@@ -311,6 +311,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 2, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!60 &5351143234586364613
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5026591317241665212}
   - component: {fileID: 2477765666676350226}
   - component: {fileID: 3107980410355143961}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: drownd zombie
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -105,6 +105,10 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 5
   stopRange: 25
+  Cowspeed: 1
+  runSpeed: 3
+  runDuration: 2
+  Cow: 0
 --- !u!114 &6932718053459578043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +147,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &5026591317241665212
 MonoBehaviour:
   m_ObjectHideFlags: 0

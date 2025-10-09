@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2272984699830704619}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: projectile spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3177965412560485804}
   - component: {fileID: 7977133194754818268}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: super shoulder plates
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 281895717523500798}
   - component: {fileID: 3017820507489960018}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: super helmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1400520452486615757}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: super skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 668848580899798486}
   - component: {fileID: 6958515199969675714}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: super crossbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 8513036271473212335}
   - component: {fileID: 1261348201851300222}
   - component: {fileID: 6959998491053940286}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Skeleton
   m_Icon: {fileID: 0}
@@ -464,6 +464,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &8513036271473212335
 MonoBehaviour:
   m_ObjectHideFlags: 0

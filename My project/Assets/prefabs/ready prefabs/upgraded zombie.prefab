@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6001274868414259261}
   - component: {fileID: 8933897522596782624}
   - component: {fileID: 6900817671333829728}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -105,6 +105,10 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 6
   stopRange: 30
+  Cowspeed: 1
+  runSpeed: 3
+  runDuration: 2
+  Cow: 0
 --- !u!114 &8932024960038150281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +147,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   distanceThreshold: 40
   player: {fileID: 0}
+  killCounter: {fileID: 0}
 --- !u!114 &6001274868414259261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3473443152065996317}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: upgraded zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
