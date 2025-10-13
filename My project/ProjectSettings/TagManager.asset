@@ -19,14 +19,16 @@ TagManager:
   - slot 1
   - Npc
   - Cow
+  - Koe
+  - COW
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
-  - 
+  - Demon King
   - 
   - 
   - 
