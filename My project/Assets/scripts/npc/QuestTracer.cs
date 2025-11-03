@@ -21,42 +21,41 @@ public class QuestTracer : MonoBehaviour
     public TMP_Text smallmonsterText;
 
     [Header("Quest Variables")]
-    public int kills = 0;
-    public int cowkills = 0;
-    public int currentkils = 0;
+    // Monster quest (generic)
+    public int kills = 0;            // goal for generic monster quest
+    public int currentkils = 0;      // progress for generic monster quest
     public int randomMonster;
     public string monster = "";
     public bool Quest = false;
-    public bool Quest2 = false;
-
-    public int randomNum;
-    public bool quest1 = false;
-    public bool quest2 = false;
+    public bool quest1 = false;      // accepted/active flag for monster quest
     public bool succes = false;
+
+    // Cow quest
+    public int cowkills = 0;         // goal for cow quest
+    public int currentCowkils = 0;   // progress for cow quest
+    public bool Quest2 = false;      // cow quest exists flag
+    public bool quest2 = false;      // accepted/active flag for cow quest
     public bool succes1 = false;
 
-    public int currentCowkils = 0;
+    public int randomNum;
 
     private float time1;
+    private float cooldownTimer = 0.2f;
 
     private bool accepted = false;
     private bool accepted1 = false;
 
-    private float cooldownTimer = 0.2f;
-
     // Remove GetComponent usage to avoid null references if on different objects
-    //public Inventory inventory;
     public InventoryItem inventroyItem;
     public PlayerCoins playerCoins;
 
     void Start()
     {
-        // Assign references by finding them in the scene, or wire them in the Inspector
-        //if (!inventory) inventory = FindObjectOfType<Inventory>();
         if (!inventroyItem) inventroyItem = FindObjectOfType<InventoryItem>();
         if (!playerCoins) playerCoins = FindObjectOfType<PlayerCoins>();
 
         currentQuest();
+        currentQuestCow();
     }
 
     void Update()
@@ -71,16 +70,20 @@ public class QuestTracer : MonoBehaviour
             }
         }
 
-        if (kills == currentkils && kills > 0)
+        // Check completion for monster quest
+        if (kills > 0 && currentkils >= kills)
         {
             QuestCompleted();
         }
-        if (kills == currentCowkils && cowkills > 0)
+
+        // Check completion for cow quest
+        if (cowkills > 0 && currentCowkils >= cowkills)
         {
             QuestCompletedCow();
         }
     }
 
+    // Start or generate a new generic monster quest (if none accepted)
     public void currentQuest()
     {
         if (!accepted)
@@ -94,26 +97,28 @@ public class QuestTracer : MonoBehaviour
                 case 1: monster = "Slime"; break;
                 case 2: monster = "Zombie"; break;
                 default: monster = "Skeleton"; break;
-                    //default: monster = "Demon"; break;
             }
 
             if (Quest)
             {
-                kills += randomNum;
+                kills = randomNum;
             }
+
             UpdateQuest();
         }
     }
 
+    // Update UI for generic monster quest + small UI
     public void UpdateQuest()
     {
-        amountOfKills.text = kills.ToString();
-        currentKills.text = currentkils.ToString();
-        monsterText.text = monster;
+        if (amountOfKills) amountOfKills.text = kills.ToString();
+        if (currentKills) currentKills.text = currentkils.ToString();
+        if (monsterText) monsterText.text = monster;
 
-        smallamountOfKills.text = kills.ToString();
-        smallcurrentKills.text = currentCowkils.ToString();
-        smallmonsterText.text = monster;
+        // Small UI should reflect the same monster quest
+        if (smallamountOfKills) smallamountOfKills.text = kills.ToString();
+        if (smallcurrentKills) smallcurrentKills.text = currentkils.ToString();
+        if (smallmonsterText) smallmonsterText.text = monster;
     }
 
     public void AddKill()
@@ -128,27 +133,20 @@ public class QuestTracer : MonoBehaviour
     public void acceptQuest()
     {
         quest1 = true;
-        //currentkils = 0;
-        //kills = 0;
-        //currentQuest();
-        UpdateQuest();
+        currentkils = 0;
+        succes = false;
         accepted = true;
+        UpdateQuest();
     }
 
     public void QuestCompleted()
     {
         succes = true;
-        Debug.Log("Quest completed!");
+        Debug.Log("Monster quest completed!");
     }
 
     public void collectQuest()
     {
-        //if (!inventory)
-        //{
-        //    Debug.LogWarning("There is no inventory");
-        //    return;
-        //}
-
         if (quest1 && succes)
         {
             int coinsCollected = Random.Range(5, 20);
@@ -157,6 +155,7 @@ public class QuestTracer : MonoBehaviour
             Debug.Log("You get " + coinsCollected + " coins");
             AddCoins(coinsCollected);
 
+            // reset monster quest state
             currentkils = 0;
             kills = 0;
             quest1 = false;
@@ -178,16 +177,18 @@ public class QuestTracer : MonoBehaviour
             Debug.LogWarning("No PlayerCoins reference found.");
         }
     }
+
+    // Accept cow quest
     public void acceptQuestCow()
     {
         quest2 = true;
-        //currentkils = 0;
-        //kills = 0;
-        //currentQuest();
-        UpdateQuest1();
+        currentCowkils = 0;
+        succes1 = false;
         accepted1 = true;
+        UpdateQuest1();
     }
 
+    // Called when a cow is killed (or when Q pressed in your test)
     void AddKillCow()
     {
         if (quest2)
@@ -196,59 +197,57 @@ public class QuestTracer : MonoBehaviour
             UpdateQuest1();
         }
     }
+
+    // Update UI for cow quest
     public void UpdateQuest1()
     {
-        amountOfKillsOfCow.text = kills.ToString();
-        currentKillsOfCow.text = currentCowkils.ToString();
-        monsterTextOfCow.text = "Cow";
-
-        
+        if (amountOfKillsOfCow) amountOfKillsOfCow.text = cowkills.ToString();
+        if (currentKillsOfCow) currentKillsOfCow.text = currentCowkils.ToString();
+        if (monsterTextOfCow) monsterTextOfCow.text = "Cow";
     }
+
+    // Generate a new cow quest if none accepted
     public void currentQuestCow()
     {
         if (!accepted1)
         {
-            
-            randomNum = Random.Range(1, 11);     
-            Quest = true;
-
-            
+            // Use a separate random goal for cows
+            int randomCowNum = Random.Range(1, 11); // 1 to 10
+            Quest2 = true;
 
             if (Quest2)
             {
-                kills += randomNum;
+                cowkills = randomCowNum;
             }
+
             UpdateQuest1();
         }
     }
+
     public void collectCowQuest()
     {
-        //if (!inventory)
-        //{
-        //    Debug.LogWarning("There is no inventory");
-        //    return;
-        //}
-
         if (quest2 && succes1)
         {
             int coinsCollected = Random.Range(5, 20);
-            coinsCollected += kills;
+            coinsCollected += cowkills;
 
             Debug.Log("You get " + coinsCollected + " coins");
             AddCoins(coinsCollected);
 
-            currentkils = 0;
-            kills = 0;
+            // reset cow quest state
+            currentCowkils = 0;
+            cowkills = 0;
             quest2 = false;
             succes1 = false;
             randomNum = 0;
-            accepted = false;
+            accepted1 = false;
             currentQuestCow();
         }
     }
+
     public void QuestCompletedCow()
     {
         succes1 = true;
-        Debug.Log("Quest completed!");
+        Debug.Log("Cow quest completed!");
     }
 }
