@@ -5,7 +5,7 @@ using UnityEngine;
 public class CowMovement : MonoBehaviour
 {
     public float speed = 1f;
-    public float runSpeed = 3f;
+    public float runSpeed = 6f;
     public float runDuration = 2f;
 
     private float currentSpeed;
@@ -13,7 +13,7 @@ public class CowMovement : MonoBehaviour
     private float runTimer = 3f;
 
     private Vector2 target;
-    private float changeTargetTime = 2f;
+    private float changeTargetTime = 5f;
     private float timer;
 
     void Start()

@@ -14,11 +14,15 @@ public class Item : ScriptableObject
     public ActionType actionType;
     public Vector2Int range = new Vector2Int(5, 4);
     public int hotBarNum = 0;
+    public int armorNum = 0;
 
     [Header("Only UI")]
     public bool stackable = true;
     [Header("Both")]
     public Sprite image;
+
+    
+    
 }
 public enum ItemType
 {

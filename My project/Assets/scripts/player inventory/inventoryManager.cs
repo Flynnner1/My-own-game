@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -26,6 +27,8 @@ public class InventoryManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha7)) ChangeSelectedSlot(6);
         else if (Input.GetKeyDown(KeyCode.Alpha8)) ChangeSelectedSlot(7);
         else if (Input.GetKeyDown(KeyCode.Alpha9)) ChangeSelectedSlot(8);
+
+        turnOnArmor(10, 11);
     }
 
     void ChangeSelectedSlot(int newValue)
@@ -36,6 +39,11 @@ public class InventoryManager : MonoBehaviour
         }
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
+    }
+    void turnOnArmor(int newValue, int newValue1)
+    {
+        //armorinventory[newValue].Select();
+        //armorinventory[newValue1].Select();
     }
 
     public bool AddItem(Item item)
@@ -100,5 +108,10 @@ public class InventoryManager : MonoBehaviour
             return item;
         }
         return null;
+    }
+    public InventoryItem GetItemInSlot(int index)
+    {
+        if (index < 0 || index >= inventorySlots.Length) return null;
+        return inventorySlots[index].GetComponentInChildren<InventoryItem>();
     }
 }
