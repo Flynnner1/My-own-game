@@ -48,21 +48,23 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         if (transform.childCount == 0 && eventData.pointerDrag != null)
         {
+            Debug.Log("I dropped something on)");
             GameObject dropped = eventData.pointerDrag;
             InventoryItem draggableItem = dropped.GetComponent<InventoryItem>();
             if (draggableItem == null)
                 return;
 
-            // move the UI element into this slot
             draggableItem.parentAfterDrag = transform;
+            draggableItem.SwitchSlot(SlotNum);
 
-            // If this slot is configured as an armor slot, attempt to equip the associated armor.
-            // The Item script has an 'armorNum' field — use that to select which armor piece to enable.
             if (ArmorBar != null && draggableItem.item != null)
             {
                 int armorIndex = draggableItem.item.armorNum;
-                // Only equip if armorIndex is meaningful; you can choose convention (e.g., -1 = none, >=0 valid)
-                if (armorIndex >= 0)
+                if (armorIndex == 0)
+                {
+                    ArmorBar.UnequipArmor(armorIndex);
+                }
+                else
                 {
                     ArmorBar.EquipArmor(armorIndex);
                 }

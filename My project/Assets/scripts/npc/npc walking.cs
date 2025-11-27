@@ -43,7 +43,7 @@ public class NPCMovement2D : MonoBehaviour
             // If UI is open, stop movement
             if (isMoving)
             {
-                rb.velocity = Vector2.zero; // Stop immediately if dynamic
+                rb.linearVelocity = Vector2.zero; // Stop immediately if dynamic
                 isMoving = false; // Prevent further movement calculations
             }
             return; // Exit FixedUpdate early
@@ -65,7 +65,7 @@ public class NPCMovement2D : MonoBehaviour
             // Ensure velocity is zero if not supposed to be moving
             if (rb.bodyType == RigidbodyType2D.Dynamic)
             {
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
             }
             return; // Don't move if flag is false or no waypoints
         }
@@ -96,7 +96,7 @@ public class NPCMovement2D : MonoBehaviour
             }
             else // Dynamic
             {
-                rb.velocity = direction * moveSpeed; // Set velocity for dynamic bodies
+                rb.linearVelocity = direction * moveSpeed; // Set velocity for dynamic bodies
                 // Optional: Face the direction of movement (add sprite flipping logic if needed)
             }
         }

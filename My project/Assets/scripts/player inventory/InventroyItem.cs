@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -12,6 +12,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField] private Image image;
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
+    [HideInInspector] public int currentSlot;
 
     private void Awake()
     {
@@ -68,5 +69,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         count += coins;
         RefreshCount();
+    }
+
+    public void SwitchSlot(int newSlot)
+    {
+        if (currentSlot == 10 || currentSlot == 11)
+        {
+            if (newSlot != 10 && newSlot != 11)
+            {
+                armorinventory.Instance.UnequipArmor(item.armorNum);
+            }
+        }
+        currentSlot = newSlot;
     }
 }

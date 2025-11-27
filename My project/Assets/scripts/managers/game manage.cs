@@ -42,9 +42,7 @@ public class gameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             inventorystate = !inventorystate;
-            Debug.Log($"E pressed. Inventory state toggled to: {inventorystate} at Time: {Time.time}");
             inventoryScreen.SetActive(inventorystate);
-            Debug.Log($"Inventory Screen Active set to: {inventoryScreen.activeSelf} at Time: {Time.time}");
 
             // Uncomment this if you want to pause the game
             // Time.timeScale = inventorystate ? 0 : 1;
@@ -52,10 +50,7 @@ public class gameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             Counterstate = !Counterstate;
-            Debug.Log($"E pressed. Inventory state toggled to: {inventorystate} at Time: {Time.time}");
             KillCounterScreen.SetActive(Counterstate);
-            Debug.Log($"Inventory Screen Active set to: {inventoryScreen.activeSelf} at Time: {Time.time}");
-
             // Uncomment this if you want to pause the game
             // Time.timeScale = inventorystate ? 0 : 1;
         }

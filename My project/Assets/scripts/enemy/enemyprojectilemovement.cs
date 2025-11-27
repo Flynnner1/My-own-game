@@ -17,7 +17,7 @@ public class EnemyProjectileMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = transform.right * initialSpeed;
+            rb.linearVelocity = transform.right * initialSpeed;
         }
         else
         {
@@ -33,7 +33,7 @@ public class EnemyProjectileMovement : MonoBehaviour
         if (rb != null)
         {
             // Accelerate the projectile over time
-            rb.velocity += (Vector2)(transform.right * acceleration * Time.deltaTime);
+            rb.linearVelocity += (Vector2)(transform.right * acceleration * Time.deltaTime);
         }
     }
 

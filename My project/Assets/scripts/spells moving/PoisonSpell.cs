@@ -39,14 +39,14 @@ public class PoisonSpell : MonoBehaviour
         if (playerTransform != null)
         {
             movementDirection = playerTransform.right;
-            rb.velocity = movementDirection * initialSpeed;
+            rb.linearVelocity = movementDirection * initialSpeed;
             Debug.Log("PoisonSpell Start: Set initial velocity based on player.");
         }
         else
         {
             Debug.LogWarning("PlayerTransform not assigned to PoisonSpell. Using default direction (Vector2.right).");
             movementDirection = Vector2.right;
-            rb.velocity = movementDirection * initialSpeed;
+            rb.linearVelocity = movementDirection * initialSpeed;
         }
 
         Invoke(nameof(DestroyProjectileNoHit), maxLifetime);
@@ -57,8 +57,8 @@ public class PoisonSpell : MonoBehaviour
     {
         if (rb != null && !hasCollided && rb.bodyType != RigidbodyType2D.Kinematic)
         {
-            rb.velocity += movementDirection * acceleration * Time.fixedDeltaTime;
-            currentSpeed = rb.velocity.magnitude;
+            rb.linearVelocity += movementDirection * acceleration * Time.fixedDeltaTime;
+            currentSpeed = rb.linearVelocity.magnitude;
         }
     }
 
@@ -96,7 +96,7 @@ public class PoisonSpell : MonoBehaviour
                 // 2. Stop Rigidbody
                 if (rb != null)
                 {
-                    rb.velocity = Vector2.zero;
+                    rb.linearVelocity = Vector2.zero;
                     rb.isKinematic = true; // Make kinematic to stop all physics influence
                     Debug.Log("PoisonSpell OnTriggerEnter2D: Stopped Rigidbody and set to Kinematic.");
                 }

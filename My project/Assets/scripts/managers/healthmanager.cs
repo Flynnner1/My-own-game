@@ -28,8 +28,8 @@ public class Healthmanager : MonoBehaviour
 
     void Start()
     {
-        LoadHealthData();
-        UpdateHealthUI();
+        //LoadHealthData();
+        //UpdateHealthUI();
 
         // Find the player and its PlayerHealth component
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -50,13 +50,13 @@ public class Healthmanager : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        SaveHealthData();
+        //SaveHealthData();
     }
 
     public void TakeDamage(float damage)
     {
         healthAmount -= damage;
-        healthBar.fillAmount = healthAmount / 100f;
+        healthBar.fillAmount = healthAmount / SecrethealthAmount;
         if (healthAmount <= 0f)
         {
             Debug.Log("Player died via Healthmanager.");
@@ -65,7 +65,7 @@ public class Healthmanager : MonoBehaviour
                 playerHealth.Die();
             }
         }
-        SaveHealthData();
+        //SaveHealthData();
     }
 
     public void Heal(float healingAmount)
@@ -77,7 +77,7 @@ public class Healthmanager : MonoBehaviour
             healthBar.fillAmount = healthAmount / 100f;
             playerCoins.coins -= 10;    // Safe to update now
             playerCoins.updatecointext();
-            SaveHealthData();
+            //SaveHealthData();
         }
         else
         {

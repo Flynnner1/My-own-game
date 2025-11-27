@@ -1,4 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 public class armorinventory : MonoBehaviour
 {
     [Header("Helmets")]
@@ -10,36 +16,76 @@ public class armorinventory : MonoBehaviour
     [Header("Shoulderplates")]
     public GameObject letherShoulderplate;
     public GameObject ironShoulderplate;
-    public GameObject diamondShoulderplate; 
+    public GameObject diamondShoulderplate;
     public GameObject superShoulderplate;
+
+    private const int helmetSlot = 10;
+    private const int shoulderplateSlot = 11;
+
+    public Healthmanager healthmanager;
+    public static armorinventory Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     public void EquipArmor(int armorNum)
     {
         switch (armorNum)
         {
-            case 0: 
-                SetActiveHelmet(letherHelmet);
+            // helmets
+            case 0:
+                //letherHelmet.SetActive(true);
                 break;
             case 2:
-                SetActiveHelmet(ironHelmet);
+                letherHelmet.SetActive(true);
+                healthmanager.healthAmount += 20;
+                healthmanager.SecrethealthAmount += 20;
                 break;
-            case 4: 
-                SetActiveHelmet(diamondHelmet);
+            case 4:
+                ironHelmet.SetActive(true);
+                healthmanager.healthAmount += 30;
+                healthmanager.SecrethealthAmount += 30;
                 break;
-            case 6: 
-                SetActiveHelmet(superHelmet);
+            case 6:
+                diamondHelmet.SetActive(true);
+                healthmanager.healthAmount += 40;
+                healthmanager.SecrethealthAmount += 40;
                 break;
-            case 1: 
-                SetActiveShoulder(letherShoulderplate);
+            case 8:
+                superHelmet.SetActive(true);
+                healthmanager.healthAmount += 50;
+                healthmanager.SecrethealthAmount += 50;
+                break;
+
+            // shoulderplates 
+            case 1:
+                letherShoulderplate.SetActive(true);
+                healthmanager.healthAmount += 25;
+                healthmanager.SecrethealthAmount += 25;
                 break;
             case 3:
-                SetActiveShoulder(ironShoulderplate);
+                ironShoulderplate.SetActive(true);
+                healthmanager.healthAmount += 35;
+                healthmanager.SecrethealthAmount += 35;
                 break;
             case 5:
-                SetActiveShoulder(diamondShoulderplate);
+                diamondShoulderplate.SetActive(true);
+                healthmanager.healthAmount += 45;
+                healthmanager.SecrethealthAmount += 45;
                 break;
             case 7:
-                SetActiveShoulder(superShoulderplate);
+                superShoulderplate.SetActive(true);
+                healthmanager.healthAmount += 55;
+                healthmanager.SecrethealthAmount += 55;
                 break;
             default:
                 Debug.LogWarning("unknown armorNum");
@@ -51,52 +97,56 @@ public class armorinventory : MonoBehaviour
     {
         switch (armorNum)
         {
+
+            // helmets
             case 0:
-                SafeSetActive(letherHelmet, false);
+                //letherHelmet.SetActive(false);
                 break;
             case 2:
-                SafeSetActive(ironHelmet, false);
+                letherHelmet.SetActive(false);
+                healthmanager.healthAmount -= 20;
+                healthmanager.SecrethealthAmount -= 20;
                 break;
             case 4:
-                SafeSetActive(diamondHelmet, false);
+                ironHelmet.SetActive(false);
+                healthmanager.healthAmount -= 30;
+                healthmanager.SecrethealthAmount -= 30;
                 break;
             case 6:
-                SafeSetActive(superHelmet, false);
+                diamondHelmet.SetActive(false);
+                healthmanager.healthAmount -= 40;
+                healthmanager.SecrethealthAmount -= 40;
                 break;
+            case 8:
+                superHelmet.SetActive(false);
+                healthmanager.healthAmount -= 50;
+                healthmanager.SecrethealthAmount -= 50;
+                break;
+
+            // shoulderplates
             case 1:
-                SafeSetActive(letherShoulderplate, false);
+                letherShoulderplate.SetActive(false);
+                healthmanager.healthAmount -= 25;
+                healthmanager.SecrethealthAmount -= 25;
                 break;
             case 3:
-                SafeSetActive(ironShoulderplate, false);
+                ironShoulderplate.SetActive(false);
+                healthmanager.healthAmount -= 35;
+                healthmanager.SecrethealthAmount -= 35;
                 break;
             case 5:
-                SafeSetActive(diamondShoulderplate, false);
+                diamondShoulderplate.SetActive(false);
+                healthmanager.healthAmount -= 45;
+                healthmanager.SecrethealthAmount -= 45;
                 break;
             case 7:
-                SafeSetActive(superShoulderplate, false);
+                superShoulderplate.SetActive(false);
+                healthmanager.healthAmount -= 55;
+                healthmanager.SecrethealthAmount -= 55;
                 break;
             default:
                 Debug.LogWarning("unknown armorNum");
                 break;
         }
-    }
-    void SetActiveHelmet(GameObject toEnable)
-    {
-        SafeSetActive(letherHelmet, letherHelmet == toEnable);
-        SafeSetActive(ironHelmet, ironHelmet == toEnable);
-        SafeSetActive(diamondHelmet, diamondHelmet == toEnable);
-        SafeSetActive(superHelmet, superHelmet == toEnable);
-    }
-    void SetActiveShoulder(GameObject toEnable)
-    {
-        SafeSetActive(letherShoulderplate, letherShoulderplate == toEnable);
-        SafeSetActive(ironShoulderplate, ironShoulderplate == toEnable);
-        SafeSetActive(diamondShoulderplate, diamondShoulderplate == toEnable);
-        SafeSetActive(superShoulderplate, superShoulderplate == toEnable);
-    }
-
-    void SafeSetActive(GameObject go, bool active)
-    {
-        go.SetActive(active);
     }
 }

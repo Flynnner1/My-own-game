@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class InventorySaveSystem : MonoBehaviour
 {
+    //made by chatgpt tried to make it so it saves and loads inventory items
     [Header("Reference to all Item ScriptableObjects in the game")]
     public Item[] allItems; // Populate this list in the Inspector with all items.
 

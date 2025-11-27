@@ -25,7 +25,7 @@ public class BallMovement : MonoBehaviour
         if (playerTransform != null)
         {
             movementDirection = playerTransform.right; // Assuming the player faces right by default
-            rb.velocity = movementDirection * initialSpeed;
+            rb.linearVelocity = movementDirection * initialSpeed;
         }
         else
         {
@@ -41,7 +41,7 @@ public class BallMovement : MonoBehaviour
         if (rb != null)
         {
             // Accelerate the ball over time
-            rb.velocity += movementDirection * acceleration * Time.deltaTime;
+            rb.linearVelocity += movementDirection * acceleration * Time.deltaTime;
         }
     }
     void OnTriggerEnter2D(Collider2D other)

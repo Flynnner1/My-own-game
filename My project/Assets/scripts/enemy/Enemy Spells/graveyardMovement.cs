@@ -16,7 +16,7 @@ public class graveyardMovement : MonoBehaviour
         if (rb != null)
         {
             // Set the initial forward velocity
-            rb.velocity = transform.right * initialSpeed;
+            rb.linearVelocity = transform.right * initialSpeed;
 
             // --- THIS IS THE KEY CHANGE ---
             // Freeze the rotation so the object doesn't spin
@@ -36,7 +36,7 @@ public class graveyardMovement : MonoBehaviour
         if (rb != null)
         {
             // Accelerate the projectile over time
-            rb.velocity += (Vector2)(transform.right * acceleration * Time.deltaTime);
+            rb.linearVelocity += (Vector2)(transform.right * acceleration * Time.deltaTime);
         }
     }
 }

@@ -33,13 +33,13 @@ public class LookAtAndMoveTowardsRandomDemon : MonoBehaviour
         if (currentTarget == null)
         {
             // Stop moving if there is no target
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             return;
         }
 
         // Move towards and rotate to face the current target
         Vector2 direction = ((Vector2)currentTarget.position - rb.position).normalized;
-        rb.velocity = direction * moveSpeed;
+        rb.linearVelocity = direction * moveSpeed;
 
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         float newAngle = Mathf.MoveTowardsAngle(rb.rotation, targetAngle, rotationSpeed * Time.fixedDeltaTime);
