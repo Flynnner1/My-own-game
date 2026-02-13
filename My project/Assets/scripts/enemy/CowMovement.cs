@@ -58,7 +58,7 @@ public class CowMovement : MonoBehaviour
 
     public void Run()
     {
-        Debug.Log("Cow starts running!");
+        
         isRunning = true;
         currentSpeed = runSpeed;
         runTimer = 0f;

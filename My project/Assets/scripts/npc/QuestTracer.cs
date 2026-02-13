@@ -21,7 +21,6 @@ public class QuestTracer : MonoBehaviour
     public TMP_Text smallmonsterText;
 
     [Header("Quest Variables")]
-    // Monster quest (generic)
     public int kills = 0;            // goal for generic monster quest
     public int currentkils = 0;      // progress for generic monster quest
     public int randomMonster;
@@ -69,21 +68,15 @@ public class QuestTracer : MonoBehaviour
                 time1 = 0f;
             }
         }
-
-        // Check completion for monster quest
         if (kills > 0 && currentkils >= kills)
         {
             QuestCompleted();
         }
-
-        // Check completion for cow quest
         if (cowkills > 0 && currentCowkils >= cowkills)
         {
             QuestCompletedCow();
         }
     }
-
-    // Start or generate a new generic monster quest (if none accepted)
     public void currentQuest()
     {
         if (!accepted)
@@ -107,20 +100,16 @@ public class QuestTracer : MonoBehaviour
             UpdateQuest();
         }
     }
-
-    // Update UI for generic monster quest + small UI
     public void UpdateQuest()
     {
         if (amountOfKills) amountOfKills.text = kills.ToString();
         if (currentKills) currentKills.text = currentkils.ToString();
         if (monsterText) monsterText.text = monster;
 
-        // Small UI should reflect the same monster quest
         if (smallamountOfKills) smallamountOfKills.text = kills.ToString();
         if (smallcurrentKills) smallcurrentKills.text = currentkils.ToString();
         if (smallmonsterText) smallmonsterText.text = monster;
     }
-
     public void AddKill()
     {
         if (quest1)
@@ -129,7 +118,6 @@ public class QuestTracer : MonoBehaviour
             UpdateQuest();
         }
     }
-
     public void acceptQuest()
     {
         quest1 = true;
@@ -138,7 +126,6 @@ public class QuestTracer : MonoBehaviour
         accepted = true;
         UpdateQuest();
     }
-
     public void QuestCompleted()
     {
         succes = true;
@@ -165,7 +152,6 @@ public class QuestTracer : MonoBehaviour
             currentQuest();
         }
     }
-
     public void AddCoins(int coin)
     {
         if (playerCoins)
@@ -177,10 +163,10 @@ public class QuestTracer : MonoBehaviour
             Debug.LogWarning("No PlayerCoins reference found.");
         }
     }
-
     // Accept cow quest
     public void acceptQuestCow()
     {
+        Debug.Log("Cow quest accepted!");
         quest2 = true;
         currentCowkils = 0;
         succes1 = false;

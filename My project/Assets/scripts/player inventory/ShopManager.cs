@@ -9,8 +9,6 @@ public class ShopManager : MonoBehaviour
     public PlayerCoins playerCoins;
     public Item[] itemsToPickup;
     public int[] itemCosts;
-    
-
     void Start()
     {
         if (!playerCoins)
@@ -18,7 +16,6 @@ public class ShopManager : MonoBehaviour
             playerCoins = FindObjectOfType<PlayerCoins>();
         }
     }
-
     public void PickUpItem(int id)
     {
         if (id < 0 || id >= itemsToPickup.Length || id >= itemCosts.Length)
@@ -26,7 +23,6 @@ public class ShopManager : MonoBehaviour
             Debug.Log("Invalid item ID");
             return;
         }
-
         if (playerCoins.coins >= itemCosts[id])
         {
             bool result = inventoryManager.AddItem(itemsToPickup[id]);
@@ -46,37 +42,28 @@ public class ShopManager : MonoBehaviour
             Debug.Log("not enough coins");
         }
     }
-
     public void GetSelectedItem()
     {
         Item recievedItem = inventoryManager.GetSelectedItem(false);
         if (recievedItem != null)
         {
-            
             Debug.Log("recieved item " + recievedItem);
         }
         else
         {
             Debug.Log("didnt recieve a item");
-
         }
     }
-
-
     public void UseGetSelectedItem()
     {
         Item recievedItem = inventoryManager.GetSelectedItem(true);
         if (recievedItem != null)
         {
-           
-                Debug.Log("used item" + recievedItem);
+            Debug.Log("used item" + recievedItem);
         }
         else
         {
             Debug.Log("didnt use a item");
-
         }
-
     }
-
 }

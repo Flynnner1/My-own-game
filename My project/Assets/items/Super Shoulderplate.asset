@@ -17,6 +17,7 @@ MonoBehaviour:
   actionType: 0
   range: {x: 5, y: 4}
   hotBarNum: 0
-  armorNum: 0
-  stackable: 1
-  image: {fileID: 0}
+  armorNum: 7
+  helmet: 0
+  stackable: 0
+  image: {fileID: -5147048380626328836, guid: 33d8b67168f169647a3305da09edf237, type: 3}

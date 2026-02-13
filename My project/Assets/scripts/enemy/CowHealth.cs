@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CowHealth : MonoBehaviour
 {
     [Header("Identification")]
-    public string EnemyId = "Zombie1"; // Assign this in the Inspector for each enemy prefab variant
+    public string EnemyId = "Cow";
 
     [Header("Health")]
     public float maxHealth = 100f;
@@ -14,150 +12,93 @@ public class CowHealth : MonoBehaviour
     [Header("Drops")]
     public GameObject coinSpawn;
     public GameObject XPSpawn;
-    public GameObject rareSpellItem; // Single spell item to drop
-    public int MoreCoins = 4;           // Maximum number of coins to drop
+    public GameObject rareSpellItem;
+    public int MoreCoins = 4;
     public int amountXp = 10;
     public Vector3 spawnOffset;
 
     [Header("Behavior")]
-    public float distanceThreshold = 40f; // Distance to the player after which the enemy dies
-    public Transform player;            // Reference to the player's Transform (Assign or find)
+    public float distanceThreshold = 40f;
+    public Transform player;
 
-    // --- References to Scene Managers ---
     private QuestTracer questTracer;
-    // Make this public if you want the *option* to assign it in the inspector later,
-    // but FindObjectOfType will still be the primary way it gets set in Start()
-    public KillCounter killCounter;
+    private KillCounter killCounter;
 
-    public CowMovement cowMovement;
-
-    private bool isDying = false; // Renamed from pickedUp for clarity
+    private bool isDying = false;
 
     void Start()
     {
-        //gameObject.tag = "Cow";
-        //Debug.Log("Cow tag assigned to " + gameObject.name);
         currentHealth = maxHealth;
 
-        // --- Find Scene Managers ---
-        // Find the single KillCounter instance in the scene
-        killCounter = FindObjectOfType<KillCounter>(); // Find the manager in the scene
-        if (killCounter == null)
-        {
-            // Log the error if not found
-            Debug.LogError($"KillCounter script not found in the scene! Kills from {gameObject.name} will not be counted.", this);
-        }
-
-        // Find QuestTracer
+        killCounter = FindObjectOfType<KillCounter>();
         questTracer = FindObjectOfType<QuestTracer>();
-        if (questTracer == null)
-        {
-            Debug.LogWarning($"QuestTracer script not found in the scene! Quests might not track kills from {gameObject.name}.", this);
-        }
 
-
-
-
-        // Find Player if not assigned
         if (player == null)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
-            {
-                player = playerObject.transform;
-            }
-            else
-            {
-                Debug.LogWarning($"Player with tag 'Player' not found. Distance check for {gameObject.name} might not work.", this);
-            }
+            if (playerObject != null) player = playerObject.transform;
         }
 
-        // Generate a random Y offset for the spawn position
         int randomY = Random.Range(0, 3);
         spawnOffset = new Vector3(0, randomY, 0);
     }
 
     void Update()
     {
-        // If the player reference is set, enemy not already dying, and is too far away, despawn it.
         if (!isDying && player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold)
         {
-            Die(false); // Pass false: Don't count as kill, don't drop loot
+            Die(false);
         }
     }
 
     public void TakeDamage(float amount)
     {
-        if (isDying) return; // Already dying, do nothing
+        if (isDying) return;
 
         currentHealth -= amount;
-        if (currentHealth < maxHealth)
+        CowMovement movement = GetComponent<CowMovement>();
+        if (currentHealth < maxHealth && movement != null)
         {
-            CowMovement movement = GetComponent<CowMovement>();
-            if (movement != null)
-            {
-                Debug.Log("Calling Run() on CowMovement");
-                movement.Run();
-            }
-            else
-            {
-                Debug.LogWarning("CowMovement component not found on " + gameObject.name);
-            }
+            movement.Run();
         }
 
         if (currentHealth <= 0f)
         {
-            Die(true); // Pass true: Count as kill, drop loot
+            Die(true);
         }
     }
 
-    // Added bool parameter to distinguish true kills from despawns
     void Die(bool wasKilled)
     {
-        if (isDying) return; // Prevent multiple calls
+        if (isDying) return;
         isDying = true;
 
-        // --- Report Kill ---
-        // Only report to KillCounter if it was a true kill and the counter was found
         if (wasKilled && killCounter != null)
         {
-            killCounter.addcount(EnemyId); // Call the counter method
+            killCounter.addcount(EnemyId);
         }
-        // Optional: You could log an error here again if wasKilled is true but killCounter is null,
-        // but the Start() method already warned you.
-        // else if (wasKilled && killCounter == null)
-        // {
-        //     Debug.LogError($"Attempted to report kill for {EnemyId}, but KillCounter is missing!", this);
-        // }
 
-        // --- Quest Logic ---
-        // Only update quests if it was a true kill and questTracer was found
-        if (wasKilled && questTracer != null)
+        if (wasKilled && questTracer != null && questTracer.monster == "Cow" && gameObject.CompareTag("Cow"))
         {
-            // Using CompareTag is good practice!
-            // Consider if EnemyId could simplify quest tracking further.
-            if (questTracer.monster == "Cow" && gameObject.CompareTag("Cow"))
-            {
-                questTracer.AddKill();
-            }
-            
-            // Consider adding an 'else' or default case if needed
+            questTracer.AddKill();
         }
 
-        // --- Drops ---
-        // Only drop loot if it was a true kill
+        CowQuestTracker cowQuestTracker = FindObjectOfType<CowQuestTracker>();
+        if (wasKilled && cowQuestTracker != null && gameObject.CompareTag("Cow"))
+        {
+            cowQuestTracker.AddKill();
+        }
+
         if (wasKilled)
         {
             RandomDrop();
         }
 
-        // --- Cleanup ---
-        Destroy(gameObject); // Destroy the enemy object at the end
+        Destroy(gameObject);
     }
 
     void RandomDrop()
     {
-        // Spawn a random number of coins
         int randomNumber = Random.Range(1, MoreCoins + 1);
         for (int t = 0; t < randomNumber; t++)
         {
@@ -167,14 +108,12 @@ public class CowHealth : MonoBehaviour
             }
         }
 
-        // 1-in-100 chance to drop the single rare spell item
         int dropChance = Random.Range(1, 101);
         if (dropChance == 1 && rareSpellItem != null)
         {
             Instantiate(rareSpellItem, transform.position + spawnOffset, Quaternion.identity);
         }
 
-        // Spawn XP
         int XpChange = Random.Range(1, amountXp + 1);
         for (int t = 0; t < XpChange; t++)
         {

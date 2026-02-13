@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
@@ -16,6 +13,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public int helmetNum;
     public int shoulderNum;
 
+    public bool isArmorSlot = false;
+    public bool isHelmetSlot = false;
     private void Awake()
     {
         if (image == null)
@@ -53,21 +52,42 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             InventoryItem draggableItem = dropped.GetComponent<InventoryItem>();
             if (draggableItem == null)
                 return;
-
-            draggableItem.parentAfterDrag = transform;
-            draggableItem.SwitchSlot(SlotNum);
-
-            if (ArmorBar != null && draggableItem.item != null)
+            if (draggableItem.item.helmet == false && isHelmetSlot == false)
             {
-                int armorIndex = draggableItem.item.armorNum;
-                if (armorIndex == 0)
+                if (ArmorBar != null && draggableItem.item != null)
                 {
-                    ArmorBar.UnequipArmor(armorIndex);
+                    int armorIndex = draggableItem.item.armorNum;
+                    if (armorIndex == 0)
+                    {
+                        ArmorBar.UnequipArmor(armorIndex);
+                    }
+                    else
+                    {
+                        ArmorBar.EquipArmor(armorIndex);
+                    }
                 }
-                else
+            }
+            else if (draggableItem.item.helmet == true && isHelmetSlot == true)
+            {
+                if (ArmorBar != null && draggableItem.item != null)
                 {
-                    ArmorBar.EquipArmor(armorIndex);
+                    int armorIndex = draggableItem.item.armorNum;
+                    if (armorIndex == 0)
+                    {
+                        ArmorBar.UnequipArmor(armorIndex);
+                    }
+                    else
+                    {
+                        ArmorBar.EquipArmor(armorIndex);
+                    }
                 }
+            }
+            if (isHelmetSlot && draggableItem.item.helmet ||
+                isArmorSlot && !draggableItem.item.helmet ||
+                    !isHelmetSlot && !isArmorSlot)
+            {
+                draggableItem.parentAfterDrag = transform;
+                draggableItem.SwitchSlot(SlotNum);
             }
         }
     }

@@ -16,6 +16,8 @@ public class Item : ScriptableObject
     public int hotBarNum = 0;
     public int armorNum = 0;
 
+    public bool helmet = false;
+
     [Header("Only UI")]
     public bool stackable = true;
     [Header("Both")]

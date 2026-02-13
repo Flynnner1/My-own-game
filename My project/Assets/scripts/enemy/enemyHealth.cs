@@ -12,45 +12,36 @@ public class EnemyHealth : MonoBehaviour
     [Header("Drops")]
     public GameObject coinSpawn;
     public GameObject XPSpawn;
-    public GameObject rareSpellItem; // Single spell item to drop
-    public int MoreCoins = 4;           // Maximum number of coins to drop
+    //public GameObject rareSpellItem;
+    public int MoreCoins = 4;           
     public int amountXp = 10;
     public Vector3 spawnOffset;
 
     [Header("Behavior")]
-    public float distanceThreshold = 40f; // Distance to the player after which the enemy dies
-    public Transform player;            // Reference to the player's Transform (Assign or find)
+    public float distanceThreshold = 40f; 
+    public Transform player;           
 
-    // --- References to Scene Managers ---
+ 
     private QuestTracer questTracer;
-    // Make this public if you want the *option* to assign it in the inspector later,
-    // but FindObjectOfType will still be the primary way it gets set in Start()
+    private CowQuestTracker cowQuestTracker;
+ 
     public KillCounter killCounter;
 
-    private bool isDying = false; // Renamed from pickedUp for clarity
+    private bool isDying = false; 
 
     void Start()
     {
         currentHealth = maxHealth;
-
-        // --- Find Scene Managers ---
-        // Find the single KillCounter instance in the scene
-        killCounter = FindObjectOfType<KillCounter>(); // Find the manager in the scene
+        killCounter = FindObjectOfType<KillCounter>();
         if (killCounter == null)
         {
-            // Log the error if not found
             Debug.LogError($"KillCounter script not found in the scene! Kills from {gameObject.name} will not be counted.", this);
         }
-
-        // Find QuestTracer
         questTracer = FindObjectOfType<QuestTracer>();
         if (questTracer == null)
         {
             Debug.LogWarning($"QuestTracer script not found in the scene! Quests might not track kills from {gameObject.name}.", this);
         }
-
-
-        // Find Player if not assigned
         if (player == null)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -63,15 +54,12 @@ public class EnemyHealth : MonoBehaviour
                 Debug.LogWarning($"Player with tag 'Player' not found. Distance check for {gameObject.name} might not work.", this);
             }
         }
-
-        // Generate a random Y offset for the spawn position
         int randomY = Random.Range(0, 3);
         spawnOffset = new Vector3(0, randomY, 0);
     }
 
     void Update()
     {
-        // If the player reference is set, enemy not already dying, and is too far away, despawn it.
         if (!isDying && player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold)
         {
             Die(false); // Pass false: Don't count as kill, don't drop loot
@@ -80,8 +68,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (isDying) return; // Already dying, do nothing
-
+        if (isDying) return;
         currentHealth -= amount;
 
         if (currentHealth <= 0f)
@@ -89,15 +76,12 @@ public class EnemyHealth : MonoBehaviour
             Die(true); // Pass true: Count as kill, drop loot
         }
     }
-
-    // Added bool parameter to distinguish true kills from despawns
     void Die(bool wasKilled)
     {
-        if (isDying) return; // Prevent multiple calls
+        if (isDying) return;
         isDying = true;
 
-        // --- Report Kill ---
-        // Only report to KillCounter if it was a true kill and the counter was found
+       
         if (wasKilled && killCounter != null)
         {
             killCounter.addcount(EnemyId); // Call the counter method
@@ -111,7 +95,7 @@ public class EnemyHealth : MonoBehaviour
 
         // --- Quest Logic ---
         // Only update quests if it was a true kill and questTracer was found
-        if (wasKilled && questTracer != null)
+        if (wasKilled && questTracer != null || cowQuestTracker != null)
         {
             // Using CompareTag is good practice!
             // Consider if EnemyId could simplify quest tracking further.
@@ -134,6 +118,10 @@ public class EnemyHealth : MonoBehaviour
             else if (questTracer.monster == "Cow" && gameObject.CompareTag("Cow"))
             {
                 questTracer.AddKill();
+            }
+            if (cowQuestTracker.monster == "Cow" && gameObject.CompareTag("Cow"))
+            {
+                cowQuestTracker.AddKill();
             }
             // Consider adding an 'else' or default case if needed
         }
@@ -162,11 +150,11 @@ public class EnemyHealth : MonoBehaviour
         }
 
         // 1-in-100 chance to drop the single rare spell item
-        int dropChance = Random.Range(1, 101);
-        if (dropChance == 1 && rareSpellItem != null)
-        {
-            Instantiate(rareSpellItem, transform.position + spawnOffset, Quaternion.identity);
-        }
+        //int dropChance = Random.Range(1, 101);
+        //if (dropChance == 1 && rareSpellItem != null)
+        //{
+        //    Instantiate(rareSpellItem, transform.position + spawnOffset, Quaternion.identity);
+        //}
 
         // Spawn XP
         int XpChange = Random.Range(1, amountXp + 1);

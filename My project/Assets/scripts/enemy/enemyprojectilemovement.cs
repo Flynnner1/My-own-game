@@ -7,11 +7,8 @@ public class EnemyProjectileMovement : MonoBehaviour
     public float initialSpeed = 7f;
     public float acceleration = 2f;
     public float destroyTime = 5f;
-
-    public float damage = 15f; // Damage dealt by the projectile
-
-    private Rigidbody2D rb;
-
+    public float damage = 15f; 
+    private Rigidbody2D rb; 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -19,27 +16,18 @@ public class EnemyProjectileMovement : MonoBehaviour
         {
             rb.linearVelocity = transform.right * initialSpeed;
         }
-        else
-        {
-            Debug.LogError("Rigidbody2D component is missing on this projectile!");
-        }
-
-        // Destroy the projectile after the specified lifetime
         Destroy(gameObject, destroyTime);
     }
-
-    void Update()
+    void FixedUpdate()
     {
         if (rb != null)
         {
-            // Accelerate the projectile over time
-            rb.linearVelocity += (Vector2)(transform.right * acceleration * Time.deltaTime);
+            // Accelerate the projectile forward over time in the FixedUpdate loop (for physics)
+            rb.linearVelocity += (Vector2)(transform.right * acceleration * Time.fixedDeltaTime);
         }
     }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // If the projectile hits the player, deal damage
         if (collision.gameObject.CompareTag("Player"))
         {
             if (Healthmanager.Instance != null)
@@ -47,8 +35,6 @@ public class EnemyProjectileMovement : MonoBehaviour
                 Healthmanager.Instance.TakeDamage(damage);
             }
         }
-
-        // Destroy the projectile on any collision
         Destroy(gameObject);
     }
 }
