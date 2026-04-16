@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      super helmet icon_0: 2187497424468020179
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

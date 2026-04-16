@@ -19,12 +19,11 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("Behavior")]
     public float distanceThreshold = 40f; 
-    public Transform player;           
+    public Transform player;
 
- 
-    private QuestTracer questTracer;
-    private CowQuestTracker cowQuestTracker;
- 
+
+    private BetterMonsterQuestTracker betterMonsterQuestTracker;
+
     public KillCounter killCounter;
 
     private bool isDying = false; 
@@ -37,8 +36,8 @@ public class EnemyHealth : MonoBehaviour
         {
             Debug.LogError($"KillCounter script not found in the scene! Kills from {gameObject.name} will not be counted.", this);
         }
-        questTracer = FindObjectOfType<QuestTracer>();
-        if (questTracer == null)
+        betterMonsterQuestTracker = FindObjectOfType<BetterMonsterQuestTracker>();
+        if (betterMonsterQuestTracker == null)
         {
             Debug.LogWarning($"QuestTracer script not found in the scene! Quests might not track kills from {gameObject.name}.", this);
         }
@@ -95,34 +94,38 @@ public class EnemyHealth : MonoBehaviour
 
         // --- Quest Logic ---
         // Only update quests if it was a true kill and questTracer was found
-        if (wasKilled && questTracer != null || cowQuestTracker != null)
+        if (wasKilled && betterMonsterQuestTracker != null)
         {
             // Using CompareTag is good practice!
             // Consider if EnemyId could simplify quest tracking further.
-            if (questTracer.monster == "Zombie" && gameObject.CompareTag("Zombie"))
+            if (betterMonsterQuestTracker.monster == "Zombie" && gameObject.CompareTag("Zombie"))
             {
-                questTracer.AddKill();
+                betterMonsterQuestTracker.AddKill();
             }
-            else if (questTracer.monster == "Skeleton" && gameObject.CompareTag("Skeleton"))
+            else if (betterMonsterQuestTracker.monster == "Skeleton" && gameObject.CompareTag("Skeleton"))
             {
-                questTracer.AddKill();
+                betterMonsterQuestTracker.AddKill();
             }
-            else if (questTracer.monster == "Slime" && gameObject.CompareTag("Slime"))
+            else if (betterMonsterQuestTracker.monster == "Slime" && gameObject.CompareTag("Slime"))
             {
-                questTracer.AddKill();
+                betterMonsterQuestTracker.AddKill();
             }
-            else if (questTracer.monster == "Demon" && gameObject.CompareTag("Demon"))
+            else if (betterMonsterQuestTracker.monster == "Demon" && gameObject.CompareTag("Demon"))
             {
-                questTracer.AddKill();
+                betterMonsterQuestTracker.AddKill();
             }
-            else if (questTracer.monster == "Cow" && gameObject.CompareTag("Cow"))
+            else if (betterMonsterQuestTracker.monster == "Cow" && gameObject.CompareTag("Cow"))
             {
-                questTracer.AddKill();
+                betterMonsterQuestTracker.AddKill();
             }
-            if (cowQuestTracker.monster == "Cow" && gameObject.CompareTag("Cow"))
+            else
             {
-                cowQuestTracker.AddKill();
+                betterMonsterQuestTracker.AddKill();
             }
+            //if (betterMonsterQuestTracker.monster == "Cow" && gameObject.CompareTag("Cow"))
+            //{
+            //    betterMonsterQuestTracker.AddKill();
+            //}
             // Consider adding an 'else' or default case if needed
         }
 

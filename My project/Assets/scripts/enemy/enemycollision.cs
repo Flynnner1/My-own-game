@@ -37,15 +37,15 @@ public class EnemyCollision : MonoBehaviour
     {
         if (time >= cooldownTimer)
         {
-            Debug.Log("The zombie collides with the player");
+            
 
             if (col.gameObject.CompareTag("Player"))
             {
                 if (playerHealth != null)
                 {
-                    Debug.Log("ouch!");
+                    
                     Healthmanager.Instance.TakeDamage(damage); // Apply damage to the player
-                    Debug.Log("Hit Player");
+                    
                 }
                 else
                 {

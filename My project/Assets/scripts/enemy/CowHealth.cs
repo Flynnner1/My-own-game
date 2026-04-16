@@ -21,17 +21,37 @@ public class CowHealth : MonoBehaviour
     public float distanceThreshold = 40f;
     public Transform player;
 
-    private QuestTracer questTracer;
+    private BetterMonsterQuestTracker betterMonsterQuestTracker;
     private KillCounter killCounter;
 
     private bool isDying = false;
 
+    //public void Start()
+    //{
+    //    currentHealth = maxHealth;
+    //    if (player == null)
+    //    {
+    //        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+    //        if (playerObject != null) player = playerObject.transform;
+    //    }
+    //    int randomY = Random.Range(0, 3);
+    //        spawnOffset = new Vector3(0, randomY, 0);
+    //}
+    public void Update()
+    {
+        if (!isDying && Vector3.Distance(transform.position, player.position) > distanceThreshold)
+        {
+            Die(false);
+        }
+    }
+
+    
     void Start()
     {
         currentHealth = maxHealth;
 
         killCounter = FindObjectOfType<KillCounter>();
-        questTracer = FindObjectOfType<QuestTracer>();
+        betterMonsterQuestTracker = FindObjectOfType<BetterMonsterQuestTracker>();
 
         if (player == null)
         {
@@ -39,17 +59,17 @@ public class CowHealth : MonoBehaviour
             if (playerObject != null) player = playerObject.transform;
         }
 
-        int randomY = Random.Range(0, 3);
+        int randomY = Random.Range(0, 3); 
         spawnOffset = new Vector3(0, randomY, 0);
     }
 
-    void Update()
-    {
-        if (!isDying && player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold)
-        {
-            Die(false);
-        }
-    }
+    //void Update()
+    //{
+    //    if (!isDying && player != null && Vector3.Distance(transform.position, player.position) > distanceThreshold)
+    //    {
+    //        Die(false);
+    //    }
+    //}
 
     public void TakeDamage(float amount)
     {
@@ -67,28 +87,18 @@ public class CowHealth : MonoBehaviour
             Die(true);
         }
     }
-
-    void Die(bool wasKilled)
+    public void Die(bool wasKilled)
     {
         if (isDying) return;
         isDying = true;
-
         if (wasKilled && killCounter != null)
         {
             killCounter.addcount(EnemyId);
         }
-
-        if (wasKilled && questTracer != null && questTracer.monster == "Cow" && gameObject.CompareTag("Cow"))
+        if (wasKilled)
         {
-            questTracer.AddKill();
+            betterMonsterQuestTracker.AddKill();
         }
-
-        CowQuestTracker cowQuestTracker = FindObjectOfType<CowQuestTracker>();
-        if (wasKilled && cowQuestTracker != null && gameObject.CompareTag("Cow"))
-        {
-            cowQuestTracker.AddKill();
-        }
-
         if (wasKilled)
         {
             RandomDrop();
@@ -96,6 +106,36 @@ public class CowHealth : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    //void Die(bool wasKilled)
+    //{
+    //    if (isDying) return;
+    //    isDying = true;
+
+    //    if (wasKilled && killCounter != null)
+    //    {
+    //        killCounter.addcount(EnemyId);
+    //    }
+
+    //    if (wasKilled && betterMonsterQuestTracker != null && betterMonsterQuestTracker.monster == "Cow" && gameObject.CompareTag("Cow"))
+    //    {
+    //        betterMonsterQuestTracker.AddKill();
+    //    }
+
+    //    BetterMonsterQuestTracker betterMonsterQuestTracker = FindObjectOfType<BetterMonsterQuestTracker>();
+    //    if (wasKilled && cowQuestTracker != null && gameObject.CompareTag("Cow"))
+    //    {
+    //        cowQuestTracker.AddKill();
+    //        Debug.Log("Cow kill added to CowQuestTracker.");
+    //    }
+
+    //    if (wasKilled)
+    //    {
+    //        RandomDrop();
+    //    }
+
+    //    Destroy(gameObject);
+    //}
 
     void RandomDrop()
     {

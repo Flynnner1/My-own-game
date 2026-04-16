@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Super Shoulderplate icon_0: -5147048380626328836
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

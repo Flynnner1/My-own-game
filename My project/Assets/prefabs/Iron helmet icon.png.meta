@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Iron helmet icon_0: 5780907700051135202
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -33,21 +33,21 @@ public class NPCController : MonoBehaviour
             }
         }
 
-        IsUIOpen = (questUI != null && questUI.activeSelf) || (inventoryUI != null && inventoryUI.activeSelf);
+        //IsUIOpen = (questUI != null && questUI.activeSelf) || (inventoryUI != null && inventoryUI.activeSelf);
 
-        bool showSmallQuestUI = npcQuest && questTracer != null && questTracer.quest1 && !IsUIOpen; // Don't show if main UI is open
+        //bool showSmallQuestUI = npcQuest && questTracer != null && questTracer.quest1 && !IsUIOpen; // Don't show if main UI is open
 
-        if (smallquestUI != null)
-        {
-            if (showSmallQuestUI)
-            {
-                smallquestUI.SetActive(true);
-            }
-            else
-            {
-                smallquestUI.SetActive(false);
-            }
-        }
+        //if (smallquestUI != null)
+        //{
+        //    if (showSmallQuestUI)
+        //    {
+        //        smallquestUI.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        smallquestUI.SetActive(false);
+        //    }
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -65,8 +65,8 @@ public class NPCController : MonoBehaviour
             isPlayerNearby = false;
             if (questUI != null)
                 questUI.SetActive(false);
-            if (smallquestUI != null)
-                smallquestUI.SetActive(false);
+            //if (smallquestUI != null)
+            //    smallquestUI.SetActive(false);
             if (inventoryUI != null)
                 inventoryUI.SetActive(false);
             IsUIOpen = false;
@@ -81,8 +81,8 @@ public class NPCController : MonoBehaviour
             questUI.SetActive(false);
         if (inventoryUI != null)
             inventoryUI.SetActive(false);
-        if (smallquestUI != null && npcQuest && questTracer != null && questTracer.quest1)
-            smallquestUI.SetActive(true);
+        //if (smallquestUI != null && npcQuest && questTracer != null && questTracer.quest1)
+        //    smallquestUI.SetActive(true);
         IsUIOpen = false;
     }
 }

@@ -51,6 +51,7 @@ public class CowQuestTracker : MonoBehaviour
         currentCowKills = 0;
         isQuestCompleted = false;
         isQuestAccepted = true;
+        Debug.Log("Quest Accepted:");
         UpdateQuestUI();
     }
 
@@ -60,6 +61,7 @@ public class CowQuestTracker : MonoBehaviour
         {
             currentCowKills++;
             UpdateQuestUI();
+            Debug.Log($"Added a kill to cow quest");
         }
     }
 
@@ -86,6 +88,7 @@ public class CowQuestTracker : MonoBehaviour
             isQuestActive = false;
             isQuestCompleted = false;
             isQuestAccepted = false;
+            Debug.Log("Youve collected the quest");
             InitializeQuest();
         }
     }

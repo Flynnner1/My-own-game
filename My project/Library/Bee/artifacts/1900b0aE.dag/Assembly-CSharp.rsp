@@ -443,6 +443,8 @@
 "Assets/scripts/managers/pause script.cs"
 "Assets/scripts/managers/Upgrade manager.cs"
 "Assets/scripts/managers/XpManager.cs"
+"Assets/scripts/npc/cowQuestTracker.cs"
+"Assets/scripts/npc/monsterQuestTracker.cs"
 "Assets/scripts/npc/npc walking.cs"
 "Assets/scripts/npc/NPC-Controller.cs"
 "Assets/scripts/npc/NpcHealth.cs"

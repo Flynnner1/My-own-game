@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MonsterQuestTracker : MonoBehaviour
+public class BetterMonsterQuestTracker : MonoBehaviour
 {
     [Header("UI Text References (Large UI)")]
     public TMP_Text amountOfKills;
@@ -18,36 +16,69 @@ public class MonsterQuestTracker : MonoBehaviour
 
     [Header("Quest Variables")]
     public int kills = 0;
-    public int currentKillsCount = 0; 
+    public int currentKillsCount = 0;
     public int randomMonster;
     public string monster = "";
-    public bool isQuestActive = false;  
-    public bool isQuestCompleted = false;
+    public bool isDemonArea = false;
+    public bool isCowArea = false;
 
-    private bool isQuestAccepted = false;
+    [Header("Other Scripts")]
     public InventoryItem inventoryItem;
     public PlayerCoins playerCoins;
-    void Start()
+
+    [Header("Quest State")]
+    public bool isQuestActive = false;
+    public bool isQuestCompleted = false;
+    public bool isQuestAccepted = false;
+    public void Start()
     {
-        if (!inventoryItem) inventoryItem = FindObjectOfType<InventoryItem>();
-        if (!playerCoins) playerCoins = FindObjectOfType<PlayerCoins>();
         InitializeQuest();
+        Debug.LogWarning("initializeQuest");
     }
 
     void Update()
     {
-        if (kills > 0 && currentKillsCount >= kills)
+        if(kills == currentKillsCount)
         {
-            CompleteQuest();
+            isQuestCompleted = true;
+        }
+        if (isQuestAccepted)
+        {
+            if(Input.GetKeyDown(KeyCode.Z))
+            {
+                AddKill();
+            }
         }
     }
+
     public void InitializeQuest()
     {
-        if (!isQuestAccepted)
+        Debug.LogWarning("making the quest");  
+        if (isDemonArea)
+        {
+            randomMonster = Random.Range(1, 5);
+            int randomKillCount = Random.Range(1, 10);
+            Debug.Log("amount of kills needed " + randomKillCount);
+            switch (randomMonster)
+            {
+                case 1: monster = "Slime"; break;
+                case 2: monster = "Zombie"; break;
+                case 3: monster = "Demon"; break;
+                default: monster = "Skeleton"; break;
+            }
+            kills = randomKillCount;
+        }
+        else if (isCowArea)
+        {
+            
+            int randomKillCount = Random.Range(1, 10);
+            monster = "Cow";
+            kills = randomKillCount;
+        }
+        else
         {
             randomMonster = Random.Range(1, 4);
             int randomKillCount = Random.Range(1, 10);
-            isQuestActive = true;
             switch (randomMonster)
             {
                 case 1: monster = "Slime"; break;
@@ -55,8 +86,8 @@ public class MonsterQuestTracker : MonoBehaviour
                 default: monster = "Skeleton"; break;
             }
             kills = randomKillCount;
-            UpdateQuestUI();
         }
+        UpdateQuestUI();
     }
     public void UpdateQuestUI()
     {
@@ -68,46 +99,40 @@ public class MonsterQuestTracker : MonoBehaviour
         if (smallCurrentKills) smallCurrentKills.text = currentKillsCount.ToString();
         if (smallMonsterText) smallMonsterText.text = monster;
     }
-    public void AddKill()
+    public void QuestAccepted()
     {
-        if (isQuestActive)
+        if (!isQuestAccepted)
         {
-            currentKillsCount++;
-            UpdateQuestUI();
-        }
-    }
-    public void AcceptQuest()
-    {
-        
             SmallQuestUI.SetActive(true);
             isQuestActive = true;
             currentKillsCount = 0;
             isQuestCompleted = false;
             isQuestAccepted = true;
+            Debug.Log("Quest Accepted:");
             UpdateQuestUI();
-        
+        }
+
     }
+    public void AddKill()
+    {
+        if (isQuestAccepted)
+        {
+            currentKillsCount++;
+            UpdateQuestUI();
+        }
+    }
+
     public void CompleteQuest()
     {
-        isQuestCompleted = true;
-        Debug.Log("Monster quest completed!");
-    }
-    public void CollectQuestReward()
-    {
-        if (isQuestActive && isQuestCompleted)
+        if(isQuestCompleted)
         {
-            int coinsCollected = Random.Range(5, 20) + kills;
-            Debug.Log("You get " + coinsCollected + " coins");
-            AddCoins(coinsCollected);
-
-
-            // Reset Quest
             SmallQuestUI.SetActive(false);
-            currentKillsCount = 0;
-            kills = 0;
-            isQuestActive = false;
             isQuestCompleted = false;
-            isQuestAccepted = false;
+            isQuestActive = false;
+            Debug.Log("Quest Completed!");
+            int rewardCoins = Random.Range(1, 10) + kills;
+            AddCoins(rewardCoins);
+            Debug.Log("reseting the Quest");
             InitializeQuest();
         }
     }
@@ -116,6 +141,6 @@ public class MonsterQuestTracker : MonoBehaviour
         if (playerCoins)
         {
             playerCoins.addcoins(coin);
-        }       
+        }
     }
 }
