@@ -7499,7 +7499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.598572, y: 2.2999878}
+  m_AnchoredPosition: {x: 24.19989, y: 2.2999878}
   m_SizeDelta: {x: 26, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &96131109
@@ -7587,7 +7587,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0.58483887, w: 0}
+  m_margin: {x: 0, y: 0, z: -4.5113525, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -39272,7 +39272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &455280992
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59390,9 +59390,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 962748773}
-        m_TargetAssemblyTypeName: CowQuestTracker, Assembly-CSharp
-        m_MethodName: CollectQuestReward
+      - m_Target: {fileID: 962748772}
+        m_TargetAssemblyTypeName: BetterMonsterQuestTracker, Assembly-CSharp
+        m_MethodName: CollectQuest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -60862,7 +60862,7 @@ MonoBehaviour:
   spawnLocationProjectile: {fileID: 801565219}
   cooldownTimerfireball: 4
   cooldownTimerpebble: 5
-  cooldownTimerBeam: 15
+  cooldownTimerBeam: 1
   cooldownTimerslash: 2.5
   cooldownTimerpoison: 7
   emptyItem: {fileID: 11400000, guid: d157f838e84210047a32870bf29d93b7, type: 2}
@@ -63534,7 +63534,7 @@ MonoBehaviour:
   questUI: {fileID: 660798745}
   smallquestUI: {fileID: 79895114}
   inventoryUI: {fileID: 430342717}
-  questTracer: {fileID: 962748772}
+  questTracer: {fileID: 0}
   npcQuest: 1
 --- !u!114 &716214125
 MonoBehaviour:
@@ -83032,7 +83032,7 @@ MonoBehaviour:
   questUI: {fileID: 85575680}
   smallquestUI: {fileID: 79895114}
   inventoryUI: {fileID: 430342717}
-  questTracer: {fileID: 962748772}
+  questTracer: {fileID: 0}
   npcQuest: 1
 --- !u!60 &899317313
 PolygonCollider2D:
@@ -89108,8 +89108,6 @@ GameObject:
   m_Component:
   - component: {fileID: 962748771}
   - component: {fileID: 962748772}
-  - component: {fileID: 962748773}
-  - component: {fileID: 962748774}
   m_Layer: 0
   m_Name: Quest Tracer
   m_TagString: Untagged
@@ -89141,82 +89139,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 962748769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b29056d493a2e140bc9f582e68ac91f, type: 3}
+  m_Script: {fileID: 11500000, guid: c7d78a517d81e214fb9c9b8891140bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfKills: {fileID: 966122496}
-  currentKills: {fileID: 767034432}
-  monsterText: {fileID: 718518548}
-  amountOfKillsOfCow: {fileID: 1969450242}
-  currentKillsOfCow: {fileID: 96131109}
-  monsterTextOfCow: {fileID: 803456751}
-  smallamountOfKills: {fileID: 2106177692}
-  smallcurrentKills: {fileID: 2137508289}
-  smallmonsterText: {fileID: 161511594}
-  kills: 0
-  currentkils: 0
-  randomMonster: 0
-  monster: 
-  Quest: 0
-  quest1: 0
-  succes: 0
-  cowkills: 0
-  currentCowkils: 0
-  Quest2: 0
-  quest2: 0
-  succes1: 0
-  randomNum: 0
-  inventroyItem: {fileID: 0}
-  playerCoins: {fileID: 0}
---- !u!114 &962748773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 962748769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 368cc31e2e8efb14182ce24b306d82ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amountOfKillsOfCow: {fileID: 1969450242}
-  currentKillsOfCow: {fileID: 96131109}
-  monsterTextOfCow: {fileID: 803456751}
-  cowKillGoal: 0
-  currentCowKills: 0
-  isQuestActive: 0
-  isQuestCompleted: 0
-  isQuestAccepted: 0
-  inventoryItem: {fileID: 0}
-  playerCoins: {fileID: 689547584}
-  monster: Cow
---- !u!114 &962748774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 962748769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6004e0a1c5c5e8e4c8e445dbfde944ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amountOfKills: {fileID: 0}
-  currentKills: {fileID: 0}
-  monsterText: {fileID: 0}
-  smallAmountOfKills: {fileID: 0}
-  smallCurrentKills: {fileID: 0}
-  smallMonsterText: {fileID: 0}
+  MonsteramountOfKills: {fileID: 966122496}
+  MonstercurrentKills: {fileID: 767034432}
+  MonstermonsterText: {fileID: 718518548}
+  CowamountOfKills: {fileID: 1969450242}
+  CowcurrentKills: {fileID: 96131109}
+  CowmonsterText: {fileID: 803456751}
+  SmallQuestUI: {fileID: 79895114}
+  smallAmountOfKills: {fileID: 2106177692}
+  smallCurrentKills: {fileID: 2137508289}
+  smallMonsterText: {fileID: 161511594}
   kills: 0
   currentKillsCount: 0
   randomMonster: 0
   monster: 
+  isDemonArea: 0
+  isCowArea: 0
+  inventoryItem: {fileID: 1211462008}
+  playerCoins: {fileID: 689547584}
   isQuestActive: 0
   isQuestCompleted: 0
-  inventoryItem: {fileID: 0}
-  playerCoins: {fileID: 0}
+  isQuestAccepted: 0
 --- !u!1 &963162066
 GameObject:
   m_ObjectHideFlags: 0
@@ -92322,9 +92268,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 962748773}
-        m_TargetAssemblyTypeName: CowQuestTracker, Assembly-CSharp
-        m_MethodName: AcceptQuest
+      - m_Target: {fileID: 962748772}
+        m_TargetAssemblyTypeName: BetterMonsterQuestTracker, Assembly-CSharp
+        m_MethodName: CowQuestAccepted
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -130668,8 +130614,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 962748772}
-        m_TargetAssemblyTypeName: QuestTracer, Assembly-CSharp
-        m_MethodName: collectQuest
+        m_TargetAssemblyTypeName: BetterMonsterQuestTracker, Assembly-CSharp
+        m_MethodName: CollectQuest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -162249,7 +162195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.9, y: 4.6}
+  m_AnchoredPosition: {x: 48.50132, y: 4.6}
   m_SizeDelta: {x: 21.1383, y: 43.4959}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657628990
@@ -173186,7 +173132,7 @@ MonoBehaviour:
   questUI: {fileID: 455280991}
   smallquestUI: {fileID: 79895114}
   inventoryUI: {fileID: 430342717}
-  questTracer: {fileID: 962748772}
+  questTracer: {fileID: 0}
   npcQuest: 1
 --- !u!114 &1758637604
 MonoBehaviour:
@@ -177817,8 +177763,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 962748772}
-        m_TargetAssemblyTypeName: QuestTracer, Assembly-CSharp
-        m_MethodName: acceptQuest
+        m_TargetAssemblyTypeName: BetterMonsterQuestTracker, Assembly-CSharp
+        m_MethodName: MonsterQuestAccepted
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -196985,7 +196931,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 135.39868, y: 2.2999878}
+  m_AnchoredPosition: {x: 153, y: 2.2999878}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1969450242
@@ -197073,7 +197019,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 174.2489, w: 0}
+  m_margin: {x: 0, y: 0, z: 157.68616, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -215725,7 +215671,7 @@ MonoBehaviour:
   questUI: {fileID: 1556733925}
   smallquestUI: {fileID: 79895114}
   inventoryUI: {fileID: 430342717}
-  questTracer: {fileID: 962748772}
+  questTracer: {fileID: 0}
   npcQuest: 0
 --- !u!60 &2137270069
 PolygonCollider2D:

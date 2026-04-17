@@ -21,7 +21,7 @@ public class CowHealth : MonoBehaviour
     public float distanceThreshold = 40f;
     public Transform player;
 
-    private BetterMonsterQuestTracker betterMonsterQuestTracker;
+    public BetterMonsterQuestTracker betterMonsterQuestTracker;
     private KillCounter killCounter;
 
     private bool isDying = false;

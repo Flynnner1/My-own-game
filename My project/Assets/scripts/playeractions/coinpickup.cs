@@ -14,7 +14,6 @@ public class CoinPickup : MonoBehaviour
             PlayerCoins playerCoins = other.GetComponent<PlayerCoins>();
             if (playerCoins != null)
             {
-                // Increase the coin count and mark as picked up.
                 coins += 1;
                 pickedUp = true;
                 playerCoins.addcoins(1);
@@ -27,9 +26,9 @@ public class CoinPickup : MonoBehaviour
                 Debug.LogError("PlayerCoins component not found on Player!");
             }
         }
-        else
-        {
-            Debug.Log("You didn't pick up a coin");
-        }
+        //else
+        //{
+        //    Debug.Log("You didn't pick up a coin");
+        //}
     }
 }

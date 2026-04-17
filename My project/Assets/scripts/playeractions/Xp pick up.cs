@@ -5,18 +5,15 @@ using UnityEngine;
 public class Xppickup : MonoBehaviour
 {
     public bool pickedUp = false;
-    // Remove the local overshadowing variable
     private XpManager xpManager;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && !pickedUp)
         {
-            // Assign to the class-level xpManager reference
             xpManager = other.GetComponent<XpManager>();
             if (xpManager != null)
             {
-                // Pass the XP to XpManager directly
                 xpManager.PlusXp(1);
                 pickedUp = true;
 
@@ -28,9 +25,9 @@ public class Xppickup : MonoBehaviour
                 Debug.LogError("XpManager component not found on Player!");
             }
         }
-        else
-        {
-            Debug.Log("You didn't pick up Xp");
-        }
+        //else
+        //{
+        //    Debug.Log("You didn't pick up Xp");
+        //}
     }
 }

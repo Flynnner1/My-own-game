@@ -1,12 +1,31 @@
+using System.Threading;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BetterMonsterQuestTracker : MonoBehaviour
 {
-    [Header("UI Text References (Large UI)")]
-    public TMP_Text amountOfKills;
-    public TMP_Text currentKills;
-    public TMP_Text monsterText;
+    public enum QuestType
+    {
+        None,
+        Monster,
+        Demon,
+        Cow
+    }
+    [Header("UI Text References For Monster (Large UI)")]
+    public TMP_Text MonsteramountOfKills;
+    public TMP_Text MonstercurrentKills;
+    public TMP_Text MonstermonsterText;
+
+    [Header("UI Text References For Cow (Large UI)")]
+    public TMP_Text CowamountOfKills;
+    public TMP_Text CowcurrentKills;
+    public TMP_Text CowmonsterText;
+
+    //[Header("UI Text References For Demon (Large UI)")]
+    //public TMP_Text DemonamountOfKills;
+    //public TMP_Text DemoncurrentKills;
+    //public TMP_Text DemonmonsterText;
 
     [Header("UI Text References (Small UI)")]
     public GameObject SmallQuestUI;
@@ -30,14 +49,20 @@ public class BetterMonsterQuestTracker : MonoBehaviour
     public bool isQuestActive = false;
     public bool isQuestCompleted = false;
     public bool isQuestAccepted = false;
+
+    QuestType SortQuest = QuestType.None;
     public void Start()
     {
+        monster = "Monster:";
+        kills = 10;
+        UpdateQuestUI();
         InitializeQuest();
         Debug.LogWarning("initializeQuest");
     }
 
     void Update()
     {
+        Debug.Log(SortQuest);
         if(kills == currentKillsCount)
         {
             isQuestCompleted = true;
@@ -54,7 +79,7 @@ public class BetterMonsterQuestTracker : MonoBehaviour
     public void InitializeQuest()
     {
         Debug.LogWarning("making the quest");  
-        if (isDemonArea)
+        if (isDemonArea && SortQuest == QuestType.Demon)
         {
             randomMonster = Random.Range(1, 5);
             int randomKillCount = Random.Range(1, 10);
@@ -68,14 +93,14 @@ public class BetterMonsterQuestTracker : MonoBehaviour
             }
             kills = randomKillCount;
         }
-        else if (isCowArea)
+        else if (isCowArea && SortQuest == QuestType.Cow)
         {
             
             int randomKillCount = Random.Range(1, 10);
             monster = "Cow";
             kills = randomKillCount;
         }
-        else
+        else if (SortQuest == QuestType.Monster)
         {
             randomMonster = Random.Range(1, 4);
             int randomKillCount = Random.Range(1, 10);
@@ -91,38 +116,34 @@ public class BetterMonsterQuestTracker : MonoBehaviour
     }
     public void UpdateQuestUI()
     {
-        if (amountOfKills) amountOfKills.text = kills.ToString();
-        if (currentKills) currentKills.text = currentKillsCount.ToString();
-        if (monsterText) monsterText.text = monster;
+        if (CowamountOfKills) CowamountOfKills.text = kills.ToString();
+        if (CowcurrentKills) CowcurrentKills.text = currentKillsCount.ToString();
+        if (CowmonsterText) CowmonsterText.text = monster;
+
+        if (MonsteramountOfKills) MonsteramountOfKills.text = kills.ToString();
+        if (MonstercurrentKills) MonstercurrentKills.text = currentKillsCount.ToString();
+        if (MonstermonsterText) MonstermonsterText.text = monster;
+
+        //if (DemonamountOfKills) DemonamountOfKills.text = kills.ToString();
+        //if (DemoncurrentKills) DemoncurrentKills.text = currentKillsCount.ToString();
+        //if (DemonmonsterText) DemonmonsterText.text = monster;
 
         if (smallAmountOfKills) smallAmountOfKills.text = kills.ToString();
         if (smallCurrentKills) smallCurrentKills.text = currentKillsCount.ToString();
         if (smallMonsterText) smallMonsterText.text = monster;
     }
-    public void QuestAccepted()
-    {
-        if (!isQuestAccepted)
-        {
-            SmallQuestUI.SetActive(true);
-            isQuestActive = true;
-            currentKillsCount = 0;
-            isQuestCompleted = false;
-            isQuestAccepted = true;
-            Debug.Log("Quest Accepted:");
-            UpdateQuestUI();
-        }
-
-    }
+    
     public void AddKill()
     {
         if (isQuestAccepted)
         {
+            Debug.Log("added 1 to quest");
             currentKillsCount++;
             UpdateQuestUI();
         }
     }
 
-    public void CompleteQuest()
+    public void CollectQuest()
     {
         if(isQuestCompleted)
         {
@@ -134,6 +155,7 @@ public class BetterMonsterQuestTracker : MonoBehaviour
             AddCoins(rewardCoins);
             Debug.Log("reseting the Quest");
             InitializeQuest();
+            UpdateQuestUI();
         }
     }
     public void AddCoins(int coin)
@@ -142,5 +164,60 @@ public class BetterMonsterQuestTracker : MonoBehaviour
         {
             playerCoins.addcoins(coin);
         }
+    }
+    public void CowQuestAccepted()
+    {
+        if (!isQuestAccepted )
+        {
+            
+            isCowArea = true;
+            SortQuest = QuestType.Cow;
+            SmallQuestUI.SetActive(true);
+            isQuestActive = true;
+            currentKillsCount = 0;
+            isQuestCompleted = false;
+            isQuestAccepted = true;
+            InitializeQuest();
+            Debug.Log("Quest Accepted:");
+            UpdateQuestUI();
+        }
+
+    }
+    public void MonsterQuestAccepted()
+    {
+        if (!isQuestAccepted)
+        {
+            
+            isDemonArea = false;
+            isCowArea = false;
+            SortQuest = QuestType.Monster;
+            SmallQuestUI.SetActive(true);
+            isQuestActive = true;
+            currentKillsCount = 0;
+            isQuestCompleted = false;
+            isQuestAccepted = true;
+            InitializeQuest();
+            Debug.Log("Quest Accepted:");
+            UpdateQuestUI();
+        }
+
+    }
+    public void DemonQuestAccepted()
+    {
+        if (!isQuestAccepted)
+        {
+            
+            isDemonArea = true;
+            SortQuest = QuestType.Demon;
+            SmallQuestUI.SetActive(true);
+            isQuestActive = true;
+            currentKillsCount = 0;
+            isQuestCompleted = false;
+            isQuestAccepted = true;
+            InitializeQuest();
+            Debug.Log("Quest Accepted:");
+            UpdateQuestUI();
+        }
+
     }
 }
