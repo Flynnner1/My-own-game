@@ -1,0 +1,55 @@
+N = noord (boven), O = oost (rechts), Z = zuid (onder), W = west (links): de kanten waar het pad/de rivier de tile uit gaat. Bij brug-eind: de kant waar de brug zit.
+(origineel) = jouw eigen tile, niet gedraaid.
+
+rij 1, kolom 1: grass
+rij 1, kolom 2: Cow Grass
+rij 1, kolom 3: skeleton grass
+rij 1, kolom 4: zombie grass
+rij 1, kolom 5: slime grass
+rij 1, kolom 6: demon grass
+rij 1, kolom 7: Demon crack grass
+rij 2, kolom 1: rivier recht N-Z (origineel)
+rij 2, kolom 2: rivier recht O-W
+rij 2, kolom 3: rivier hoek N-O
+rij 2, kolom 4: rivier hoek O-Z (origineel)
+rij 2, kolom 5: rivier hoek Z-W (origineel 3)
+rij 2, kolom 6: rivier hoek W-N (origineel 2)
+rij 3, kolom 1: rivier T N-O-W (origineel)
+rij 3, kolom 2: rivier T N-O-Z
+rij 3, kolom 3: rivier T O-Z-W
+rij 3, kolom 4: rivier T N-Z-W
+rij 3, kolom 5: rivier eind N
+rij 3, kolom 6: rivier eind O
+rij 3, kolom 7: rivier eind Z (origineel)
+rij 3, kolom 8: rivier eind W
+rij 4, kolom 1: pad recht N-Z (origineel)
+rij 4, kolom 2: pad recht O-W
+rij 4, kolom 3: pad hoek N-O
+rij 4, kolom 4: pad hoek O-Z (origineel v2)
+rij 4, kolom 5: pad hoek Z-W (origineel)
+rij 4, kolom 6: pad hoek W-N
+rij 4, kolom 7: pad kruising (origineel)
+rij 5, kolom 1: pad T N-O-W
+rij 5, kolom 2: pad T N-O-Z (origineel v2)
+rij 5, kolom 3: pad T O-Z-W
+rij 5, kolom 4: pad T N-Z-W (origineel)
+rij 5, kolom 5: pad eind N
+rij 5, kolom 6: pad eind O
+rij 5, kolom 7: pad eind Z (origineel)
+rij 5, kolom 8: pad eind W
+rij 6, kolom 1: einde pad N
+rij 6, kolom 2: einde pad O
+rij 6, kolom 3: einde pad Z (origineel)
+rij 6, kolom 4: einde pad W
+rij 6, kolom 5: brug, rivier N-Z (origineel)
+rij 6, kolom 6: brug, rivier O-W
+rij 6, kolom 7: kapotte brug, rivier N-Z (origineel)
+rij 6, kolom 8: kapotte brug, rivier O-W
+rij 7, kolom 1: brug-eind, brug aan N
+rij 7, kolom 2: brug-eind, brug aan O (origineel)
+rij 7, kolom 3: brug-eind, brug aan Z
+rij 7, kolom 4: brug-eind, brug aan W
+rij 7, kolom 5: brug-eind 2, brug aan N
+rij 7, kolom 6: brug-eind 2, brug aan O (origineel)
+rij 7, kolom 7: brug-eind 2, brug aan Z
+rij 7, kolom 8: brug-eind 2, brug aan W
