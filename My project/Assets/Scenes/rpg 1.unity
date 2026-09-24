@@ -89377,7 +89377,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 174.2489, w: 0}
+  m_margin: {x: 0, y: 0, z: 144.37842, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -116625,9 +116625,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 591212898}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 1000, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1250223511
@@ -133180,7 +133180,7 @@ Transform:
   m_GameObject: {fileID: 1403272485}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 225.4, y: -51.7, z: 0}
+  m_LocalPosition: {x: 43.1, y: -25.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -148348,7 +148348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 60.930817}
+  m_AnchoredPosition: {x: 0, y: 60.93091}
   m_SizeDelta: {x: 1100, y: 121.8616}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1553151200
@@ -149068,7 +149068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1556733926
 RectTransform:
   m_ObjectHideFlags: 0
@@ -149155,8 +149155,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c455d15ebed121b4e8dd347b7b81f129, type: 2}
   - {fileID: 11400000, guid: ae7070f2efd44a6468a27734538e4556, type: 2}
   - {fileID: 11400000, guid: 91fbc4db750a73e40842d5cdbcb8b930, type: 2}
-  - {fileID: 11400000, guid: 9c5942781075b4a4498fb528d7e532d9, type: 2}
-  - {fileID: 11400000, guid: 13bb3b4eee247924bae0d1708e44c77a, type: 2}
+  - {fileID: 11400000, guid: 75f4e712ace79964aaa679c0074eafb1, type: 2}
+  - {fileID: 11400000, guid: d003f7baaa51e3e4496de425ffb18c38, type: 2}
   itemCosts: 00000000190000000a0000006400000005000000230000000a0000000f000000
 --- !u!1001 &1557218577
 PrefabInstance:
