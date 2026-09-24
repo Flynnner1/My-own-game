@@ -21,7 +21,7 @@ public class CowHealth : MonoBehaviour
     public float distanceThreshold = 40f;
     public Transform player;
 
-    public BetterMonsterQuestTracker betterMonsterQuestTracker;
+    private BetterMonsterQuestTracker[] questTrackers; 
     private KillCounter killCounter;
 
     private bool isDying = false;
@@ -51,8 +51,7 @@ public class CowHealth : MonoBehaviour
         currentHealth = maxHealth;
 
         killCounter = FindObjectOfType<KillCounter>();
-        betterMonsterQuestTracker = FindObjectOfType<BetterMonsterQuestTracker>();
-
+        questTrackers = FindObjectsByType<BetterMonsterQuestTracker>(FindObjectsSortMode.None);
         if (player == null)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -97,12 +96,13 @@ public class CowHealth : MonoBehaviour
         }
         if (wasKilled)
         {
-            betterMonsterQuestTracker.AddKill();
-        }
-        if (wasKilled)
-        {
+            foreach (BetterMonsterQuestTracker tracker in questTrackers)
+            {
+                tracker.AddKill("Cow");
+            }
             RandomDrop();
         }
+        
 
         Destroy(gameObject);
     }

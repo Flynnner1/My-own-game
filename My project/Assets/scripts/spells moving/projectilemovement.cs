@@ -44,7 +44,7 @@ public class BallMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon") || other.CompareTag("Npc") || other.CompareTag("COW"))
+        if (other.CompareTag("Skeleton") || other.CompareTag("Zombie") || other.CompareTag("Slime") || other.CompareTag("Demon") || other.CompareTag("Npc") || other.CompareTag("Cow"))
         {
             //Debug.Log("Projectile hit: " + other.name);
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();

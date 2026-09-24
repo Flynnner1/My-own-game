@@ -12,7 +12,7 @@ public class NPCController : MonoBehaviour
     private bool isPlayerNearby = false;
 
     [Tooltip("Reference to the QuestTracer script.")]
-    public QuestTracer questTracer;
+    public BetterMonsterQuestTracker questTracer;
 
     public bool npcQuest = false;
 
@@ -76,7 +76,7 @@ public class NPCController : MonoBehaviour
     public void AcceptQuestButton()
     {
         if (questTracer != null)
-            questTracer.acceptQuest();
+            questTracer.AcceptQuest();
         if (questUI != null)
             questUI.SetActive(false);
         if (inventoryUI != null)
